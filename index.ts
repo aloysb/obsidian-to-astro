@@ -2,8 +2,8 @@ import * as path from "https://deno.land/std@0.171.0/path/mod.ts";
 
 import { BLOG_DIR, VAULT_DIR } from "./config.ts";
 
-import { Note } from "./types.ts";
 import { getAllProcessedNotes } from "./notes.ts";
+import { Note } from "./types.ts";
 
 await main();
 
@@ -15,10 +15,11 @@ async function main() {
 `);
 
    try {
+      Deno.removeSync(path.join(BLOG_DIR), { recursive: true });
       await prepareDestDirectory();
       const notes = await getAllProcessedNotes(VAULT_DIR);
-      await publishNotes(notes);
-      console.log("note publish");
+      await publishNotes(notes.filter(({ frontmatter }) => frontmatter.status === 'publish'))
+      console.log(` ${notes.length} notes published`);
    } catch (e) {
       console.error("Something went wrong", e);
    }

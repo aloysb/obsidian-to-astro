@@ -1,12 +1,12 @@
-import { Frontmatter, Note } from "./types.ts";
 import { basename, join } from "https://deno.land/std@0.171.0/path/mod.ts";
+import { Frontmatter, Note } from "./types.ts";
 
 import { parse } from "https://deno.land/std@0.171.0/encoding/yaml.ts";
 
 export async function getAllProcessedNotes(directory: string): Promise<Note[]> {
    const notes: Note[] = [];
    await findNotesInDirectoryRecursively(directory, notes);
-   const processedNotes = await replaceWikilinks(notes);
+   const processedNotes = await replaceWikilinks(notes.filter(({ frontmatter }) => frontmatter.status === 'publish'));
    return processedNotes;
 }
 
@@ -91,9 +91,8 @@ export function replaceWikilinks(notes: Note[]): Note[] {
                   const replace = `${title ?? file}`;
                   return replace;
                }
-               const replace = `[${title ?? file}](./${
-                  linkedNote.frontmatter.slug
-               })`;
+               const replace = `[${title ?? file}](./${linkedNote.frontmatter.slug
+                  })`;
                return replace;
             }
          })
