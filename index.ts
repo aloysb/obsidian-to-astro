@@ -27,8 +27,10 @@ async function main() {
 
 async function publishNotes(notes: Note[]) {
    await Promise.all(
-      notes.map((note) =>
-         Deno.writeTextFile(path.join(BLOG_DIR, note.title), note.content)
+      notes.map((note) => {
+         console.log(note);
+         return Deno.writeTextFile(path.join(BLOG_DIR, note.title), note.publish)
+      }
       )
    );
 }

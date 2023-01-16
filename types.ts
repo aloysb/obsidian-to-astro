@@ -11,5 +11,6 @@ export interface Note {
     title: string;
     filePath: string;
     content: string;
+    publish: any,
     frontmatter: Frontmatter;
 }
