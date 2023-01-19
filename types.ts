@@ -3,7 +3,7 @@ export interface Frontmatter {
     tags: string[];
     created_at: Date;
     last_modified_at: Date;
-    draft: boolean;
+    status: 'idea' | 'publish' | 'draft';
     slug: string;
 }
 
@@ -11,5 +11,6 @@ export interface Note {
     title: string;
     filePath: string;
     content: string;
+    publish: any,
     frontmatter: Frontmatter;
 }

@@ -1,12 +1,12 @@
-import { Frontmatter, Note } from "./types.ts";
 import { basename, join } from "https://deno.land/std@0.171.0/path/mod.ts";
+import { Frontmatter, Note } from "./types.ts";
 
-import { parse } from "https://deno.land/std@0.171.0/encoding/yaml.ts";
+import { parse, stringify } from "https://deno.land/std@0.171.0/encoding/yaml.ts";
 
 export async function getAllProcessedNotes(directory: string): Promise<Note[]> {
    const notes: Note[] = [];
    await findNotesInDirectoryRecursively(directory, notes);
-   const processedNotes = await replaceWikilinks(notes);
+   const processedNotes = await replaceWikilinks(notes.filter(({ frontmatter }) => frontmatter.status === 'publish'));
    return processedNotes;
 }
 
@@ -40,10 +40,12 @@ async function parseFileIntoNote(filePath: string): Promise<Note | null> {
 
    try {
       const rawFrontmatter = parse(content.split("---")[1]) as Frontmatter;
+      const rawContent = content.split("---")[2] as string;
       const frontmatter = {
          ...rawFrontmatter,
          created_at: new Date(rawFrontmatter.created_at),
          last_modified_at: new Date(rawFrontmatter.last_modified_at),
+         description: rawContent.substring(0, 400).split('.').join('\n'),
          slug:
             rawFrontmatter?.slug ??
             rawFrontmatter.title.split(" ").join("-").toLowerCase(),
@@ -52,6 +54,7 @@ async function parseFileIntoNote(filePath: string): Promise<Note | null> {
          title: basename(filePath),
          filePath,
          content,
+         publish: '---\n' + stringify(frontmatter) + '---\n' + rawContent,
          frontmatter,
       };
    } catch (e) {
@@ -91,9 +94,8 @@ export function replaceWikilinks(notes: Note[]): Note[] {
                   const replace = `${title ?? file}`;
                   return replace;
                }
-               const replace = `[${title ?? file}](./${
-                  linkedNote.frontmatter.slug
-               })`;
+               const replace = `[${title ?? file}](./${linkedNote.frontmatter.slug
+                  })`;
                return replace;
             }
          })
