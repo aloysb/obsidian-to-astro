@@ -1,36 +1,48 @@
-import { basename, join } from "https://deno.land/std@0.171.0/path/mod.ts";
 import { Frontmatter, Note } from "./types.ts";
-
+import { basename, join } from "https://deno.land/std@0.171.0/path/mod.ts";
 import { parse, stringify } from "https://deno.land/std@0.171.0/encoding/yaml.ts";
 
-export async function getAllProcessedNotes(directory: string): Promise<Note[]> {
-   const notes: Note[] = [];
-   await findNotesInDirectoryRecursively(directory, notes);
-   const processedNotes = await replaceWikilinks(notes.filter(({ frontmatter }) => frontmatter.status === 'publish'));
-   return processedNotes;
+// export async function getAllProcessedNotes(directory: string): Promise<Note[]> {
+//    const notes: Note[] = await findNotesInDirectoryRecursively(directory);
+//    const processedNotes = await replaceWikilinks(notes.filter(({ frontmatter }) => frontmatter.status === 'publish'));
+//    return processedNotes;
+// }
+
+/**
+ * 
+ * @param directory The directory to search. Note that the result will be base on this directory, so if you provide a relative path, the result will be relative.
+ * @returns The list of files path
+ */
+type Options = {
+   match: RegExp
 }
 
-async function findNotesInDirectoryRecursively(
+export async function findFilesRecursively(
    directory: string,
-   notesAccumulator: Note[]
-): Promise<Note[]> {
+   options?:Options
+): Promise<string[]> {
+   const files: string[] = [];
    const subdirs = await Deno.readDir(directory);
 
    for await (const subdir of subdirs) {
       const subdirPath = join(directory, subdir.name);
-      if (subdir.isDirectory) {
-         await findNotesInDirectoryRecursively(subdirPath, notesAccumulator);
+      if (subdir.isFile) {
+         if(options?.match && !options.match.test(subdir.name)){
+            continue;
+         }
+         files.push(`${directory}/${subdir.name}`)
+      } else {
+         files.push(...await findFilesRecursively(subdirPath, options));
       }
-      const parsedNote = await parseFileIntoNote(subdirPath);
-      if (parsedNote) {
-         notesAccumulator.push(parsedNote);
-      }
+      // const parsedNote = await parseFileIntoNote(subdirPath);
+      // if (parsedNote) {
+      //    notes.push(parsedNote);
+      // }
    }
-
-   return notesAccumulator;
+   return files;
 }
 
-async function parseFileIntoNote(filePath: string): Promise<Note | null> {
+async function parseFileIntoNote(filePath:string): Promise<Note | null> {
    let content: string;
    try {
       content = await Deno.readTextFile(filePath);
