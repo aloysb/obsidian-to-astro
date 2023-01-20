@@ -29,7 +29,8 @@ export class Note {
   public get frontmatter(): Frontmatter | null {
     try {
       const rawFrontmatter = this.rawFile.split("---")[1] as string;
-      return parse(rawFrontmatter) as Frontmatter;
+       const frontmatter = parse(rawFrontmatter) as Frontmatter;
+       return { ...frontmatter, last_modified_at: new Date(frontmatter.last_modified_at), created_at: new Date(frontmatter.created_at) }
     } catch {
       return null;
     }
