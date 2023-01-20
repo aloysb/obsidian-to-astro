@@ -1,3 +1,4 @@
+import { parse, stringify } from "https://deno.land/std@0.171.0/encoding/yaml.ts";
 export interface NoteProps {
   //   title: string;
   filePath: string;
@@ -6,8 +7,14 @@ export interface NoteProps {
   //   frontmatter: Frontmatter;
 }
 
-type Frontmatter = string;
-
+type Frontmatter = {
+   title: string;
+   tags: string[];
+   created_at: Date;
+   last_modified_at: Date;
+   status: 'idea' | 'publish' | 'draft';
+   slug: string;
+};
 //   [x: string]: string;
 
 export class Note {
@@ -21,15 +28,16 @@ export class Note {
 
   public get frontmatter(): Frontmatter | null {
     try {
-      return this.rawFile.split("---")[1] as unknown as Frontmatter;
+      const rawFrontmatter = this.rawFile.split("---")[1] as string;
+      return parse(rawFrontmatter) as Frontmatter;
     } catch {
       return null;
     }
   }
 
-  public get content(): Frontmatter | null {
+  public get content():  string | null {
     try {
-      return this.rawFile.split("---")[2] as unknown as Frontmatter;
+      return this.rawFile.split("---")[2].trim();
     } catch {
       return null;
     }

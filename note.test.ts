@@ -1,4 +1,3 @@
-import { assertEquals } from "https://deno.land/std@0.173.0/testing/asserts.ts";
 import {
   beforeEach,
   describe,
@@ -6,6 +5,7 @@ import {
 } from "https://deno.land/std@0.173.0/testing/bdd.ts";
 
 import { Note } from "./note.ts";
+import { assertEquals } from "https://deno.land/std@0.173.0/testing/asserts.ts";
 
 describe("Note class", () => {
   let note: Note;
@@ -21,8 +21,8 @@ describe("Note class", () => {
   });
 
   it("should let me obtain the frontmatter", () => {
-    const expected = `title: 'hello world`;
-    note.frontmatter === expected;
+    const expected = {title: 'hello world'};
+    assertEquals(expected, note.frontmatter);
   });
 
   it("should return null if there is no frontmatter", () => {
@@ -33,6 +33,6 @@ describe("Note class", () => {
 
   it("should let me obtain the note content", () => {
     const expected = "hello world";
-    note.frontmatter === expected;
+    assertEquals(note.content, expected);
   });
 });
