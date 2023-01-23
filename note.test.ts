@@ -21,17 +21,17 @@ describe("Note class", () => {
   });
 
   it("should let me obtain the frontmatter", () => {
-     const expected = {
-        title: 'hello world',
-        created_at: new Date('2023-01-01 12:00'),
-        last_modified_at: new Date("2023-01-01 18:00"),
-        slug: "hello-world",
-        status: "publish",
-        tags: [
-           "hello",
-           "world",
-        ],
-     };
+    const expected = {
+      title: "hello world",
+      created_at: new Date("2023-01-01 12:00"),
+      last_modified_at: new Date("2023-01-01 18:00"),
+      slug: "hello-world",
+      status: "publish",
+      tags: [
+        "hello",
+        "world",
+      ],
+    };
     assertEquals(expected, note.frontmatter);
   });
 
@@ -42,7 +42,7 @@ describe("Note class", () => {
   });
 
   it("should let me obtain the note raw content", () => {
-     const expected = `Hello world\nThis wiki link does no exist [[fake link]]`;
-     assertEquals(note.rawContent, expected);
+    const expected = `Hello world\nThis wiki link does no exist [[fake link]]`;
+    assertEquals(note.rawContent, expected);
   });
 });
