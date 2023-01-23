@@ -1,7 +1,10 @@
 import { basename, join } from "https://deno.land/std@0.171.0/path/mod.ts";
 import { Frontmatter, Note } from "./types.ts";
 
-import { parse, stringify } from "https://deno.land/std@0.171.0/encoding/yaml.ts";
+import {
+   parse,
+   stringify,
+} from "https://deno.land/std@0.171.0/encoding/yaml.ts";
 
 export async function getAllProcessedNotes(directory: string): Promise<Note[]> {
    const notes: Note[] = [];

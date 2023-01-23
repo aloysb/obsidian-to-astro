@@ -41,8 +41,8 @@ describe("Note class", () => {
     noteWithoutFrontMatter.frontmatter === expected;
   });
 
-  it("should let me obtain the note content", () => {
-    const expected = "hello world";
-    assertEquals(note.content, expected);
+  it("should let me obtain the note raw content", () => {
+     const expected = `Hello world\nThis wiki link does no exist [[fake link]]`;
+     assertEquals(note.rawContent, expected);
   });
 });
