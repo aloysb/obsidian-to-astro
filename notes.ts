@@ -40,6 +40,7 @@ async function parseFileIntoNote(filePath: string): Promise<Note | null> {
   try {
     content = await Deno.readTextFile(filePath);
   } catch (e) {
+    console.error(e);
     return null;
   }
 
@@ -61,7 +62,7 @@ async function parseFileIntoNote(filePath: string): Promise<Note | null> {
       publish: "---\n" + stringify(frontmatter) + "---\n" + rawContent,
       frontmatter,
     };
-  } catch (e) {
+  } catch (_e) {
     console.warn(
       `${
         basename(

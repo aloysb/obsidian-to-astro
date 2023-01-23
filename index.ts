@@ -36,7 +36,7 @@ async function publishNotes(notes: Note[]) {
   );
 }
 
-async function prepareDestDirectory() {
+function prepareDestDirectory() {
   try {
     Deno.readDirSync(BLOG_DIR);
     Deno.removeSync(path.join(BLOG_DIR, "*"));
