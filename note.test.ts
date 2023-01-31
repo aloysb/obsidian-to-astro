@@ -12,8 +12,9 @@ describe("Note class", () => {
   const filePath = "./_testFolder/note1.md";
   const filePathWithoutFrontmatter = "./_testFolder/noteWithoutFrontmatter.md";
   const fileContent = Deno.readTextFileSync(filePath);
+  const onCreateNote = (_note:Note) => {/* do something with the note */}
   beforeEach(() => {
-    note = new Note(filePath);
+    note = new Note(filePath, onCreateNote);
   });
   it("should instantiate a Note object from a file path", () => {
     assertEquals(note.filePath, filePath);
@@ -36,7 +37,7 @@ describe("Note class", () => {
   });
 
   it("should return null if there is no frontmatter", () => {
-    const noteWithoutFrontMatter = new Note(filePathWithoutFrontmatter);
+    const noteWithoutFrontMatter = new Note(filePathWithoutFrontmatter, onCreateNote);
     const expected = null;
     noteWithoutFrontMatter.frontmatter === expected;
   });
@@ -45,4 +46,15 @@ describe("Note class", () => {
     const expected = `Hello world\nThis wiki link does no exist [[fake link]]`;
     assertEquals(note.rawContent, expected);
   });
+
+  it('should emit an event on note creation', () => {
+   let createdNote:Note;
+   const expected = `Hello world\nThis wiki link does no exist [[fake link]]`;
+   const onCreatedNote = (note:Note) => { createdNote = note};
+   note = new Note(filePath, onCreatedNote);
+   // @ts-ignore
+   assertEquals(createdNote.filePath, filePath);
+   // @ts-ignore
+   assertEquals(createdNote.rawContent, expected)
+  })
 });
