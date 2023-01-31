@@ -16,10 +16,11 @@ export class Note {
   readonly rawFile: string;
   readonly frontmatter: Frontmatter | null;
 
-  constructor(filePath: string) {
+  constructor(filePath: string, onCreatedNote: (note: Note) => void) {
     this.filePath = filePath;
     this.rawFile = Deno.readTextFileSync(filePath);
     this.frontmatter = this.parseFrontmatter();
+    onCreatedNote(this);
   }
   /**
    * Return the raw content of the note, as is.
