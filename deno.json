@@ -1,0 +1,12 @@
+{
+  "tasks": {
+    "precommit": "deno fmt && deno lint && deno test -A"
+  },
+  "fmt": {
+    "files": {
+      "exclude": [
+        "_testFolder/"
+      ]
+    }
+  }
+}

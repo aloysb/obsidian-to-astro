@@ -1,7 +1,24 @@
-// import { assertEquals, assertExists, assertStringIncludes } from "https://deno.land/std@0.171.0/testing/asserts.ts";
+import { describe, it } from "https://deno.land/std@0.171.0/testing/bdd.ts";
 
-// import { replaceWikilinks } from "./notes.ts";
+import { assertEquals } from "https://deno.land/std@0.171.0/testing/asserts.ts";
+import { findFilesRecursively } from "./notes.ts";
+
 // import { Note } from "./types.ts";
+
+describe("Retrieveing the notes", () => {
+  it("retrieves the notes recursively within a directory", async () => {
+    const files = await findFilesRecursively("./_testFolder");
+    assertEquals(files.length, 5);
+  });
+
+  it("can take a regexp as an option and filter the files based on whether or not they match the regexp", async () => {
+    const markdownRegexp = /.*\.md/;
+    const files = await findFilesRecursively("./_testFolder", {
+      match: markdownRegexp,
+    });
+    assertEquals(files.length, 4);
+  });
+});
 
 // Deno.test("replaceWikiLinks", async (t) => {
 //     await t.step("It replaces the wiki links by markdown link if the file exists", async () => {

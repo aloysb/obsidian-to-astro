@@ -1,6 +1,7 @@
 # Obsidian-to-Astro
 
-A Deno module and CLI that allows you to parse files from an Obsidian vault folder and publish them on your Astro website.
+A Deno module and CLI that allows you to parse files from an Obsidian vault
+folder and publish them on your Astro website.
 
 ## Why
 
