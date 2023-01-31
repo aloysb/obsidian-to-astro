@@ -1,4 +1,4 @@
-import { Note } from "./types.ts";
+// import { Note } from "./types.ts";
 import { join } from "https://deno.land/std@0.171.0/path/mod.ts";
 
 // export async function getAllProcessedNotes(directory: string): Promise<Note[]> {
@@ -79,12 +79,13 @@ export async function findFilesRecursively(
 //   }
 // }
 
-export function replaceWikilinks(notes: Note[]): Note[] {
+// deno-lint-ignore no-explicit-any
+export function replaceWikilinks(notes: any[]): any[] {
   return notes.map((note) => {
     const { content } = note;
     const lines = content.split("\n");
     note.content = lines
-      .map((line) => {
+      .map((line: string) => {
         const regexp = /\[\[.+?\|?.*?\]\]/g;
         const wikilinks = line.match(regexp);
 
