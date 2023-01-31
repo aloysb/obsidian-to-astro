@@ -1,4 +1,3 @@
-import { Emitter } from "./eventEmitter.ts";
 import { parse } from "https://deno.land/std@0.171.0/encoding/yaml.ts";
 export interface NoteProps {
   filePath: string;
@@ -17,7 +16,7 @@ export class Note {
   readonly rawFile: string;
   readonly frontmatter: Frontmatter | null;
 
-  constructor(filePath: string, onCreatedNote: (note:Note) => void) {
+  constructor(filePath: string, onCreatedNote: (note: Note) => void) {
     this.filePath = filePath;
     this.rawFile = Deno.readTextFileSync(filePath);
     this.frontmatter = this.parseFrontmatter();
