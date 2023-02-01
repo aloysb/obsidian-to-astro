@@ -13,7 +13,7 @@ import { Emitter } from "./eventEmitter.ts";
 describe("Note class", () => {
   let noteCreatedEmitter: Emitter<"note created", null>;
   beforeEach(() => {
-    noteCreatedEmitter = new Emitter("note created");
+    noteCreatedEmitter = new Emitter();
   });
   it("should instantiate a new emitter", () => {
     assertExists(noteCreatedEmitter);
