@@ -1,39 +1,36 @@
-// import * as path from "https://deno.land/std@0.171.0/path/mod.ts";
-
 import { BLOG_DIR, VAULT_DIR } from "./config.ts";
 
+import { Emitter } from "./eventEmitter.ts";
 import { LinkManager } from "./linkManager.ts";
 import { Note } from "./note.ts";
 import { findFilesRecursively } from "./utils.ts";
 
-// import { Note } from "./types.ts";
-
-// await main();
-
 async function _main() {
-  confirm(`Using the following directories:
+   confirm(`Using the following directories:
     - Blog: ${BLOG_DIR},
     - Vault: ${VAULT_DIR},
     Do you want to proceed?
 `);
-  const notes = [];
-  const linkManager = new LinkManager();
-  const noteFilePaths = await findFilesRecursively(VAULT_DIR, {
-    match: new RegExp(".*.md$"),
-  });
+   const notes = [];
+   const linkManager = new LinkManager();
+   const onNoteCreatedEmitter = new Emitter<Note>();
+   onNoteCreatedEmitter.on(linkManager.registerNote.bind(linkManager));
 
-  const onNoteCreated = [linkManager.registerNote];
-  const handlers = [linkManager.replaceWikiLinks];
+   const noteFilePaths = await findFilesRecursively(VAULT_DIR, {
+      match: new RegExp(".*.md$"),
+   });
 
-  // Create all notes
-  for (const filePath of noteFilePaths) {
-    notes.push(new Note(filePath, handlers, onNoteCreated));
-  }
+   const handlers = [linkManager.replaceWikiLinks.bind(linkManager)];
 
-  // Process notes
-  for (const note of notes) {
-    note.process();
-  }
+   // Create all notes
+   for (const filePath of noteFilePaths) {
+      notes.push(new Note(filePath, handlers, onNoteCreatedEmitter));
+   }
+
+   // Process notes
+   for (const note of notes) {
+      note.process();
+   }
 }
 
 //   try {

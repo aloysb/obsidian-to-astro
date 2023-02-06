@@ -5,6 +5,7 @@ import {
    it,
 } from "https://deno.land/std@0.173.0/testing/bdd.ts";
 
+import { Emitter } from "../lib/eventEmitter.ts";
 import { assertEquals } from "https://deno.land/std@0.173.0/testing/asserts.ts";
 
 describe("Note class", () => {
@@ -14,13 +15,9 @@ describe("Note class", () => {
       "test/_testFolder/noteWithoutFrontmatter.md";
    const fileContent = Deno.readTextFileSync(filePath);
    const handlers = undefined;
-   const onCreateNote = [
-      (_note: Note) => {
-         /* do something with the note */
-      },
-   ];
+   const onNoteCreatedEmitter = new Emitter<Note>();
    beforeEach(() => {
-      note = new Note(filePath, handlers, onCreateNote);
+      note = new Note(filePath, handlers, onNoteCreatedEmitter);
    });
    it("should instantiate a Note object from a file path", () => {
       assertEquals(note.filePath, filePath);
@@ -44,7 +41,7 @@ describe("Note class", () => {
       const noteWithoutFrontMatter = new Note(
          filePathWithoutFrontmatter,
          handlers,
-         onCreateNote
+         onNoteCreatedEmitter
       );
       const expected = null;
       noteWithoutFrontMatter.frontmatter === expected;
@@ -58,12 +55,10 @@ describe("Note class", () => {
    it("should emit an event on note creation", () => {
       let createdNote: Note;
       const expected = `Hello world\nThis wiki link does no exist [[fake link]]`;
-      const onCreatedNote = [
-         (note: Note) => {
-            createdNote = note;
-         },
-      ];
-      note = new Note(filePath, [], onCreatedNote);
+      onNoteCreatedEmitter.on((note: Note) => {
+         createdNote = note;
+      });
+      note = new Note(filePath, [], onNoteCreatedEmitter);
       // @ts-ignore: created Note is created as part of side effect
       assertEquals((createdNote as Note).filePath, filePath);
       // @ts-ignore: created Note is created as part of side effect
