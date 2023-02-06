@@ -13,21 +13,27 @@ async function _main() {
 `);
    const notes = [];
    const linkManager = new LinkManager();
+
+   // Create a note created emitter
    const onNoteCreatedEmitter = new Emitter<Note>();
+
+   // Registers handlers at note creation
    onNoteCreatedEmitter.on(linkManager.registerNote.bind(linkManager));
 
+   // Get all notes
    const noteFilePaths = await findFilesRecursively(VAULT_DIR, {
       match: new RegExp(".*.md$"),
    });
 
-   const handlers = [linkManager.replaceWikiLinks.bind(linkManager)];
+   // Build the processing pipeline
+   const noteProcessHandlers = [linkManager.replaceWikiLinks.bind(linkManager)];
 
    // Create all notes
    for (const filePath of noteFilePaths) {
-      notes.push(new Note(filePath, handlers, onNoteCreatedEmitter));
+      notes.push(new Note(filePath, noteProcessHandlers, onNoteCreatedEmitter));
    }
 
-   // Process notes
+   // Process notes once all created
    for (const note of notes) {
       note.process();
    }
