@@ -1,19 +1,19 @@
 import { describe, it } from "https://deno.land/std@0.171.0/testing/bdd.ts";
 
 import { assertEquals } from "https://deno.land/std@0.171.0/testing/asserts.ts";
-import { findFilesRecursively } from "./utils.ts";
+import { findFilesRecursively } from "../lib/utils.ts";
 
 // import { Note } from "./types.ts";
 
 describe("Retrieveing the notes", () => {
    it("retrieves the notes recursively within a directory", async () => {
-      const files = await findFilesRecursively("./_testFolder");
+      const files = await findFilesRecursively("test/_testFolder");
       assertEquals(files.length, 5);
    });
 
    it("can take a regexp as an option and filter the files based on whether or not they match the regexp", async () => {
       const markdownRegexp = /.*\.md/;
-      const files = await findFilesRecursively("./_testFolder", {
+      const files = await findFilesRecursively("test/_testFolder", {
          match: markdownRegexp,
       });
       assertEquals(files.length, 4);

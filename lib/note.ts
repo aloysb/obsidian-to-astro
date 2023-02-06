@@ -1,26 +1,37 @@
+import { blogSchema } from "./schema.ts";
 import { parse } from "https://deno.land/std@0.171.0/encoding/yaml.ts";
+import { z } from "https://deno.land/x/zod@v3.16.1/mod.ts";
 export interface NoteProps {
   filePath: string;
 }
+export type Frontmatter = z.infer<typeof blogSchema>;
 
-type Frontmatter = {
-  title: string;
-  tags: string[];
-  created_at: Date;
-  last_modified_at: Date;
-  status: "idea" | "publish" | "draft";
-  slug: string;
-};
+/**
+ * Class representing the parsed version of a note.
+ */
 export class Note {
   readonly filePath: string;
   readonly rawFile: string;
   readonly frontmatter: Frontmatter | null;
+  private handlers: ((note: this) => void)[] = [];
 
-  constructor(filePath: string, onCreatedNote: (note: Note) => void) {
+  /**
+   * Create a note
+   * @param filePath the path of file
+   * @param handlers an array of handler to execute when processing the note
+   * @param onCreatedNote a hook to run a function on note creation
+   */
+  constructor(
+    filePath: string,
+    handlers: ((note: Note) => void)[] = [],
+    onCreatedNote: ((note: Note) => void)[] = [],
+  ) {
     this.filePath = filePath;
     this.rawFile = Deno.readTextFileSync(filePath);
     this.frontmatter = this.parseFrontmatter();
-    onCreatedNote(this);
+    this.handlers = handlers;
+    // On successful note creation, execute the lifecycle hooks
+    onCreatedNote.forEach((hook) => hook(this));
   }
   /**
    * Return the raw content of the note, as is.
@@ -53,7 +64,9 @@ export class Note {
   }
 
   /**
-   * Find and replace the wikilinks
-   * @private
+   * Process the note, as per handlers;
    */
+  public process() {
+    this.handlers.forEach((handler) => handler(this));
+  }
 }

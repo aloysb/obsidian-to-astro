@@ -15,6 +15,13 @@ type Options = {
   match: RegExp;
 };
 
+/**
+ * Given a directory, find all the files matching the options provided and return their file paths.
+ *
+ * @param directory the directory to search
+ * @param options options to filter the result. So far, the sole option is to provide a regexp to match.
+ * @returns anarray of filepath for the files matching the search options in the directory provided
+ */
 export async function findFilesRecursively(
   directory: string,
   options?: Options,
@@ -30,12 +37,8 @@ export async function findFilesRecursively(
       }
       files.push(`${directory}/${subdir.name}`);
     } else {
-      files.push(...await findFilesRecursively(subdirPath, options));
+      files.push(...(await findFilesRecursively(subdirPath, options)));
     }
-    // const parsedNote = await parseFileIntoNote(subdirPath);
-    // if (parsedNote) {
-    //    notes.push(parsedNote);
-    // }
   }
   return files;
 }
@@ -78,42 +81,3 @@ export async function findFilesRecursively(
 //     return null;
 //   }
 // }
-
-// deno-lint-ignore no-explicit-any
-export function replaceWikilinks(notes: any[]): any[] {
-  return notes.map((note) => {
-    const { content } = note;
-    const lines = content.split("\n");
-    note.content = lines
-      .map((line: string) => {
-        const regexp = /\[\[.+?\|?.*?\]\]/g;
-        const wikilinks = line.match(regexp);
-
-        if (!wikilinks) {
-          return line;
-        }
-        const newLine = line.replace(regexp, processLink);
-        return newLine;
-
-        function processLink(link: string): string {
-          const [file, title] = link.slice(2, -2).split("|");
-          const linkedNote = notes.find(
-            (note) => note.title === `${file}.md`,
-          );
-          if (!linkedNote) {
-            console.log(
-              `${note.filePath} has a link to '${file}' that we could not resolve. The link has been ignored.`,
-            );
-            const replace = `${title ?? file}`;
-            return replace;
-          }
-          const replace = `[${
-            title ?? file
-          }](./${linkedNote.frontmatter.slug})`;
-          return replace;
-        }
-      })
-      .join("\n");
-    return note;
-  });
-}
