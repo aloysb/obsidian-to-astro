@@ -25,7 +25,7 @@ async function _main() {
       match: new RegExp(".*.md$"),
    });
 
-   // Build the processing pipeline
+   // Note processing pipeline
    const noteProcessHandlers = [linkManager.replaceWikiLinks.bind(linkManager)];
 
    // Create all notes
