@@ -16,18 +16,13 @@ const flags = parse(Deno.args, {
   boolean: ["help", "publish"],
   string: ["source", "blog"],
 });
-if (
-  Deno.args.length === 1 && Deno.args[0] === "publish" ||
-  flags.publish || Deno.args.length === 0
-) {
-  await main();
-}
 
 if (
-  Deno.args.length === 1 && Deno.args[0] === "help" ||
-  flags.help || Deno.args.length === 0
+  Deno.args.includes("publish") ||
+  flags.publish
 ) {
-  console.log(Deno.args);
+  await main();
+} else {
   console.log(`
     Hey there! 
     This is how you use this tool:
@@ -46,11 +41,23 @@ if (
 }
 
 async function main() {
-  const configuration = Config.initialize({ type: "integrated" });
+  const isIntegrated = !flags.source || !flags.blog;
+
+  const configurationArguments = isIntegrated
+    ? { type: "integrated" } as const
+    : {
+      type: "cli",
+      values: {
+        sourceDir: flags.source as string,
+        blogDir: flags.blog as string,
+      },
+    } as const;
+
+  const { sourceDir, blogDir } = Config.initialize(configurationArguments);
 
   const shouldProceed = confirm(`Using the following directories:
-    - Blog: ${configuration.blogDir},
-    - Vault: ${configuration.sourceDir},
+    - Blog: ${blogDir},
+    - Vault: ${sourceDir},
     Do you want to proceed?
 `);
 
@@ -61,8 +68,8 @@ async function main() {
 
   try {
     prepareBackups(
-      VAULT_DIR,
-      BLOG_DIR,
+      sourceDir,
+      blogDir,
       join(Deno.env.get("HOME") ?? ".vault2blog/", "/.vault2blog/backups"),
     );
   } catch (e) {
@@ -82,7 +89,7 @@ async function main() {
   );
 
   // Get all notes
-  const noteFilePaths = await findFilesRecursively(VAULT_DIR, {
+  const noteFilePaths = await findFilesRecursively(sourceDir, {
     match: new RegExp(".*.md$"),
   });
 
@@ -97,13 +104,13 @@ async function main() {
   }
 
   // Prepare destination directory
-  prepareDestDirectory(BLOG_DIR);
+  prepareDestDirectory(blogDir);
 }
 
 //   try {
-//     Deno.removeSync(path.join(BLOG_DIR), { recursive: true });
+//     Deno.removeSync(path.join(blogDir), { recursive: true });
 //     await prepareDestDirectory();
-//     const notes = await getAllProcessedNotes(VAULT_DIR);
+//     const notes = await getAllProcessedNotes(sourceDir);
 //     await publishNotes(
 //       notes.filter(({ frontmatter }) => frontmatter.status === "publish"),
 //     );
@@ -117,7 +124,7 @@ async function main() {
 //   await Promise.all(
 //     notes.map((note) => {
 //       console.log(note);
-//       return Deno.writeTextFile(path.join(BLOG_DIR, note.title), note.publish);
+//       return Deno.writeTextFile(path.join(blogDir, note.title), note.publish);
 //     }),
 //   );
 // }
