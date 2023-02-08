@@ -10,5 +10,4 @@ status: publish
 slug: hello-world
 ---
 
-Hello world
-This wiki link does no exist [[fake link]]
+Hello world This wiki link does no exist [[fake link]]
