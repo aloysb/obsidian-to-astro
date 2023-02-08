@@ -8,12 +8,12 @@ import {
   it,
 } from "https://deno.land/std@0.173.0/testing/bdd.ts";
 
-import { Emitter } from "./eventEmitter.ts";
+import { Emitter } from "../lib/eventEmitter.ts";
 
 describe("Note class", () => {
-  let noteCreatedEmitter: Emitter<"note created", null>;
+  let noteCreatedEmitter: Emitter<null>;
   beforeEach(() => {
-    noteCreatedEmitter = new Emitter("note created");
+    noteCreatedEmitter = new Emitter();
   });
   it("should instantiate a new emitter", () => {
     assertExists(noteCreatedEmitter);

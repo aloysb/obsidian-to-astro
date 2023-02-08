@@ -1,26 +1,34 @@
 import { parse } from "https://deno.land/std@0.171.0/encoding/yaml.ts";
+import { z } from "https://deno.land/x/zod@v3.16.1/mod.ts";
+import { Emitter } from "./eventEmitter.ts";
+import { blogSchema } from "./schema.ts";
 export interface NoteProps {
   filePath: string;
 }
+export type Frontmatter = z.infer<typeof blogSchema>;
 
-type Frontmatter = {
-  title: string;
-  tags: string[];
-  created_at: Date;
-  last_modified_at: Date;
-  status: "idea" | "publish" | "draft";
-  slug: string;
-};
+/**
+ * Class representing the parsed version of a note.
+ */
 export class Note {
   readonly filePath: string;
   readonly rawFile: string;
   readonly frontmatter: Frontmatter | null;
 
-  constructor(filePath: string, onCreatedNote: (note: Note) => void) {
+  /**
+   * Create a note
+   * @param filePath the path of file
+   * @param handlers an array of handler to execute when processing the note
+   * @param onCreatedNote a hook to run a function on note creation
+   */
+  constructor(
+    filePath: string,
+    onNoteCreatedEmitter: Emitter<Note>,
+  ) {
     this.filePath = filePath;
     this.rawFile = Deno.readTextFileSync(filePath);
     this.frontmatter = this.parseFrontmatter();
-    onCreatedNote(this);
+    onNoteCreatedEmitter.emit(this);
   }
   /**
    * Return the raw content of the note, as is.
@@ -51,9 +59,4 @@ export class Note {
       return null;
     }
   }
-
-  /**
-   * Find and replace the wikilinks
-   * @private
-   */
 }

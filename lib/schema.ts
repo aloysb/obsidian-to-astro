@@ -6,7 +6,7 @@ export const blogSchema = z.object({
   tags: z.array(z.string()),
   created_at: z.date(),
   last_modified_at: z.date(),
-  published_at: z.date(),
-  lang: z.enum(["en-AU"]),
-  description: z.string().optional().nullable(),
+  published_at: z.date().optional(),
+  description: z.string(),
+  slug: z.string().optional(),
 });

@@ -1,5 +1,11 @@
 // import { Note } from "./types.ts";
 import { join } from "https://deno.land/std@0.171.0/path/mod.ts";
+import { crypto } from "https://deno.land/std@0.177.0/crypto/crypto.ts";
+import {
+  copySync,
+  emptyDirSync,
+} from "https://deno.land/std@0.177.0/fs/mod.ts";
+import * as logger from "https://deno.land/std@0.177.0/log/mod.ts";
 
 // export async function getAllProcessedNotes(directory: string): Promise<Note[]> {
 //    const notes: Note[] = await findNotesInDirectoryRecursively(directory);
@@ -15,6 +21,13 @@ type Options = {
   match: RegExp;
 };
 
+/**
+ * Given a directory, find all the files matching the options provided and return their file paths.
+ *
+ * @param directory the directory to search
+ * @param options options to filter the result. So far, the sole option is to provide a regexp to match.
+ * @returns an array of filepath for the files matching the search options in the directory provided
+ */
 export async function findFilesRecursively(
   directory: string,
   options?: Options,
@@ -30,14 +43,57 @@ export async function findFilesRecursively(
       }
       files.push(`${directory}/${subdir.name}`);
     } else {
-      files.push(...await findFilesRecursively(subdirPath, options));
+      files.push(...(await findFilesRecursively(subdirPath, options)));
     }
-    // const parsedNote = await parseFileIntoNote(subdirPath);
-    // if (parsedNote) {
-    //    notes.push(parsedNote);
-    // }
   }
   return files;
+}
+
+/**
+ * Prepare a backup of both the source and the destination folders
+ * @param sourceDir source dir filepath
+ * @param destinationDir  destination dir filepath
+ * @param backupDir the location of the backups
+ */
+export function prepareBackups(
+  sourceDir: string,
+  destinationDir: string,
+  backupDir: string,
+): string {
+  // Create a random backup dir
+  const uniqueBackupDir = join(
+    backupDir,
+    new Date().toDateString(),
+    crypto.randomUUID(),
+  );
+  prepareDestDirectory(uniqueBackupDir);
+
+  try {
+    copySync(sourceDir, join(uniqueBackupDir, "source"), { overwrite: true });
+    copySync(destinationDir, join(uniqueBackupDir, "destination"), {
+      overwrite: true,
+    });
+    logger.info(
+      `"Backup successful. \n Backup directory: ${uniqueBackupDir}`,
+    );
+    return uniqueBackupDir;
+  } catch (e) {
+    logger.error(`Failed to prepare backup: \n ${e}`);
+    throw new Error("Fail to prepare backups");
+  }
+}
+
+/**
+ * Prepare the destination directory:
+ * Empty the directory of all files or create a new directory at the given path
+ * @param dirPath the path of the directory to empty
+ */
+export function prepareDestDirectory(dirPath: string) {
+  try {
+    emptyDirSync(dirPath);
+  } catch {
+    Deno.mkdirSync(dirPath, { recursive: true });
+  }
 }
 
 // async function parseFileIntoNote(filePath:string): Promise<Note | null> {
@@ -78,42 +134,3 @@ export async function findFilesRecursively(
 //     return null;
 //   }
 // }
-
-// deno-lint-ignore no-explicit-any
-export function replaceWikilinks(notes: any[]): any[] {
-  return notes.map((note) => {
-    const { content } = note;
-    const lines = content.split("\n");
-    note.content = lines
-      .map((line: string) => {
-        const regexp = /\[\[.+?\|?.*?\]\]/g;
-        const wikilinks = line.match(regexp);
-
-        if (!wikilinks) {
-          return line;
-        }
-        const newLine = line.replace(regexp, processLink);
-        return newLine;
-
-        function processLink(link: string): string {
-          const [file, title] = link.slice(2, -2).split("|");
-          const linkedNote = notes.find(
-            (note) => note.title === `${file}.md`,
-          );
-          if (!linkedNote) {
-            console.log(
-              `${note.filePath} has a link to '${file}' that we could not resolve. The link has been ignored.`,
-            );
-            const replace = `${title ?? file}`;
-            return replace;
-          }
-          const replace = `[${
-            title ?? file
-          }](./${linkedNote.frontmatter.slug})`;
-          return replace;
-        }
-      })
-      .join("\n");
-    return note;
-  });
-}
