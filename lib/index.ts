@@ -1,6 +1,7 @@
+import { parse } from "https://deno.land/std@0.175.0/flags/mod.ts";
 import * as logger from "https://deno.land/std@0.177.0/log/mod.ts";
 import { join } from "https://deno.land/std@0.177.0/path/mod.ts";
-import { BLOG_DIR, VAULT_DIR } from "./config.ts";
+import { Config } from "./config.ts";
 
 import { Emitter } from "./eventEmitter.ts";
 import { LinkManager } from "./linkManager.ts";
@@ -11,12 +12,52 @@ import {
   prepareDestDirectory,
 } from "./utils.ts";
 
+const flags = parse(Deno.args, {
+  boolean: ["help", "publish"],
+  string: ["source", "blog"],
+});
+if (
+  Deno.args.length === 1 && Deno.args[0] === "publish" ||
+  flags.publish || Deno.args.length === 0
+) {
+  await main();
+}
+
+if (
+  Deno.args.length === 1 && Deno.args[0] === "help" ||
+  flags.help || Deno.args.length === 0
+) {
+  console.log(Deno.args);
+  console.log(`
+    Hey there! 
+    This is how you use this tool:
+    
+    [Integrated mode]: we handle the configuration for you.
+    Simply run: 'vault2blog publish'
+
+    [CLI mode]: you provide us with the source directory (your Obsidian vault) and your blog directory ("/my/astro/site/src/content/)
+    'vault2blog publish --source='/my/source/path' --blog='/my/blog/path'
+    
+    ☝️ Note that in CLI mode, you must provide both the source and the blog paths!
+
+    Thank you!
+    Alo.
+  `);
+}
+
 async function main() {
-  confirm(`Using the following directories:
-    - Blog: ${BLOG_DIR},
-    - Vault: ${VAULT_DIR},
+  const configuration = Config.initialize({ type: "integrated" });
+
+  const shouldProceed = confirm(`Using the following directories:
+    - Blog: ${configuration.blogDir},
+    - Vault: ${configuration.sourceDir},
     Do you want to proceed?
 `);
+
+  if (!shouldProceed) {
+    console.log("Cancelling. Not post published");
+    return;
+  }
 
   try {
     prepareBackups(
@@ -58,8 +99,6 @@ async function main() {
   // Prepare destination directory
   prepareDestDirectory(BLOG_DIR);
 }
-
-await main();
 
 //   try {
 //     Deno.removeSync(path.join(BLOG_DIR), { recursive: true });
