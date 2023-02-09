@@ -39,6 +39,7 @@ export const missingArgument = `
  * It is the main entry point that will run the right command depending on the user input
  */
 export class Cli {
+   flags;
   private constructor() {
   }
   /**
@@ -52,17 +53,41 @@ export class Cli {
       return;
     }
 
-    const flags = parse(args, {
+    self.flags = parse(args, {
       boolean: ["help", "publish"],
       string: ["source", "blog"],
     });
 
-    if (flags.help) {
+    if (self.flags.help) {
       self.displayWelcomeMessage();
       return;
     }
 
-    if (flags.publish) {
+    if (self.flags.publish) {
+      try {
+         self.initializeConfiguration(self.flags)
+         await self.publish();
+      } catch(e){
+         console.error(e);
+      }
+    }
+  }
+
+  /**
+   * Simply display the welcome/help message!
+   */
+  private displayWelcomeMessage() {
+    console.log(welcomeMessage);
+  }
+
+  /**
+   * Attempt to initialize a configuration
+   * 
+   * @param flags the parse flags
+   * @returns Configuration
+   */
+  // deno-lint-ignore no-explicit-any: FIXME there should be a proper type here :)
+  private initializeConfiguration(flags: any){
       if (flags.source && flags.blog) {
         Config.initialize({
           type: "cli",
@@ -75,17 +100,7 @@ export class Cli {
         Config.initialize({ type: "integrated" });
       }
 
-      await self.publish();
-    }
-
-    return;
-  }
-
-  /**
-   * Simply display the welcome/help message!
-   */
-  private displayWelcomeMessage() {
-    console.log(welcomeMessage);
+      return Config.retrieve()
   }
 
   /**
