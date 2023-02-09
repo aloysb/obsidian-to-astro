@@ -56,13 +56,13 @@ describe("cli", () => {
     assertSpyCallArgs(consoleSpy, 0, [missingArgument]);
     assertSpyCallArgs(consoleSpy, 1, [missingArgument]);
   });
-});
-it("should runs the configuration in integrated mode if neither the source of the blog path are provided", () => {
-  const initializeSpy = spy(Config, "initialize");
-  const promptStub = stub(window, "confirm", () => false);
-  Cli.handleCommand(["--publish"]);
-  // @ts-ignore: I can't figure out the Spy generic
-  assertSpyCall(initializeSpy, 0, [{ type: "integrated" }]);
-  initializeSpy.restore();
-  promptStub.restore();
+  it("should runs the configuration in integrated mode if neither the source of the blog path are provided", () => {
+    const initializeSpy = spy(Config, "initialize");
+    const promptStub = stub(window, "confirm", () => false);
+    Cli.handleCommand(["--publish"]);
+    // @ts-ignore: I can't figure out the Spy generic
+    assertSpyCall(initializeSpy, 0, [{ type: "integrated" }]);
+    initializeSpy.restore();
+    promptStub.restore();
+  });
 });
