@@ -1,5 +1,3 @@
-import * as logger from "https://deno.land/std@0.177.0/log/mod.ts";
-
 import {
   findFilesRecursively,
   prepareBackups,
@@ -10,8 +8,7 @@ import { Config } from "./config.ts";
 import { Emitter } from "./eventEmitter.ts";
 import { LinkManager } from "./linkManager.ts";
 import { Note } from "./note.ts";
-import { join } from "https://deno.land/std@0.177.0/path/mod.ts";
-import { parse } from "https://deno.land/std@0.175.0/flags/mod.ts";
+import { join, logger, parse } from "./deps.ts";
 
 export const welcomeMessage = `
     Hey there! 
@@ -39,7 +36,9 @@ export const missingArgument = `
  * It is the main entry point that will run the right command depending on the user input
  */
 export class Cli {
-   flags;
+  // deno-lint-ignore no-explicit-any
+  flags: any;
+
   private constructor() {
   }
   /**
@@ -65,10 +64,10 @@ export class Cli {
 
     if (self.flags.publish) {
       try {
-         self.initializeConfiguration(self.flags)
-         await self.publish();
-      } catch(e){
-         console.error(e);
+        self.initializeConfiguration(self.flags);
+        await self.publish();
+      } catch (e) {
+        console.error(e);
       }
     }
   }
@@ -82,25 +81,25 @@ export class Cli {
 
   /**
    * Attempt to initialize a configuration
-   * 
+   *
    * @param flags the parse flags
    * @returns Configuration
    */
-  // deno-lint-ignore no-explicit-any: FIXME there should be a proper type here :)
-  private initializeConfiguration(flags: any){
-      if (flags.source && flags.blog) {
-        Config.initialize({
-          type: "cli",
-          values: { sourceDir: flags.source, blogDir: flags.blog },
-        });
-      } else if (flags.source || flags.blog) {
-        console.log(missingArgument);
-        return;
-      } else {
-        Config.initialize({ type: "integrated" });
-      }
+  // deno-lint-ignore no-explicit-any
+  private initializeConfiguration(flags: any) {
+    if (flags.source && flags.blog) {
+      Config.initialize({
+        type: "cli",
+        values: { sourceDir: flags.source, blogDir: flags.blog },
+      });
+    } else if (flags.source || flags.blog) {
+      console.log(missingArgument);
+      Deno.exit(1);
+    } else {
+      Config.initialize({ type: "integrated" });
+    }
 
-      return Config.retrieve()
+    return Config.retrieve();
   }
 
   /**

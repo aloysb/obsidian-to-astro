@@ -1,11 +1,6 @@
-import {
-  beforeEach,
-  describe,
-  it,
-} from "https://deno.land/std@0.173.0/testing/bdd.ts";
+import { assertEquals, beforeEach, describe, it } from "./deps.ts";
 import { Frontmatter, Note } from "../lib/note.ts";
 
-import { assertEquals } from "https://deno.land/std@0.173.0/testing/asserts.ts";
 import { Emitter } from "../lib/eventEmitter.ts";
 
 describe("Note class", () => {

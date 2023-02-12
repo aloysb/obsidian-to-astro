@@ -1,11 +1,5 @@
 // import { Note } from "./types.ts";
-import { join } from "https://deno.land/std@0.171.0/path/mod.ts";
-import { crypto } from "https://deno.land/std@0.177.0/crypto/crypto.ts";
-import {
-  copySync,
-  emptyDirSync,
-} from "https://deno.land/std@0.177.0/fs/mod.ts";
-import * as logger from "https://deno.land/std@0.177.0/log/mod.ts";
+import { copySync, crypto, emptyDirSync, join, logger } from "./deps.ts";
 
 // export async function getAllProcessedNotes(directory: string): Promise<Note[]> {
 //    const notes: Note[] = await findNotesInDirectoryRecursively(directory);

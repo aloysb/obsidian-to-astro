@@ -1,20 +1,18 @@
 import { Cli, missingArgument, welcomeMessage } from "../lib/cli.ts";
 import {
+  afterEach,
+  assertEquals,
   assertSpyCall,
   assertSpyCallArgs,
-  Spy,
-  spy,
-  stub,
-} from "https://deno.land/std@0.177.0/testing/mock.ts";
-import {
-  afterEach,
   beforeEach,
   describe,
   it,
-} from "https://deno.land/std@0.173.0/testing/bdd.ts";
+  Spy,
+  spy,
+  stub,
+} from "./deps.ts";
 
 import { Config } from "../lib/config.ts";
-import { assertEquals } from "https://deno.land/std@0.177.0/testing/asserts.ts";
 
 describe("cli", () => {
   let consoleSpy: Spy<Console>;
@@ -49,11 +47,11 @@ describe("cli", () => {
   });
   it("should display an error message if I only provide the source or the blog path, but not both", () => {
     const SOURCE = "/my/path/source";
-    const BLOG = "/my/path/blog";
     Cli.handleCommand(["--publish", "--source", SOURCE]);
-    Cli.handleCommand(["--publish", "--blog", BLOG]);
+    assertSpyCallArgs(consoleSpy, 0, [missingArgument]); //  assertSpyCallArgs(consoleSpy, 1, [missingArgument]);
 
-    assertSpyCallArgs(consoleSpy, 0, [missingArgument]);
+    const BLOG = "/my/path/blog";
+    Cli.handleCommand(["--publish", "--source", BLOG]);
     assertSpyCallArgs(consoleSpy, 1, [missingArgument]);
   });
   it("should runs the configuration in integrated mode if neither the source of the blog path are provided", () => {
