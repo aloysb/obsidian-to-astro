@@ -1,12 +1,12 @@
 import {
   afterEach,
+  assertEquals,
   beforeEach,
   describe,
   it,
-} from "https://deno.land/std@0.171.0/testing/bdd.ts";
+  join,
+} from "./deps.ts";
 
-import { assertEquals } from "https://deno.land/std@0.171.0/testing/asserts.ts";
-import { join } from "https://deno.land/std@0.177.0/path/mod.ts";
 import {
   findFilesRecursively,
   prepareBackups,

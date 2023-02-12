@@ -1,12 +1,10 @@
 import {
   assertEquals,
   assertExists,
-} from "https://deno.land/std@0.173.0/testing/asserts.ts";
-import {
   beforeEach,
   describe,
   it,
-} from "https://deno.land/std@0.173.0/testing/bdd.ts";
+} from "./deps.ts";
 
 import { Emitter } from "../lib/eventEmitter.ts";
 
