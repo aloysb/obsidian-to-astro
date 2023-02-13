@@ -35,18 +35,16 @@ export class Cli {
   public static async handleCommand(args?: typeof Deno.args) {
     const self = new Cli();
 
-    if (!args) {
-      new HelpCommand().execute();
-      Deno.exit(0);
-      return;
-    }
-
-    self.flags = parse(args, {
+    self.flags = parse(args ?? ['--help'], {
       boolean: ["help", "publish"],
       string: ["source", "blog"],
-    });
+      alias: {['help']:'h'}
+    })
 
-    if (self.flags.help) {
+    console.error(args)
+    console.error((self.flags))
+
+    if (self.flags.help || self.flags.length === 0) {
       new HelpCommand().execute();
       Deno.exit(0);
     }

@@ -39,7 +39,10 @@ describe("cli", () => {
     Cli.handleCommand(["--help"]);
     assertSpyCallArgs(consoleSpy, 0, [welcomeMessage]);
   });
-
+  it("displays the welcome/help message if the help flag alias (-h) is set to true", () => {
+    Cli.handleCommand(["-h"]);
+    assertSpyCallArgs(consoleSpy, 0, [welcomeMessage]);
+  })
   it("should run the configuration in manual mode if a source and a destination directories are provided", () => {
     const promptStub = stub(window, "confirm", () => false);
     const SOURCE = "/my/path/source";
