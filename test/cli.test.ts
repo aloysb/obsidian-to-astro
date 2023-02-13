@@ -1,4 +1,4 @@
-import { Cli, missingArgument, welcomeMessage } from "../lib/cli.ts";
+import { Cli, missingArgument } from "../lib/cli.ts";
 import {
   afterEach,
   assertEquals,
@@ -7,21 +7,27 @@ import {
   beforeEach,
   describe,
   it,
+  returnsNext,
   Spy,
   spy,
+  Stub,
   stub,
 } from "./deps.ts";
 
 import { Config } from "../lib/config.ts";
+import { welcomeMessage } from "../lib/commands/help.ts";
 
 describe("cli", () => {
   let consoleSpy: Spy<Console>;
+  let exitStub: Stub<typeof Deno, [code?: number | undefined], never>;
   beforeEach(() => {
     Deno.env.set("ENV_MODE", "TEST");
+    exitStub = stub(Deno, "exit", returnsNext(new Array<never>(30)));
     consoleSpy = spy(console, "log");
   });
   afterEach(() => {
     consoleSpy.restore();
+    exitStub.restore();
   });
 
   it("displays a help/welcome message by default", () => {
@@ -45,14 +51,16 @@ describe("cli", () => {
 
     promptStub.restore();
   });
-  it("should display an error message if I only provide the source or the blog path, but not both", () => {
+  it("should display an error message if I only provide the source", () => {
     const SOURCE = "/my/path/source";
     Cli.handleCommand(["--publish", "--source", SOURCE]);
     assertSpyCallArgs(consoleSpy, 0, [missingArgument]); //  assertSpyCallArgs(consoleSpy, 1, [missingArgument]);
+  });
 
+  it("should display an error message if I only provide the destination (blog", () => {
     const BLOG = "/my/path/blog";
-    Cli.handleCommand(["--publish", "--source", BLOG]);
-    assertSpyCallArgs(consoleSpy, 1, [missingArgument]);
+    Cli.handleCommand(["--publish", "--blog", BLOG]);
+    assertSpyCallArgs(consoleSpy, 0, [missingArgument]);
   });
   it("should runs the configuration in integrated mode if neither the source of the blog path are provided", () => {
     const initializeSpy = spy(Config, "initialize");

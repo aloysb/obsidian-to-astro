@@ -9,23 +9,11 @@ import { Emitter } from "./eventEmitter.ts";
 import { LinkManager } from "./linkManager.ts";
 import { Note } from "./note.ts";
 import { join, logger, parse } from "./deps.ts";
+import { HelpCommand } from "./commands/help.ts";
 
-export const welcomeMessage = `
-    Hey there! 
-    This is how you use this tool:
-    
-    [Integrated mode]: we handle the configuration for you.
-    Simply run: 'vault2blog publish'
-
-    [CLI mode]: you provide us with the source directory (your Obsidian vault) and your blog directory ("/my/astro/site/src/content/)
-    'vault2blog publish --source='/my/source/path' --blog='/my/blog/path'
-    
-    ☝️ Note that in CLI mode, you must provide both the source and the blog paths!
-
-    Thank you!
-    Alo.
-  `;
-
+export interface Command<T> {
+  execute(arg: T): void;
+}
 export const missingArgument = `
    It looks like you have set the --source OR --blog argument, but not both.
    If you wish to use the manual mode, you must provide both.
@@ -48,7 +36,8 @@ export class Cli {
     const self = new Cli();
 
     if (!args) {
-      self.displayWelcomeMessage();
+      new HelpCommand().execute();
+      Deno.exit(0);
       return;
     }
 
@@ -58,8 +47,8 @@ export class Cli {
     });
 
     if (self.flags.help) {
-      self.displayWelcomeMessage();
-      return;
+      new HelpCommand().execute();
+      Deno.exit(0);
     }
 
     if (self.flags.publish) {
@@ -70,13 +59,6 @@ export class Cli {
         console.error(e);
       }
     }
-  }
-
-  /**
-   * Simply display the welcome/help message!
-   */
-  private displayWelcomeMessage() {
-    console.log(welcomeMessage);
   }
 
   /**

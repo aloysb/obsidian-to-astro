@@ -1,6 +1,11 @@
 import { Cli } from "./cli.ts";
+import { parse } from "./deps.ts";
 
 await Cli.handleCommand(Deno.args);
+
+console.log(
+  parse(Deno.args, { alias: { "help": ["h", "help"], boolean: "help" } }),
+);
 
 //   try {
 //     Deno.removeSync(path.join(blogDir), { recursive: true });
