@@ -1,5 +1,4 @@
-import { parse } from "https://deno.land/std@0.171.0/encoding/yaml.ts";
-import { z } from "https://deno.land/x/zod@v3.16.1/mod.ts";
+import { parseYAML, z } from "./deps.ts";
 import { Emitter } from "./eventEmitter.ts";
 import { blogSchema } from "./schema.ts";
 export interface NoteProps {
@@ -49,7 +48,7 @@ export class Note {
   private parseFrontmatter(): Frontmatter | null {
     try {
       const rawFrontmatter = this.rawFile.split("---")[1] as string;
-      const frontmatter = parse(rawFrontmatter) as Frontmatter;
+      const frontmatter = parseYAML(rawFrontmatter) as Frontmatter;
       return {
         ...frontmatter,
         last_modified_at: new Date(frontmatter.last_modified_at),

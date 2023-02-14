@@ -1,10 +1,5 @@
-import {
-  beforeEach,
-  describe,
-  it,
-} from "https://deno.land/std@0.175.0/testing/bdd.ts";
+import { assertEquals, beforeEach, describe, it } from "./deps.ts";
 
-import { assertEquals } from "https://deno.land/std@0.171.0/testing/asserts.ts";
 import { Emitter } from "../lib/eventEmitter.ts";
 import { LinkManager } from "../lib/linkManager.ts";
 import { Note } from "../lib/note.ts";
