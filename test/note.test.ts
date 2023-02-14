@@ -5,9 +5,9 @@ import { Emitter } from "../lib/eventEmitter.ts";
 
 describe("Note class", () => {
   let note: Note;
-  const filePath = "test/_testFolder/note1.md";
+  const filePath = "test/__fixtures__/source/note1.md";
   const filePathWithoutFrontmatter =
-    "test/_testFolder/noteWithoutFrontmatter.md";
+    "test/__fixtures__/source/noteWithoutFrontmatter.md";
   const fileContent = Deno.readTextFileSync(filePath);
   const onNoteCreatedEmitter = new Emitter<Note>();
   beforeEach(() => {

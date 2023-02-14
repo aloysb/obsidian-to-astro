@@ -17,16 +17,16 @@ import {
 
 describe("Retrieveing the notes", () => {
   it("retrieves the notes recursively within a directory", async () => {
-    const files = await findFilesRecursively("test/_testFolder");
-    assertEquals(files.length, 5);
+    const files = await findFilesRecursively("test/__fixtures__/source");
+    assertEquals(files.length, 6);
   });
 
   it("can take a regexp as an option and filter the files based on whether or not they match the regexp", async () => {
     const markdownRegexp = /.*\.md/;
-    const files = await findFilesRecursively("test/_testFolder", {
+    const files = await findFilesRecursively("test/__fixtures__/source", {
       match: markdownRegexp,
     });
-    assertEquals(files.length, 4);
+    assertEquals(files.length, 5);
   });
 });
 
