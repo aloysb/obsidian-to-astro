@@ -17,7 +17,11 @@ describe("linkManager", () => {
   beforeEach(async () => {
     linkManager = new LinkManager();
     onNoteCreatedEmitter.on(linkManager.registerNote.bind(linkManager));
-    for (const filePath of await findFilesRecursively("test/_testFolder")) {
+    for (
+      const filePath of await findFilesRecursively("test/__fixtures__/source", {
+        match: /.*\.md/,
+      })
+    ) {
       new Note(filePath, onNoteCreatedEmitter);
     }
   });

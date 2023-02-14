@@ -40,7 +40,7 @@ if (
   `);
 }
 
-async function main() {
+export async function main() {
   const isIntegrated = !flags.source || !flags.blog;
 
   const configurationArguments = isIntegrated

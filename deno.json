@@ -5,7 +5,7 @@
   "fmt": {
     "files": {
       "exclude": [
-        "_testFolder/"
+        "__*__"
       ]
     }
   }
