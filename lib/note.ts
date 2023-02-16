@@ -1,7 +1,9 @@
-import { parse } from "https://deno.land/std@0.171.0/encoding/yaml.ts";
-import { z } from "https://deno.land/x/zod@v3.16.1/mod.ts";
+import { parseYAML, z } from "./deps.ts";
+
 import { Emitter } from "./eventEmitter.ts";
+import { LinkManager } from "./linkManager.ts";
 import { blogSchema } from "./schema.ts";
+
 export interface NoteProps {
   filePath: string;
 }
@@ -12,8 +14,10 @@ export type Frontmatter = z.infer<typeof blogSchema>;
  */
 export class Note {
   readonly filePath: string;
-  readonly rawFile: string;
+  readonly originalFile: string;
   readonly frontmatter: Frontmatter | null;
+  readonly originalFrontmatter: string | null;
+  private readonly linkManager: LinkManager;
 
   /**
    * Create a note
@@ -24,22 +28,37 @@ export class Note {
   constructor(
     filePath: string,
     onNoteCreatedEmitter: Emitter<Note>,
+    linkManager: LinkManager,
   ) {
     this.filePath = filePath;
-    this.rawFile = Deno.readTextFileSync(filePath);
+    this.originalFile = Deno.readTextFileSync(filePath);
     this.frontmatter = this.parseFrontmatter();
+    this.originalFrontmatter = this.getRawFrontMatter();
+    this.linkManager = linkManager;
     onNoteCreatedEmitter.emit(this);
   }
   /**
    * Return the raw content of the note, as is.
    * This does not include frontmatter.
    */
-  public get rawContent(): string | null {
+  public get originalContent(): string | null {
     try {
-      return this.rawFile.split("---")[2].trim();
+      return this.originalFile.split("---")[2].trim();
     } catch {
       return null;
     }
+  }
+
+  public processedFile(): string | null {
+    if (!this.parseFrontmatter()) {
+      return null;
+    }
+    const frontmatter = this.originalFrontmatter;
+    const content = this.linkManager.replaceWikiLinks(this);
+    return `---
+${frontmatter}
+--- 
+${content}`;
   }
 
   /**
@@ -48,8 +67,8 @@ export class Note {
    */
   private parseFrontmatter(): Frontmatter | null {
     try {
-      const rawFrontmatter = this.rawFile.split("---")[1] as string;
-      const frontmatter = parse(rawFrontmatter) as Frontmatter;
+      const rawFrontmatter = this.getRawFrontMatter();
+      const frontmatter = parseYAML(rawFrontmatter) as Frontmatter;
       return {
         ...frontmatter,
         last_modified_at: new Date(frontmatter.last_modified_at),
@@ -58,5 +77,9 @@ export class Note {
     } catch {
       return null;
     }
+  }
+
+  private getRawFrontMatter() {
+    return this.originalFile.split("---")[1] as string;
   }
 }

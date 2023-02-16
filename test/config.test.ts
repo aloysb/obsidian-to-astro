@@ -1,10 +1,4 @@
-import {
-  afterEach,
-  describe,
-  it,
-} from "https://deno.land/std@0.175.0/testing/bdd.ts";
-import { assertEquals } from "https://deno.land/std@0.177.0/testing/asserts.ts";
-import { stub } from "https://deno.land/std@0.177.0/testing/mock.ts";
+import { afterEach, assertEquals, describe, it, stub } from "./deps.ts";
 
 import { Config } from "../lib/config.ts";
 

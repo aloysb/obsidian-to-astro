@@ -1,11 +1,7 @@
 // import { Note } from "./types.ts";
-import { join } from "https://deno.land/std@0.171.0/path/mod.ts";
-import { crypto } from "https://deno.land/std@0.177.0/crypto/crypto.ts";
-import {
-  copySync,
-  emptyDirSync,
-} from "https://deno.land/std@0.177.0/fs/mod.ts";
-import * as logger from "https://deno.land/std@0.177.0/log/mod.ts";
+import { copySync, crypto, emptyDirSync, join, logger } from "./deps.ts";
+
+import { Note } from "./note.ts";
 
 // export async function getAllProcessedNotes(directory: string): Promise<Note[]> {
 //    const notes: Note[] = await findNotesInDirectoryRecursively(directory);
@@ -60,6 +56,7 @@ export function prepareBackups(
   destinationDir: string,
   backupDir: string,
 ): string {
+  console.log(backupDir);
   // Create a random backup dir
   const uniqueBackupDir = join(
     backupDir,
@@ -96,41 +93,17 @@ export function prepareDestDirectory(dirPath: string) {
   }
 }
 
-// async function parseFileIntoNote(filePath:string): Promise<Note | null> {
-//    let content: string;
-//    try {
-//       content = await Deno.readTextFile(filePath);
-//    } catch (e) {
-//       console.error(e);
-//       return null;
-//    }
-
-//   try {
-//     const rawFrontmatter = parse(content.split("---")[1]) as Frontmatter;
-//     const rawContent = content.split("---")[2] as string;
-//     const frontmatter = {
-//       ...rawFrontmatter,
-//       created_at: new Date(rawFrontmatter.created_at),
-//       last_modified_at: new Date(rawFrontmatter.last_modified_at),
-//       description: rawContent.substring(0, 400).split(".").join("\n"),
-//       slug: rawFrontmatter?.slug ??
-//         rawFrontmatter.title.split(" ").join("-").toLowerCase(),
-//     };
-//     return {
-//       title: basename(filePath),
-//       filePath,
-//       content,
-//       publish: "---\n" + stringify(frontmatter) + "---\n" + rawContent,
-//       frontmatter,
-//     };
-//   } catch (_e) {
-//     console.warn(
-//       `${
-//         basename(
-//           filePath,
-//         )
-//       } doesn't have a frontmatter and won't be published.`,
-//     );
-//     return null;
-//   }
-// }
+export function publishNotes(notes: Note[], dirPath: string) {
+  notes.forEach((note) => {
+    const contentToPublish = note.processedFile();
+    if (!contentToPublish) {
+      return;
+    }
+    let slug = note.frontmatter?.slug;
+    if (!slug) {
+      slug = note.frontmatter?.title?.toLowerCase().replace(/ /g, "-");
+      return;
+    }
+    Deno.writeTextFileSync(join(dirPath, `${slug}.md`), contentToPublish);
+  });
+}
