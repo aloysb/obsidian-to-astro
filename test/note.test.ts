@@ -17,14 +17,13 @@ It contains wiki link does no exist [[fake link]] an wiki links that exists like
 this one [[good link|under an alias!]]`;
 
 const NOTE_PROCESSED_CONTENT = `---
-
 title: hello world
-tags: 
-   - hello
-   - world
-created_at: 2023-01-01 12:00
-description: ""
-last_modified_at: 2023-01-01 18:00
+tags:
+  - hello
+  - world
+created_at: 2023-01-01T02:00:00.000Z
+description: ''
+last_modified_at: 2023-01-01T08:00:00.000Z
 status: publish
 slug: hello-world
 
