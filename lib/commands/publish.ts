@@ -67,7 +67,6 @@ export class PublishCommand implements Command<never> {
 
     // Prepare destination directory
     prepareDestDirectory(blogDir);
-    console.log("HERE")
 
     // Copy notes to destination directory
     publishNotes(notes, blogDir);

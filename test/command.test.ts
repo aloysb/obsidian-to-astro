@@ -55,7 +55,6 @@ describe("CLI commands", () => {
         await new PublishCommand().execute({ sourceDir, blogDir, backupDir });
         const blogDirResult = await findFilesRecursively(blogDir);
         console.log(blogDirResult);
-        console.log("HERE");
         assertEquals(blogDirResult.length, 4);
       } finally {
         Deno.removeSync(backupDir, { recursive: true });

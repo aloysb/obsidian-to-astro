@@ -109,9 +109,8 @@ describe("Note class", () => {
     assertEquals(note.processedFile(), NOTE_PROCESSED_CONTENT);
   });
 
+  //   it("should create a slug out of the title if no slug is provided",() => {
+  //       // TODO
 
-//   it("should create a slug out of the title if no slug is provided",() => {
-//       // TODO
-
-//   })
+  //   })
 });
