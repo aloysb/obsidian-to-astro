@@ -1,20 +1,27 @@
 const homedir = Deno.env.get("HOME");
 const CONFIG_PATH = `${homedir}/.vault2blog/configuration.json`;
+const DEFAULT_BACKUP_DIR = `${homedir}/.vault2blog/backups`;
 
 type ConfigType = {
   type: "cli";
-  values: { sourceDir: string; blogDir: string };
+  values: { sourceDir: string; blogDir: string; backupDir?: string };
 } | { type: "integrated"; path?: string };
 export class Config {
   private static instance: Config;
   private readonly _sourceDir: string;
   private readonly _blogDir: string;
+  private readonly _backupDir: string;
 
   private constructor(
-    { sourceDir, blogDir }: { sourceDir: string; blogDir: string },
+    { sourceDir, blogDir, backupDir }: {
+      sourceDir: string;
+      blogDir: string;
+      backupDir: string;
+    },
   ) {
     this._blogDir = blogDir;
     this._sourceDir = sourceDir;
+    this._backupDir = backupDir;
   }
 
   /**
@@ -31,6 +38,7 @@ export class Config {
       this.instance = new Config({
         sourceDir: config.values.sourceDir,
         blogDir: config.values.blogDir,
+        backupDir: config.values.backupDir ?? DEFAULT_BACKUP_DIR,
       });
     }
 
@@ -39,8 +47,8 @@ export class Config {
       try {
         const configuration = Deno.readTextFileSync(configPath);
         try {
-          const { blogDir, sourceDir } = JSON.parse(configuration);
-          this.instance = new Config({ blogDir, sourceDir });
+          const { blogDir, sourceDir, backupDir } = JSON.parse(configuration);
+          this.instance = new Config({ blogDir, sourceDir, backupDir });
         } catch (e) {
           console.error(
             "We found your configuration but could not parse it. It seems that the format is wrong.",
@@ -64,11 +72,14 @@ export class Config {
         const blogDir = prompt(
           "Please provide the blog content directory. If using Astro, this would be inside /content",
         ) ?? "";
+        const backupDir = prompt(
+          "(Optional) Please provide the backup directory. If left blank, we will use our default backup directory in $HOME/.vault2blog/backups.",
+        ) ?? DEFAULT_BACKUP_DIR;
 
         // Create the configuration file
-        const configuration = JSON.stringify({ sourceDir, blogDir });
+        const configuration = JSON.stringify({ sourceDir, blogDir, backupDir });
         Deno.writeTextFileSync(configPath, configuration, { create: true });
-        this.instance = new Config({ blogDir, sourceDir });
+        this.instance = new Config({ blogDir, sourceDir, backupDir });
 
         // Remove the testing files if testing
         if (isTesting) {
@@ -105,6 +116,13 @@ export class Config {
    */
   get blogDir() {
     return this._blogDir;
+  }
+
+  /**
+   * Get the blog dir path
+   */
+  get backupDir() {
+    return this._backupDir;
   }
 
   /**

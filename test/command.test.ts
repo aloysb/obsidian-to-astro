@@ -1,7 +1,6 @@
 import { HelpCommand, welcomeMessage } from "../lib/commands/help.ts";
-import { PublishCommand } from "../lib/commands/publish.ts";
-import { prepareBackups } from "../lib/utils.ts";
 import {
+  assertEquals,
   assertSpyCall,
   assertSpyCallArgs,
   beforeAll,
@@ -10,6 +9,9 @@ import {
   spy,
   stub,
 } from "./deps.ts";
+import { findFilesRecursively, prepareBackups } from "../lib/utils.ts";
+
+import { PublishCommand } from "../lib/commands/publish.ts";
 
 describe("CLI commands", () => {
   describe("help", () => {
@@ -29,14 +31,35 @@ describe("CLI commands", () => {
     });
     it("should do a backup", () => {
       const confirmStub = stub(window, "confirm", () => true);
+      const backupDir = Deno.makeTempDirSync();
       try {
         const backupSpy = spy(prepareBackups);
         const sourceDir = "my/path/to/source";
         const blogDir = "my/path/to/blog";
-        new PublishCommand().execute({ sourceDir, blogDir });
+        new PublishCommand().execute({ sourceDir, blogDir, backupDir });
         assertSpyCall(backupSpy, 1);
       } catch (_e) {
         /* Do nothing */
+        confirmStub.restore();
+      } finally {
+        Deno.removeSync(backupDir, { recursive: true });
+      }
+    });
+
+    it("should copy the processed notes accross", async () => {
+      const confirmStub = stub(window, "confirm", () => true);
+      const backupDir = Deno.makeTempDirSync();
+      const blogDir = Deno.makeTempDirSync();
+      try {
+        const sourceDir = "./test/__fixtures__/source";
+        await new PublishCommand().execute({ sourceDir, blogDir, backupDir });
+        const blogDirResult = await findFilesRecursively(blogDir);
+        console.log(blogDirResult);
+        console.log("HERE");
+        assertEquals(blogDirResult.length, 4);
+      } finally {
+        Deno.removeSync(backupDir, { recursive: true });
+        Deno.removeSync(blogDir, { recursive: true });
         confirmStub.restore();
       }
     });

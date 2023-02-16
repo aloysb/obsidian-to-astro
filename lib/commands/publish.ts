@@ -1,25 +1,28 @@
-import { Command } from "../cli.ts";
-import { Config } from "../config.ts";
-import { join, logger } from "../deps.ts";
-import { Emitter } from "../eventEmitter.ts";
-import { LinkManager } from "../linkManager.ts";
-import { Note } from "../note.ts";
 import {
   findFilesRecursively,
   prepareBackups,
   prepareDestDirectory,
+  publishNotes,
 } from "../utils.ts";
+
+import { Command } from "../cli.ts";
+import { Config } from "../config.ts";
+import { Emitter } from "../eventEmitter.ts";
+import { LinkManager } from "../linkManager.ts";
+import { Note } from "../note.ts";
+import { logger } from "../deps.ts";
 
 export class PublishCommand implements Command<never> {
   public async execute(
-    { sourceDir, blogDir }: Pick<
+    { sourceDir, blogDir, backupDir }: Pick<
       ReturnType<typeof Config.retrieve>,
-      "blogDir" | "sourceDir"
+      "blogDir" | "sourceDir" | "backupDir"
     >,
   ) {
     const shouldProceed = confirm(`Using the following directories:
     - Blog: ${blogDir},
     - Vault: ${sourceDir},
+    - Backup: ${backupDir}
     Do you want to proceed?
 `);
 
@@ -27,11 +30,12 @@ export class PublishCommand implements Command<never> {
       console.log("Cancelling. Not post published");
       return;
     }
+
     try {
       prepareBackups(
         sourceDir,
         blogDir,
-        join(Deno.env.get("HOME") ?? ".vault2blog/", "/.vault2blog/backups"),
+        backupDir,
       );
     } catch (e) {
       logger.error(e);
@@ -58,15 +62,14 @@ export class PublishCommand implements Command<never> {
 
     // Create all notes
     for (const filePath of noteFilePaths) {
-      notes.push(new Note(filePath, onNoteCreatedEmitter));
-    }
-
-    // Process notes once all created
-    for (const note of notes) {
-      linkManager.replaceWikiLinks(note);
+      notes.push(new Note(filePath, onNoteCreatedEmitter, linkManager));
     }
 
     // Prepare destination directory
     prepareDestDirectory(blogDir);
+    console.log("HERE")
+
+    // Copy notes to destination directory
+    publishNotes(notes, blogDir);
   }
 }

@@ -10,6 +10,6 @@ status: publish
 slug: nested-note
 ---
 
-⚠️ Do not delete me
+Do not delete me
 
 This is a fake nested note.

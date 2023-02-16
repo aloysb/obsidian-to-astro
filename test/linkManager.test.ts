@@ -17,7 +17,7 @@ describe("linkManager", () => {
         match: /.*\.md/,
       })
     ) {
-      new Note(filePath, onNoteCreatedEmitter);
+      new Note(filePath, onNoteCreatedEmitter, linkManager);
     }
   });
 

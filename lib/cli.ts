@@ -1,6 +1,6 @@
+import { Config } from "./config.ts";
 import { HelpCommand } from "./commands/help.ts";
 import { PublishCommand } from "./commands/publish.ts";
-import { Config } from "./config.ts";
 import { parse } from "./deps.ts";
 
 export interface Command<T> {
@@ -29,10 +29,13 @@ export class Cli {
       string: ["source", "blog"],
       alias: { ["help"]: "h" },
     });
+    const hasNoArgs = Object.values(flags).every((flag) => {
+      return flag === false || (flag as string[]).length === 0;
+    });
 
-    if (flags.help || flags.length === 0) {
+    if (flags.help || hasNoArgs) {
       new HelpCommand().execute();
-      Deno.exit(0);
+      // Deno.exit(0);
     }
 
     if (flags.publish) {
@@ -56,7 +59,11 @@ export class Cli {
     if (flags.source && flags.blog) {
       Config.initialize({
         type: "cli",
-        values: { sourceDir: flags.source, blogDir: flags.blog },
+        values: {
+          sourceDir: flags.source,
+          blogDir: flags.blog,
+          backupDir: flags.backup,
+        },
       });
     } else if (flags.source || flags.blog) {
       console.log(missingArgument);

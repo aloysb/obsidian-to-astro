@@ -10,7 +10,7 @@ status: publish
 slug: hello-world
 ---
 
-⚠️ Do not delete me
+Do not delete me
 
 Hello world,
 

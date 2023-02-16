@@ -6,14 +6,16 @@ import {
   it,
   join,
 } from "./deps.ts";
-
 import {
   findFilesRecursively,
   prepareBackups,
   prepareDestDirectory,
+  publishNotes,
 } from "../lib/utils.ts";
 
-// import { Note } from "./types.ts";
+import { Emitter } from "../lib/eventEmitter.ts";
+import { LinkManager } from "../lib/linkManager.ts";
+import { Note } from "../lib/note.ts";
 
 describe("Retrieveing the notes", () => {
   it("retrieves the notes recursively within a directory", async () => {
@@ -94,96 +96,16 @@ describe("Safety features", () => {
   });
 });
 
-// Deno.test("replaceWikiLinks", async (t) => {
-//     await t.step("It replaces the wiki links by markdown link if the file exists", async () => {
-//         const notes: Note[] = [
-//             {
-//                 filePath: './hello.md',
-//                 title: 'hello',
-//                 content: `
-//                 #hello world.
+describe("publishNotes", () => {
+  it("should copy the note across to the destination directory", async () => {
+    // Arrange
+    const linkManager = new LinkManager();
+    const destinationDir = Deno.makeTempDirSync();
+    const notes = (await findFilesRecursively("test/__fixtures__/source")).map((
+      path,
+    ) => new Note(path, new Emitter(), linkManager));
 
-//                 Source: [[Fancy Note|Link to my fancy note]]
-//                 `,
-//                 frontmatter: {
-//                     title: 'Hello',
-//                     slug: 'hello',
-//                     created_at: new Date(),
-//                     last_modified_at: new Date(),
-//                     tags: [],
-//                     draft: false
-
-//                 }
-//             },
-//             {
-//                 filePath: './Fancy Note.md',
-//                 title: 'Fancy Note',
-//                 content: `
-//                 # My fancy note!
-
-//                 **Fancy** !
-//                 `,
-//                 frontmatter: {
-//                     title: 'Fancy Note',
-//                     slug: 'fancy-note',
-//                     created_at: new Date(),
-//                     last_modified_at: new Date(),
-//                     tags: [],
-//                     draft: false
-//                 }
-//             },
-//         ]
-//         const processedNotes = await replaceWikilinks(notes)
-//         const helloNote = processedNotes.find(({ title }) => title === notes[0].title)
-//         assertExists(helloNote)
-//         const match = '[Link to my fancy note](../fancy-note.md)'
-//         assertStringIncludes(helloNote.content, match)
-//     })
-
-//     await t.step("It replaces the wiki links by markdown link if the file exists", async () => {
-//         const notes: Note[] = [
-//             {
-//                 filePath: './hello.md',
-//                 title: 'hello',
-//                 content: `
-//                 #hello world.
-
-//                 Source: [[Ugly Note|Link to my ugly note]]
-//                 `,
-//                 frontmatter: {
-//                     title: 'Hello',
-//                     slug: 'hello',
-//                     created_at: new Date(),
-//                     last_modified_at: new Date(),
-//                     tags: [],
-//                     draft: false
-
-//                 }
-//             },
-//             {
-//                 filePath: './Fancy Note.md',
-//                 title: 'Fancy Note',
-//                 content: `
-//                 # My fancy note!
-
-//                 **Fancy** !
-//                 `,
-//                 frontmatter: {
-//                     title: 'Fancy Note',
-//                     slug: 'fancy-note',
-//                     created_at: new Date(),
-//                     last_modified_at: new Date(),
-//                     tags: [],
-//                     draft: false
-//                 }
-//             },
-//         ]
-//         const processedNotes = await replaceWikilinks(notes)
-//         const helloNote = processedNotes.find(({ title }) => title === notes[0].title)
-//         assertExists(helloNote)
-//         const regexp = /\[Link to my ugly note\]\(\.\.\/ugly-note.md\)/
-//         assertEquals(regexp.test(helloNote.content), false)
-//         assertStringIncludes(helloNote.content, 'Link to my ugly note');
-//     })
-
-// })
+    // Act
+    publishNotes(notes, destinationDir);
+  });
+});

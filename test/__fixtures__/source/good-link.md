@@ -10,7 +10,7 @@ status: publish
 slug: good-link
 ---
 
-⚠️ Do not delete me
+Do not delete me
 
 This is yet another fake note. It is here for the sole purpose of the testing
 the link behavior from another fake note.

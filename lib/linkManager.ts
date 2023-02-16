@@ -24,15 +24,15 @@ export class LinkManager {
    * @param note The note to process
    * @returns void
    */
-  public replaceWikiLinks(note: Note) {
-    const content = note.rawContent;
+  public replaceWikiLinks(note: Note): string | null {
+    const content = note.originalContent;
     if (!content) {
       console.log(`${note.filePath} has no content.`);
-      return;
+      return null;
     }
     const lines = content.split("\n");
 
-    lines
+    const result = lines
       .map((line: string) => {
         const regexp = /\[\[.+?\|?.*?\]\]/g;
         const wikilinks = line.match(regexp);
@@ -46,7 +46,7 @@ export class LinkManager {
         return newLine;
       })
       .join("\n");
-    return note;
+    return result;
   }
 
   /**
@@ -57,7 +57,7 @@ export class LinkManager {
   private processLink(note: Note, link: string): string {
     const [file, title] = link.slice(2, -2).split("|");
     const targetNote = this._notes.find(
-      (note) => note.frontmatter?.title === `${file}.md`,
+      (note) => note.frontmatter?.title === file,
     );
     if (!targetNote) {
       console.log(
