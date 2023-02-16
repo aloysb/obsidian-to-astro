@@ -1,4 +1,4 @@
-import { parseYAML, z } from "./deps.ts";
+import { parseYAML, stringify, z } from "./deps.ts";
 
 import { Emitter } from "./eventEmitter.ts";
 import { LinkManager } from "./linkManager.ts";
@@ -53,12 +53,20 @@ export class Note {
     if (!this.parseFrontmatter()) {
       return null;
     }
-    const frontmatter = this.originalFrontmatter;
-    const content = this.linkManager.replaceWikiLinks(this);
-    return `---
+    if (!this.frontmatter) {
+      return null;
+    }
+    try {
+      const frontmatter = stringify(this.frontmatter);
+      const content = this.linkManager.replaceWikiLinks(this);
+      return `---
 ${frontmatter}
 --- 
 ${content}`;
+    } catch (e) {
+      console.log(`${this.frontmatter.title} failed to process`, e);
+      return null;
+    }
   }
 
   /**
