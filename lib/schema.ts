@@ -1,4 +1,4 @@
-import { z } from "./deps.ts";
+import { z } from "../deps.ts";
 
 export const blogSchema = z.object({
   title: z.string(),

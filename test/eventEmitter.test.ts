@@ -4,7 +4,7 @@ import {
   beforeEach,
   describe,
   it,
-} from "./deps.ts";
+} from "../deps.ts";
 
 import { Emitter } from "../lib/eventEmitter.ts";
 

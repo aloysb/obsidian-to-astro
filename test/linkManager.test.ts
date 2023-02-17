@@ -1,4 +1,4 @@
-import { assertEquals, beforeEach, describe, it } from "./deps.ts";
+import { assertEquals, beforeEach, describe, it } from "../deps.ts";
 
 import { Emitter } from "../lib/eventEmitter.ts";
 import { LinkManager } from "../lib/linkManager.ts";

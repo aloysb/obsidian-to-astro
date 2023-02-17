@@ -10,7 +10,7 @@ import { Config } from "../config.ts";
 import { Emitter } from "../eventEmitter.ts";
 import { LinkManager } from "../linkManager.ts";
 import { Note } from "../note.ts";
-import { logger } from "../deps.ts";
+import { logger } from "../../deps.ts";
 
 export class PublishCommand implements Command<never> {
   public async execute(

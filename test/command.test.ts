@@ -8,7 +8,7 @@ import {
   it,
   spy,
   stub,
-} from "./deps.ts";
+} from "../deps.ts";
 import { findFilesRecursively, prepareBackups } from "../lib/utils.ts";
 
 import { PublishCommand } from "../lib/commands/publish.ts";

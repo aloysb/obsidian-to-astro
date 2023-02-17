@@ -5,7 +5,7 @@ import {
   describe,
   it,
   join,
-} from "./deps.ts";
+} from "../deps.ts";
 import {
   findFilesRecursively,
   prepareBackups,

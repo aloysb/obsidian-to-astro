@@ -1,4 +1,4 @@
-import { assertEquals, describe, it, returnsNext, stub } from "./deps.ts";
+import { assertEquals, describe, it, returnsNext, stub } from "../deps.ts";
 
 import { findFilesRecursively } from "../lib/utils.ts";
 import { main } from "../lib/index.ts";

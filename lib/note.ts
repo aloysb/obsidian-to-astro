@@ -1,4 +1,4 @@
-import { parseYAML, stringify, z } from "./deps.ts";
+import { parseYAML, stringify, z } from "../deps.ts";
 
 import { Emitter } from "./eventEmitter.ts";
 import { LinkManager } from "./linkManager.ts";

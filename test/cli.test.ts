@@ -12,10 +12,10 @@ import {
   spy,
   Stub,
   stub,
-} from "./deps.ts";
+} from "../deps.ts";
 
-import { welcomeMessage } from "../lib/commands/help.ts";
 import { Config } from "../lib/config.ts";
+import { welcomeMessage } from "../lib/commands/help.ts";
 
 describe("cli", () => {
   let consoleSpy: Spy<Console>;

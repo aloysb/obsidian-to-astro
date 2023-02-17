@@ -1,4 +1,4 @@
-import { afterEach, assertEquals, describe, it, stub } from "./deps.ts";
+import { afterEach, assertEquals, describe, it, stub } from "../deps.ts";
 
 import { Config } from "../lib/config.ts";
 

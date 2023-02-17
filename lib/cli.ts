@@ -1,7 +1,7 @@
 import { Config } from "./config.ts";
 import { HelpCommand } from "./commands/help.ts";
 import { PublishCommand } from "./commands/publish.ts";
-import { parse } from "./deps.ts";
+import { parse } from "../deps.ts";
 
 export interface Command<T> {
   execute(arg: T): void;

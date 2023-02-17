@@ -1,5 +1,5 @@
 // import { Note } from "./types.ts";
-import { copySync, crypto, emptyDirSync, join, logger } from "./deps.ts";
+import { copySync, crypto, emptyDirSync, join, logger } from "../deps.ts";
 
 import { Note } from "./note.ts";
 

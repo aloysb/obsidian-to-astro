@@ -1,4 +1,4 @@
-import { assertSnapshot } from "./deps.ts";
+import { assertSnapshot } from "../deps.ts";
 import { blogSchema } from "../lib/schema.ts";
 
 Deno.test("the schema matches the snapshot", async function (t): Promise<void> {
