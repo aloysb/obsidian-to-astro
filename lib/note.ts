@@ -3,6 +3,7 @@ import { parseYAML, stringify, z } from "../deps.ts";
 import { Emitter } from "./eventEmitter.ts";
 import { LinkManager } from "./linkManager.ts";
 import { blogSchema } from "./schema.ts";
+import { parse } from "https://deno.land/std@0.177.0/path/win32";
 
 export interface NoteProps {
   filePath: string;
@@ -20,12 +21,30 @@ export class Note {
   private readonly linkManager: LinkManager;
 
   /**
+   * Create a note if it is createable!
+   * This prevent from creating faulty notes
+   * 
+   * @param filePath 
+   * @param onNoteCreatedEmitter 
+   * @param linkManager 
+   * @returns 
+   */
+  public new(
+    filePath: string,
+    onNoteCreatedEmitter: Emitter<Note>,
+    linkManager: LinkManager,
+  ): Note | undefined {
+    if (this.parseFrontmatter()) {
+      return new Note(filePath, onNoteCreatedEmitter, linkManager);
+    }
+  }
+  /**
    * Create a note
    * @param filePath the path of file
    * @param handlers an array of handler to execute when processing the note
    * @param onCreatedNote a hook to run a function on note creation
    */
-  constructor(
+  private constructor(
     filePath: string,
     onNoteCreatedEmitter: Emitter<Note>,
     linkManager: LinkManager,

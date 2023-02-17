@@ -16,6 +16,7 @@ import {
 import { Emitter } from "../lib/eventEmitter.ts";
 import { LinkManager } from "../lib/linkManager.ts";
 import { Note } from "../lib/note.ts";
+import { setupTestDirectories } from "./test-utils.ts";
 
 describe("Retrieveing the notes", () => {
   it("retrieves the notes recursively within a directory", async () => {
@@ -100,15 +101,44 @@ describe("publishNotes", () => {
   it("should copy the note across to the destination directory", async () => {
     // Arrange
     const linkManager = new LinkManager();
-    const destinationDir = Deno.makeTempDirSync();
-    const notes = (await findFilesRecursively("test/__fixtures__/source")).map((
+    const { directories, destroy } = await setupTestDirectories();
+    const notes = (await findFilesRecursively(directories.sourceDir)).map((
       path,
     ) => new Note(path, new Emitter(), linkManager));
 
     // Act
-    publishNotes(notes, destinationDir);
+    publishNotes(notes, directories.blogDir);
+
+    // Assert
+    assertEquals(
+      (await findFilesRecursively(directories.blogDir)).length,
+      (await findFilesRecursively(directories.sourceDir, { match: /\.md/ }))
+        .length - 1, // There is one file that does not have frontmatter
+    );
+
+    // Cleanup
+    destroy();
   });
 
-  it("should update the frontmatter in the source notes", () => {
+  it("should update the frontmatter in the source notes", async () => {
+    // Arrange
+    const linkManager = new LinkManager();
+    const { directories, destroy } = await setupTestDirectories();
+    const notes = (await findFilesRecursively(directories.sourceDir)).map((
+      path,
+    ) => new Note(path, new Emitter(), linkManager));
+
+    // Act
+    publishNotes(notes, directories.blogDir);
+
+    // Assert
+    // The frontmatter of the notes are updated to include the published date
+    notes.forEach((note) => {
+      assertEquals(note.frontmatter.published, true);
+      assertEquals(note.frontmatter.publishedDate, new Date().toISOString());
+    });
+
+    // Cleanup
+    destroy();
   });
 });

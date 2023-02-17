@@ -12,6 +12,7 @@ import {
 import { findFilesRecursively, prepareBackups } from "../lib/utils.ts";
 
 import { PublishCommand } from "../lib/commands/publish.ts";
+import { setupTestDirectories } from "./test-utils.ts";
 
 describe("CLI commands", () => {
   describe("help", () => {
@@ -48,17 +49,13 @@ describe("CLI commands", () => {
 
     it("should copy the processed notes accross", async () => {
       const confirmStub = stub(window, "confirm", () => true);
-      const backupDir = Deno.makeTempDirSync();
-      const blogDir = Deno.makeTempDirSync();
+      const { directories, destroy } = await setupTestDirectories();
       try {
-        const sourceDir = "./test/__fixtures__/source";
-        await new PublishCommand().execute({ sourceDir, blogDir, backupDir });
-        const blogDirResult = await findFilesRecursively(blogDir);
-        console.log(blogDirResult);
+        await new PublishCommand().execute(directories);
+        const blogDirResult = await findFilesRecursively(directories.blogDir);
         assertEquals(blogDirResult.length, 4);
       } finally {
-        Deno.removeSync(backupDir, { recursive: true });
-        Deno.removeSync(blogDir, { recursive: true });
+        destroy();
         confirmStub.restore();
       }
     });
