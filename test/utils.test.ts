@@ -108,4 +108,7 @@ describe("publishNotes", () => {
     // Act
     publishNotes(notes, destinationDir);
   });
+
+  it("should update the frontmatter in the source notes", () => {
+  });
 });

@@ -1,6 +1,6 @@
 {
   "tasks": {
-    "precommit": "deno fmt --check && deno lint && deno test -A -q"
+    "precommit": "deno fmt && deno lint && deno test -A -q"
   },
   "fmt": {
     "files": {
