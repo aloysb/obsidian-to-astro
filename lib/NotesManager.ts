@@ -1,19 +1,29 @@
+import { Config } from "./config.ts";
+import { logger as Logger } from "./deps.ts";
 import { Note } from "./note.ts";
+import { findFilesRecursively } from "./utils.ts";
 
 /**
- * LinkManager is in charge of handling wikilinks and replacing them with markdown friendly links.
- * To do so, it needs to be aware of the notes.
+ * The NotesManager is the central class of the program.
+ * It handles the creation, update and publication of the notes.
  */
-export class LinkManager {
+export class NotesManager {
   private readonly _notes: Note[] = [];
 
-  /**
-   * Register a note in the link manager.
-   * The link manager must be aware of existing notes to replace the wikilinks.
-   * @param note Note to register
-   */
-  public registerNote(note: Note) {
-    this._notes.push(note);
+  private constructor() {
+  }
+
+  public async initialize(
+    { config, logger }: { config: Config; logger: typeof Logger },
+  ) {
+    const files = await findFilesRecursively(config.sourceDir, {
+      match: /\.md/,
+    });
+    for (const file of files) {
+      const newNote = new Note(file);
+      this._notes.push(newNote);
+      logger.info(`${newNote} created.`);
+    }
   }
 
   public get notes() {

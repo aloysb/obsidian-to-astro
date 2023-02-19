@@ -1,7 +1,5 @@
 import { parseYAML, stringify, z } from "./deps.ts";
 
-import { Emitter } from "./eventEmitter.ts";
-import { LinkManager } from "./linkManager.ts";
 import { blogSchema } from "./schema.ts";
 
 export interface NoteProps {
@@ -17,7 +15,6 @@ export class Note {
   readonly originalFile: string;
   readonly frontmatter: Frontmatter | null;
   readonly originalFrontmatter: string | null;
-  private readonly linkManager: LinkManager;
 
   /**
    * Create a note
@@ -27,15 +24,11 @@ export class Note {
    */
   constructor(
     filePath: string,
-    onNoteCreatedEmitter: Emitter<Note>,
-    linkManager: LinkManager,
   ) {
     this.filePath = filePath;
     this.originalFile = Deno.readTextFileSync(filePath);
     this.frontmatter = this.parseFrontmatter();
     this.originalFrontmatter = this.getRawFrontMatter();
-    this.linkManager = linkManager;
-    onNoteCreatedEmitter.emit(this);
   }
   /**
    * Return the raw content of the note, as is.
@@ -58,7 +51,7 @@ export class Note {
     }
     try {
       const frontmatter = stringify(this.frontmatter);
-      const content = this.linkManager.replaceWikiLinks(this);
+      const content = "";
       return `---
 ${frontmatter}
 --- 
