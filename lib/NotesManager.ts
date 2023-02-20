@@ -13,7 +13,7 @@ type NotesManagerArgs = {
  * It handles the creation, update and publication of the notes.
  */
 export class NotesManager {
-  private readonly _notes: Note[] = [];
+  private _notes: Note[] = [];
   private readonly logger: typeof Logger;
   private readonly config: Config;
 
@@ -62,6 +62,7 @@ export class NotesManager {
         this.logger.debug(`${file} is not a note. It has been ignored.`);
       }
     }
+    this._notes = notes;
 
     this.logger.info("NotesManager initialized.");
     this.logger.info(`Notes created: ${notes.length}`);
@@ -74,10 +75,15 @@ export class NotesManager {
    * This is where we replace the wikilinks by markdown links.
    */
   private processNotes() {
+
     for (const note of this._notes) {
       const newContent = this.replaceWikiLinks(note);
-      if (newContent) {
-        //   note.originalContent = newContent;
+      const filename = note.filePath.split('/').pop()
+      if(!newContent) {
+         this.logger.info(`No content for note: ${filename}` )
+      } else {
+        this.logger.info(`New content for note: ${filename}` )
+        note.processFile(newContent);
       }
     }
   }

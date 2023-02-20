@@ -11,7 +11,7 @@ import { Config } from "../lib/config.ts";
 import { NotesManager } from "../lib/NotesManager.ts";
 import { setupTestDirectories } from "./test-utils.ts";
 
-describe("linkManager", () => {
+describe("NotesManager", () => {
   let destroy: () => void;
   let config: Config;
   beforeEach(async () => {

@@ -7,16 +7,12 @@ import {
 
 import { Command } from "../cli.ts";
 import { Config } from "../config.ts";
-import { Note } from "../note.ts";
+import { NotesManager } from "../NotesManager.ts";
 import { logger } from "../../deps.ts";
 
 export class PublishCommand implements Command<never> {
-  public async execute(
-    { sourceDir, blogDir, backupDir }: Pick<
-      ReturnType<typeof Config.retrieve>,
-      "blogDir" | "sourceDir" | "backupDir"
-    >,
-  ) {
+  public async execute(config: Config) {
+    const { backupDir, blogDir, sourceDir } = config;
     const shouldProceed = confirm(`Using the following directories:
     - Blog: ${blogDir},
     - Vault: ${sourceDir},
@@ -41,25 +37,12 @@ export class PublishCommand implements Command<never> {
       return;
     }
 
-    const notes = [];
-
-    // Get all notes
-    const noteFilePaths = await findFilesRecursively(sourceDir, {
-      match: new RegExp(".*.md$"),
-    });
-
-    // Create all notes
-    for (const filePath of noteFilePaths) {
-      const maybeNote = Note.new(filePath);
-      if (maybeNote) {
-        notes.push(maybeNote as Note);
-      }
-    }
+    const notesManager = await NotesManager.initialize({ config, logger });
 
     // Prepare destination directory
     prepareDestDirectory(blogDir);
 
     // Copy notes to destination directory
-    publishNotes(notes, blogDir);
+    publishNotes(notesManager.notes, blogDir);
   }
 }

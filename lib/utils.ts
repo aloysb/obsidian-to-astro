@@ -95,15 +95,14 @@ export function prepareDestDirectory(dirPath: string) {
 
 export function publishNotes(notes: Note[], dirPath: string) {
   notes.forEach((note) => {
-    const contentToPublish = note.processedFile();
-    if (!contentToPublish) {
-      return;
-    }
     let slug = note.frontmatter?.slug;
     if (!slug) {
       slug = note.frontmatter?.title?.toLowerCase().replace(/ /g, "-");
       return;
     }
-    Deno.writeTextFileSync(join(dirPath, `${slug}.md`), contentToPublish);
+    if (!note.processedFile) {
+      return;
+    }
+    Deno.writeTextFileSync(join(dirPath, `${slug}.md`), note.processedFile);
   });
 }

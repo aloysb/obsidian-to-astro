@@ -5,6 +5,7 @@ import {
   describe,
   it,
   join,
+  logger,
 } from "../deps.ts";
 import {
   findFilesRecursively,
@@ -13,7 +14,8 @@ import {
   publishNotes,
 } from "../lib/utils.ts";
 
-import { Note } from "../lib/note.ts";
+import { Config } from "../lib/config.ts";
+import { NotesManager } from "../lib/NotesManager.ts";
 import { setupTestDirectories } from "./test-utils.ts";
 
 describe("Retrieveing the notes", () => {
@@ -99,13 +101,11 @@ describe("publishNotes", () => {
   it("should copy the note across to the destination directory", async () => {
     // Arrange
     const { directories, destroy } = await setupTestDirectories();
-    const notePaths = await findFilesRecursively(directories.sourceDir);
-
-    const notes = notePaths.map((path) => Note.new(path))
-      .filter((note) => Boolean(note)) as Note[];
+    const config = Config.initialize({ type: "cli", values: directories });
+    const notesManager = await NotesManager.initialize({ config, logger });
 
     // Act
-    publishNotes(notes, directories.blogDir);
+    publishNotes(notesManager.notes, directories.blogDir);
 
     // Assert
     assertEquals(

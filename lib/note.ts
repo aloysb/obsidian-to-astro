@@ -1,4 +1,4 @@
-import { parseYAML, stringify, z } from "../deps.ts";
+import { logger, parseYAML, stringify, z } from "../deps.ts";
 
 import { blogSchema } from "./schema.ts";
 
@@ -12,9 +12,17 @@ export type Frontmatter = z.infer<typeof blogSchema>;
  */
 export class Note {
   readonly filePath: string;
-  readonly originalFile: string;
   readonly frontmatter: Frontmatter;
+  readonly originalFile: string;
   readonly originalFrontmatter: string | null;
+  private _processedFile: string | null = null;
+
+  /*
+   * Getters
+   */
+   public get processedFile(): string | null {
+      return this._processedFile;
+      }
 
   /**
    * Create a note if it is createable!
@@ -62,7 +70,7 @@ export class Note {
     }
   }
 
-  public processedFile(): string | null {
+  public processFile(newContent: string) {
     if (!this.parseFrontmatter()) {
       return null;
     }
@@ -71,8 +79,8 @@ export class Note {
     }
     try {
       const frontmatter = stringify(this.frontmatter);
-      const content = this.originalContent;
-      return `---
+      const content = newContent;
+      this._processedFile = `---
 ${frontmatter}
 --- 
 ${content}`;

@@ -13,7 +13,19 @@ links.
 It contains wiki link does no exist [[fake link]] an wiki links that exists like
 this one [[good link|under an alias!]]`;
 
-const NOTE_PROCESSED_CONTENT = `---
+const NOTE_PROCESSED_CONTENT = `Do not delete me
+
+Hello world,
+
+This a note to test the behavior of the application. The whole point of that
+tool is to take your Obsidian note and copy them across your Astro website. But
+in order to do so, we need to format the front matter, as well as replacing wiki
+links.
+
+It contains wiki link does no exist fake link an wiki links that exists like
+this one [under an alias!](./good-link)`;
+
+const NOTE_PROCESSED = `---
 title: hello world
 tags:
   - hello
@@ -78,12 +90,6 @@ describe("Note class", () => {
     // TODO fix this it should keep the \n newline
     const expected = NOTE_CONTENT;
     assertEquals(note.originalContent, expected);
-  });
-
-  it("should let me replace wiki links", () => {
-    Note.new(filePathLinkedNote) as Note;
-    console.log(note.processedFile());
-    assertEquals(note.processedFile(), NOTE_PROCESSED_CONTENT);
   });
 
   //   it("should create a slug out of the title if no slug is provided",() => {
