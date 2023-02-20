@@ -53,7 +53,7 @@ describe("Note class", () => {
 
   beforeEach(() => {
     // FIXME memory leak: the link manager is not reset between each test
-    note = new Note(filePath, onNoteCreatedEmitter, linkManager);
+    note = Note.new(filePath, onNoteCreatedEmitter, linkManager) as Note;
   });
   it("should instantiate a Note object from a file path", () => {
     assertEquals(note.filePath, filePath);
@@ -74,13 +74,13 @@ describe("Note class", () => {
   });
 
   it("should return null if there is no frontmatter", () => {
-    const noteWithoutFrontMatter = new Note(
+    const noteWithoutFrontMatter = Note.new(
       filePathWithoutFrontmatter,
       onNoteCreatedEmitter,
       linkManager,
     );
     const expected = null;
-    noteWithoutFrontMatter.frontmatter === expected;
+    noteWithoutFrontMatter === expected;
   });
 
   it("should let me obtain the note original content", () => {
@@ -95,7 +95,7 @@ describe("Note class", () => {
     onNoteCreatedEmitter.on((note: Note) => {
       createdNote = note;
     });
-    note = new Note(filePath, onNoteCreatedEmitter, linkManager);
+    note = Note.new(filePath, onNoteCreatedEmitter, linkManager) as Note;
     // @ts-ignore: created Note is created as part of side effect
     assertEquals((createdNote as Note).filePath, filePath);
     // @ts-ignore: created Note is created as part of side effect
@@ -103,7 +103,7 @@ describe("Note class", () => {
   });
 
   it("should let me replace wiki links", () => {
-    new Note(filePathLinkedNote, onNoteCreatedEmitter, linkManager);
+    Note.new(filePathLinkedNote, onNoteCreatedEmitter, linkManager) as Note;
     console.log(note.processedFile());
     assertEquals(note.processedFile(), NOTE_PROCESSED_CONTENT);
   });

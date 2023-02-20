@@ -3,7 +3,6 @@ import { parseYAML, stringify, z } from "../deps.ts";
 import { Emitter } from "./eventEmitter.ts";
 import { LinkManager } from "./linkManager.ts";
 import { blogSchema } from "./schema.ts";
-import { parse } from "https://deno.land/std@0.177.0/path/win32";
 
 export interface NoteProps {
   filePath: string;
@@ -16,26 +15,30 @@ export type Frontmatter = z.infer<typeof blogSchema>;
 export class Note {
   readonly filePath: string;
   readonly originalFile: string;
-  readonly frontmatter: Frontmatter | null;
+  readonly frontmatter: Frontmatter;
   readonly originalFrontmatter: string | null;
   private readonly linkManager: LinkManager;
 
   /**
    * Create a note if it is createable!
    * This prevent from creating faulty notes
-   * 
-   * @param filePath 
-   * @param onNoteCreatedEmitter 
-   * @param linkManager 
-   * @returns 
+   *
+   * @param filePath
+   * @param onNoteCreatedEmitter
+   * @param linkManager
+   * @returns
    */
-  public new(
+  public static new(
     filePath: string,
     onNoteCreatedEmitter: Emitter<Note>,
     linkManager: LinkManager,
-  ): Note | undefined {
-    if (this.parseFrontmatter()) {
-      return new Note(filePath, onNoteCreatedEmitter, linkManager);
+  ): Note | null {
+    const note = new Note(filePath, onNoteCreatedEmitter, linkManager);
+    try {
+      note.parseFrontmatter();
+      return note;
+    } catch {
+      return null;
     }
   }
   /**
@@ -92,7 +95,7 @@ ${content}`;
    *  Parse the file frontmatter. Returns null if there is no frontmatter
    *  @private
    */
-  private parseFrontmatter(): Frontmatter | null {
+  private parseFrontmatter(): Frontmatter {
     try {
       const rawFrontmatter = this.getRawFrontMatter();
       const frontmatter = parseYAML(rawFrontmatter) as Frontmatter;
@@ -102,7 +105,7 @@ ${content}`;
         created_at: new Date(frontmatter.created_at),
       };
     } catch {
-      return null;
+      throw Error("No frontmatter found");
     }
   }
 

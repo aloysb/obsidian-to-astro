@@ -62,7 +62,10 @@ export class PublishCommand implements Command<never> {
 
     // Create all notes
     for (const filePath of noteFilePaths) {
-      notes.push(new Note(filePath, onNoteCreatedEmitter, linkManager));
+      const maybeNote = Note.new(filePath, onNoteCreatedEmitter, linkManager);
+      if (maybeNote) {
+        notes.push(maybeNote as Note);
+      }
     }
 
     // Prepare destination directory
