@@ -75,14 +75,13 @@ export class NotesManager {
    * This is where we replace the wikilinks by markdown links.
    */
   private processNotes() {
-
     for (const note of this._notes) {
       const newContent = this.replaceWikiLinks(note);
-      const filename = note.filePath.split('/').pop()
-      if(!newContent) {
-         this.logger.info(`No content for note: ${filename}` )
+      const filename = note.filePath.split("/").pop();
+      if (!newContent) {
+        this.logger.info(`No content for note: ${filename}`);
       } else {
-        this.logger.info(`New content for note: ${filename}` )
+        this.logger.info(`New content for note: ${filename}`);
         note.processFile(newContent);
       }
     }

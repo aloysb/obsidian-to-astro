@@ -1,5 +1,4 @@
 import {
-  findFilesRecursively,
   prepareBackups,
   prepareDestDirectory,
   publishNotes,

@@ -13,7 +13,7 @@ links.
 It contains wiki link does no exist [[fake link]] an wiki links that exists like
 this one [[good link|under an alias!]]`;
 
-const NOTE_PROCESSED_CONTENT = `Do not delete me
+const _NOTE_PROCESSED_CONTENT = `Do not delete me
 
 Hello world,
 
@@ -25,7 +25,7 @@ links.
 It contains wiki link does no exist fake link an wiki links that exists like
 this one [under an alias!](./good-link)`;
 
-const NOTE_PROCESSED = `---
+const _NOTE_PROCESSED = `---
 title: hello world
 tags:
   - hello
@@ -52,7 +52,6 @@ this one [under an alias!](./good-link)`;
 describe("Note class", () => {
   let note: Note;
   const filePath = "test/__fixtures__/source/fake-note.md";
-  const filePathLinkedNote = "test/__fixtures__/source/good-link.md";
   const filePathWithoutFrontmatter =
     "test/__fixtures__/source/note-without-frontmatter.md";
   const fileContent = Deno.readTextFileSync(filePath);

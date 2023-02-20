@@ -1,4 +1,4 @@
-import { logger, parseYAML, stringify, z } from "../deps.ts";
+import { parseYAML, stringify, z } from "../deps.ts";
 
 import { blogSchema } from "./schema.ts";
 
@@ -20,9 +20,9 @@ export class Note {
   /*
    * Getters
    */
-   public get processedFile(): string | null {
-      return this._processedFile;
-      }
+  public get processedFile(): string | null {
+    return this._processedFile;
+  }
 
   /**
    * Create a note if it is createable!
