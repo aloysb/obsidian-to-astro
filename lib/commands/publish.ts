@@ -7,8 +7,6 @@ import {
 
 import { Command } from "../cli.ts";
 import { Config } from "../config.ts";
-import { Emitter } from "../eventEmitter.ts";
-import { LinkManager } from "../linkManager.ts";
 import { Note } from "../note.ts";
 import { logger } from "../../deps.ts";
 
@@ -44,16 +42,6 @@ export class PublishCommand implements Command<never> {
     }
 
     const notes = [];
-    const linkManager = new LinkManager();
-
-    // Create a note created emitter
-    const onNoteCreatedEmitter = new Emitter<Note>();
-
-    // Registers handlers at note creation
-    onNoteCreatedEmitter.on(linkManager.registerNote.bind(linkManager));
-    onNoteCreatedEmitter.on((note: Note) =>
-      logger.info(`${note.frontmatter?.title} created`)
-    );
 
     // Get all notes
     const noteFilePaths = await findFilesRecursively(sourceDir, {
@@ -62,7 +50,7 @@ export class PublishCommand implements Command<never> {
 
     // Create all notes
     for (const filePath of noteFilePaths) {
-      const maybeNote = Note.new(filePath, onNoteCreatedEmitter, linkManager);
+      const maybeNote = Note.new(filePath);
       if (maybeNote) {
         notes.push(maybeNote as Note);
       }

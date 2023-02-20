@@ -27,10 +27,8 @@ export class Note {
    */
   public static new(
     filePath: string,
-    onNoteCreatedEmitter: Emitter<Note>,
-    linkManager: LinkManager,
   ): Note | null {
-    const note = new Note(filePath, onNoteCreatedEmitter, linkManager);
+    const note = new Note(filePath);
     try {
       note.parseFrontmatter();
       return note;
@@ -73,7 +71,7 @@ export class Note {
     }
     try {
       const frontmatter = stringify(this.frontmatter);
-      const content = "";
+      const content = this.originalContent;
       return `---
 ${frontmatter}
 --- 

@@ -13,8 +13,6 @@ import {
   publishNotes,
 } from "../lib/utils.ts";
 
-import { Emitter } from "../lib/eventEmitter.ts";
-import { LinkManager } from "../lib/linkManager.ts";
 import { Note } from "../lib/note.ts";
 import { setupTestDirectories } from "./test-utils.ts";
 
@@ -100,13 +98,10 @@ describe("Safety features", () => {
 describe("publishNotes", () => {
   it("should copy the note across to the destination directory", async () => {
     // Arrange
-    const linkManager = new LinkManager();
     const { directories, destroy } = await setupTestDirectories();
     const notePaths = await findFilesRecursively(directories.sourceDir);
 
-    const notes = notePaths.map((path) =>
-      Note.new(path, new Emitter(), linkManager)
-    )
+    const notes = notePaths.map((path) => Note.new(path))
       .filter((note) => Boolean(note)) as Note[];
 
     // Act
@@ -124,28 +119,28 @@ describe("publishNotes", () => {
   });
 
   //TODO: fixme
-//   it("should update the frontmatter in the source notes", async () => {
-//     // Arrange
-//     const linkManager = new LinkManager();
-//     const { directories, destroy } = await setupTestDirectories();
-//     const notePaths = await findFilesRecursively(directories.sourceDir);
+  //   it("should update the frontmatter in the source notes", async () => {
+  //     // Arrange
+  //     const linkManager = new LinkManager();
+  //     const { directories, destroy } = await setupTestDirectories();
+  //     const notePaths = await findFilesRecursively(directories.sourceDir);
 
-//     const notes = notePaths.map((path) =>
-//       Note.new(path, new Emitter(), linkManager)
-//     )
-//       .filter((note) => Boolean(note)) as Note[];
+  //     const notes = notePaths.map((path) =>
+  //       Note.new(path, new Emitter(), linkManager)
+  //     )
+  //       .filter((note) => Boolean(note)) as Note[];
 
-//     // Act
-//     publishNotes(notes, directories.blogDir);
+  //     // Act
+  //     publishNotes(notes, directories.blogDir);
 
-//     // Assert
-//     // The frontmatter of the notes are updated to include the published date
-//     notes.forEach((note) => {
-//       assertEquals(note.frontmatter.status, "publish");
-//       assertEquals(note.frontmatter.published_at, new Date());
-//     });
+  //     // Assert
+  //     // The frontmatter of the notes are updated to include the published date
+  //     notes.forEach((note) => {
+  //       assertEquals(note.frontmatter.status, "publish");
+  //       assertEquals(note.frontmatter.published_at, new Date());
+  //     });
 
-//     // Cleanup
-//     destroy();
-//   });
+  //     // Cleanup
+  //     destroy();
+  //   });
 });

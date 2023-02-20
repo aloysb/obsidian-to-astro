@@ -1,9 +1,6 @@
 import { Frontmatter, Note } from "../lib/note.ts";
 import { assertEquals, beforeEach, describe, it } from "../deps.ts";
 
-import { Emitter } from "../lib/eventEmitter.ts";
-import { LinkManager } from "../lib/linkManager.ts";
-
 const NOTE_CONTENT = `Do not delete me
 
 Hello world,
@@ -47,13 +44,9 @@ describe("Note class", () => {
   const filePathWithoutFrontmatter =
     "test/__fixtures__/source/note-without-frontmatter.md";
   const fileContent = Deno.readTextFileSync(filePath);
-  const onNoteCreatedEmitter = new Emitter<Note>();
-  const linkManager = new LinkManager();
-  onNoteCreatedEmitter.on(linkManager.registerNote.bind(linkManager));
 
   beforeEach(() => {
-    // FIXME memory leak: the link manager is not reset between each test
-    note = Note.new(filePath, onNoteCreatedEmitter, linkManager) as Note;
+    note = Note.new(filePath) as Note;
   });
   it("should instantiate a Note object from a file path", () => {
     assertEquals(note.filePath, filePath);
@@ -76,8 +69,6 @@ describe("Note class", () => {
   it("should return null if there is no frontmatter", () => {
     const noteWithoutFrontMatter = Note.new(
       filePathWithoutFrontmatter,
-      onNoteCreatedEmitter,
-      linkManager,
     );
     const expected = null;
     noteWithoutFrontMatter === expected;
@@ -89,21 +80,8 @@ describe("Note class", () => {
     assertEquals(note.originalContent, expected);
   });
 
-  it("should emit an event on note creation", () => {
-    let createdNote: Note;
-    const expected = NOTE_CONTENT;
-    onNoteCreatedEmitter.on((note: Note) => {
-      createdNote = note;
-    });
-    note = Note.new(filePath, onNoteCreatedEmitter, linkManager) as Note;
-    // @ts-ignore: created Note is created as part of side effect
-    assertEquals((createdNote as Note).filePath, filePath);
-    // @ts-ignore: created Note is created as part of side effect
-    assertEquals(createdNote.originalContent, expected);
-  });
-
   it("should let me replace wiki links", () => {
-    Note.new(filePathLinkedNote, onNoteCreatedEmitter, linkManager) as Note;
+    Note.new(filePathLinkedNote) as Note;
     console.log(note.processedFile());
     assertEquals(note.processedFile(), NOTE_PROCESSED_CONTENT);
   });

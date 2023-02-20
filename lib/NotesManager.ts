@@ -1,7 +1,12 @@
 import { Config } from "./config.ts";
-import { logger as Logger } from "./deps.ts";
+import { logger as Logger } from "../deps.ts";
 import { Note } from "./note.ts";
 import { findFilesRecursively } from "./utils.ts";
+
+type NotesManagerArgs = {
+  config: Config;
+  logger: typeof Logger;
+};
 
 /**
  * The NotesManager is the central class of the program.
@@ -9,32 +14,78 @@ import { findFilesRecursively } from "./utils.ts";
  */
 export class NotesManager {
   private readonly _notes: Note[] = [];
+  private readonly logger: typeof Logger;
+  private readonly config: Config;
 
-  private constructor() {
-  }
-
-  public async initialize(
-    { config, logger }: { config: Config; logger: typeof Logger },
-  ) {
-    const files = await findFilesRecursively(config.sourceDir, {
-      match: /\.md/,
-    });
-    for (const file of files) {
-      const newNote = new Note(file);
-      this._notes.push(newNote);
-      logger.info(`${newNote} created.`);
-    }
-  }
-
+  /*
+   * Getters
+   */
   public get notes() {
     return this._notes;
   }
 
-  /**
-   * @param note The note to process
-   * @returns void
+  private constructor(args: NotesManagerArgs) {
+    this.logger = args.logger;
+    this.config = args.config;
+  }
+
+  /*
+   *  Create a NotesManager instance.
+   *  The reason we need to go through this initialization process is because
+   *  we need to await the creation of the notes.
+   *  We can't do that in the constructor because it's not async.
    */
-  public replaceWikiLinks(note: Note): string | null {
+  public static async initialize(
+    args: NotesManagerArgs,
+  ): Promise<NotesManager> {
+    const notesManager = new NotesManager(args);
+    await notesManager.createNotes();
+    await notesManager.processNotes();
+    return notesManager;
+  }
+
+  /*
+   * Look for all the notes in the source directory and create them.
+   * Do not create the notes if they are not valid.
+   */
+  private async createNotes() {
+    const files = await findFilesRecursively(this.config.sourceDir, {
+      match: /\.md/,
+    });
+    const notes: Note[] = [];
+    for (const file of files) {
+      const maybeNote = Note.new(file);
+      if (maybeNote) {
+        this.logger.debug(`${maybeNote} created.`);
+        notes.push(maybeNote as Note);
+      } else {
+        this.logger.debug(`${file} is not a note. It has been ignored.`);
+      }
+    }
+
+    this.logger.info("NotesManager initialized.");
+    this.logger.info(`Notes created: ${notes.length}`);
+    this.logger.info(`Notes ignored: ${files.length - notes.length}`);
+    this.logger.info(`Total files: ${files.length}`);
+  }
+
+  /*
+   * Process the notes.
+   * This is where we replace the wikilinks by markdown links.
+   */
+  private processNotes() {
+    for (const note of this._notes) {
+      const newContent = this.replaceWikiLinks(note);
+      if (newContent) {
+        //   note.originalContent = newContent;
+      }
+    }
+  }
+
+  /**
+   * Replace all the wikilinks in the notes by markdown links.
+   */
+  private replaceWikiLinks(note: Note): string | null {
     const content = note.originalContent;
     if (!content) {
       console.log(`${note.filePath} has no content.`);
@@ -60,9 +111,7 @@ export class NotesManager {
   }
 
   /**
-   * Takes a link and replace it by a markdown link to the file
-   * @param link
-   * @returns
+   * Replace a wikilink by a markdown link.
    */
   private processLink(note: Note, link: string): string {
     const [file, title] = link.slice(2, -2).split("|");
