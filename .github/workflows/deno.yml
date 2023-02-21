@@ -39,3 +39,14 @@ jobs:
 
       - name: Run tests
         run: deno test -A
+
+      - name: Create coverage files
+        run: deno test -A --coverage=coverage # create coverage files
+
+      - name: Create coverage report
+        run: deno coverage ./coverage --lcov > coverage.lcov # create coverage report
+
+      - name: Collect coverage
+        uses: codecov/codecov-action@v3 # upload the report on Codecov
+        with:
+          file: ./coverage.lcov
