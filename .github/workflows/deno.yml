@@ -48,3 +48,5 @@ jobs:
 
       - name: Collect coverage
         uses: codecov/codecov-action@v3 # upload the report on Codecov
+        with:
+          file: ./coverage.lcov
