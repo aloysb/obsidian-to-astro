@@ -69,9 +69,12 @@ export class NotesManager {
   public publishNotes() {
     let notesPublished = 0;
     for (const note of this._notes) {
-      let slug = note.frontmatter?.slug;
+      let slug = note.processedFrontmatter?.slug;
       if (!slug) {
-        slug = note.frontmatter?.title?.toLowerCase().replace(/ /g, "-");
+        slug = note.processedFrontmatter?.title?.toLowerCase().replace(
+          / /g,
+          "-",
+        );
       }
       if (!note.processedFile) {
         this.logger.info(`No content for note: ${note.filePath}.md`);
@@ -128,7 +131,7 @@ export class NotesManager {
         this.logger.info(`No content for note: ${filename}`);
       } else {
         this.logger.info(`New content for note: ${filename}`);
-        note.processFile(newContent);
+        note.processedFile = newContent;
       }
     }
   }
@@ -167,7 +170,7 @@ export class NotesManager {
   private processLink(note: Note, link: string): string {
     const [file, title] = link.slice(2, -2).split("|");
     const targetNote = this._notes.find(
-      (note) => note.frontmatter?.title === file,
+      (note) => note.processedFrontmatter?.title === file,
     );
     if (!targetNote) {
       console.log(
@@ -176,7 +179,9 @@ export class NotesManager {
       const replace = `${title ?? file}`;
       return replace;
     }
-    const replace = `[${title ?? file}](./${targetNote.frontmatter?.slug})`;
+    const replace = `[${
+      title ?? file
+    }](./${targetNote.processedFrontmatter?.slug})`;
     return replace;
   }
 }

@@ -3,10 +3,11 @@ title: deep nested note
 tags: 
    - hello
    - world
-created_at: 2023-01-01 12:00
+created_at: 2023-01-01T12:00
 description: ""
-last_modified_at: 2023-01-01 18:00
-status: publish
+published_at: 2022-01-01T10:00:00
+last_modified_at: 2023-01-01T18:00
+status: published
 slug: deep-nested-note
 ---
 

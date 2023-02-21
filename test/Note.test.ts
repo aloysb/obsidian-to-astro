@@ -1,5 +1,12 @@
 import { Frontmatter, Note } from "../lib/Note.ts";
-import { assertEquals, beforeEach, describe, it } from "../deps.ts";
+import {
+  assertEquals,
+  beforeAll,
+  beforeEach,
+  describe,
+  it,
+  stub,
+} from "../deps.ts";
 
 const NOTE_CONTENT = `Do not delete me
 
@@ -32,6 +39,7 @@ tags:
   - world
 created_at: 2023-01-01T02:00:00.000Z
 description: ''
+published_at: 2023-01-01T02:00:00.000Z
 last_modified_at: 2023-01-01T08:00:00.000Z
 status: publish
 slug: hello-world
@@ -56,6 +64,9 @@ describe("Note class", () => {
     "test/__fixtures__/source/note-without-frontmatter.md";
   const fileContent = Deno.readTextFileSync(filePath);
 
+  beforeAll(() => {
+    stub(Date, "now", () => new Date("2023-01-01T02:00:00.000Z").getTime());
+  });
   beforeEach(() => {
     note = Note.new(filePath) as Note;
   });
@@ -70,11 +81,12 @@ describe("Note class", () => {
       description: "",
       created_at: new Date("2023-01-01 12:00"),
       last_modified_at: new Date("2023-01-01 18:00"),
+      published_at: new Date("2023-01-01T02:00:00.000Z"),
       slug: "hello-world",
-      status: "publish",
+      status: "published",
       tags: ["hello", "world"],
     };
-    assertEquals(expected, note.frontmatter);
+    assertEquals(expected, note.processedFrontmatter);
   });
 
   it("should return null if there is no frontmatter", () => {
@@ -86,13 +98,22 @@ describe("Note class", () => {
   });
 
   it("should let me obtain the note original content", () => {
-    // TODO fix this it should keep the \n newline
     const expected = NOTE_CONTENT;
     assertEquals(note.originalContent, expected);
   });
 
-  //   it("should create a slug out of the title if no slug is provided",() => {
-  //       // TODO
+  it("should update the published_at date if it is not set", () => {
+    assertEquals(
+      note.processedFrontmatter.published_at,
+      new Date("2023-01-01T02:00:00.000Z"),
+    );
 
-  //   })
+    const noteWithPublishedAt = Note.new(
+      "./test/__fixtures__/source/folder/subfolder/note3.md",
+    ) as Note;
+    assertEquals(
+      noteWithPublishedAt.processedFrontmatter.published_at,
+      new Date("2022-01-01T10:00:00.000Z"),
+    );
+  });
 });

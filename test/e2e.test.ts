@@ -2,6 +2,7 @@ import { assertEquals, describe, it, returnsNext, stub } from "../deps.ts";
 
 import { findFilesRecursively } from "../lib/utils.ts";
 import { main } from "../lib/index.ts";
+import { processedBlogSchema } from "../lib/schema.ts";
 import { setupTestDirectories } from "./test-utils.ts";
 
 describe("E2E testing", () => {
@@ -62,7 +63,18 @@ describe("E2E testing", () => {
 
     // 3. == SOURCE ==
     // My source notes' frontmatter are updated
-    //TODO check the content of the files
+    const updatedNotes = await findFilesRecursively(sourceDir, {
+      match: /\.md/,
+    });
+    updatedNotes.forEach((note) => {
+      const content = Deno.readTextFileSync(note);
+      try {
+        const [_, frontmatter, _body] = content.split("---")[1];
+        processedBlogSchema.parse(frontmatter);
+      } catch {
+        return;
+      }
+    });
 
     // 4. == LOGGER ==
     // The logger is created

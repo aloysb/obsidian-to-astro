@@ -1,11 +1,10 @@
+import { originalBlogSchema, processedBlogSchema } from "./schema.ts";
 import { parseYAML, stringify, z } from "../deps.ts";
-
-import { blogSchema } from "./schema.ts";
 
 export interface NoteProps {
   filePath: string;
 }
-export type Frontmatter = z.infer<typeof blogSchema>;
+export type Frontmatter = z.infer<typeof processedBlogSchema>;
 
 /*
  * Note class
@@ -15,7 +14,7 @@ export type Frontmatter = z.infer<typeof blogSchema>;
  */
 export class Note {
   readonly filePath: string;
-  readonly frontmatter: Frontmatter;
+  readonly processedFrontmatter: Frontmatter;
   readonly originalFile: string;
   readonly originalFrontmatter: string | null;
   private _processedFile: string | null = null;
@@ -29,15 +28,33 @@ export class Note {
   ) {
     this.filePath = filePath;
     this.originalFile = Deno.readTextFileSync(filePath);
-    this.frontmatter = this.parseFrontmatter();
+    this.processedFrontmatter = this.parseFrontmatter();
     this.originalFrontmatter = this.getRawFrontMatter();
   }
 
   /*
-   * Getters
+   * Getters/Setters
    */
   public get processedFile(): string | null {
     return this._processedFile;
+  }
+
+  public set processedFile(newContent: string | null) {
+    if (!this.processedFrontmatter || !newContent) {
+      return;
+    }
+
+    try {
+      const frontmatter = stringify(this.processedFrontmatter);
+      const content = newContent;
+      this._processedFile = `---
+${frontmatter}
+--- 
+${content}`;
+    } catch (e) {
+      console.log(`${this.processedFrontmatter.title} failed to process`, e);
+      return;
+    }
   }
 
   /*
@@ -50,10 +67,6 @@ export class Note {
     } catch {
       return null;
     }
-  }
-
-  private getRawFrontMatter() {
-    return this.originalFile.split("---")[1] as string;
   }
 
   /*
@@ -81,31 +94,6 @@ export class Note {
    */
 
   /*
-   Process the file
-   This method will process the file and return the processed file
-   If the file is not valid, return null
-  */
-  public processFile(newContent: string) {
-    if (!this.parseFrontmatter()) {
-      return null;
-    }
-    if (!this.frontmatter) {
-      return null;
-    }
-    try {
-      const frontmatter = stringify(this.frontmatter);
-      const content = newContent;
-      this._processedFile = `---
-${frontmatter}
---- 
-${content}`;
-    } catch (e) {
-      console.log(`${this.frontmatter.title} failed to process`, e);
-      return null;
-    }
-  }
-
-  /*
      Parse the frontmatter
      This method will parse the frontmatter and return it
    */
@@ -113,13 +101,30 @@ ${content}`;
     try {
       const rawFrontmatter = this.getRawFrontMatter();
       const frontmatter = parseYAML(rawFrontmatter) as Frontmatter;
+      try {
+        originalBlogSchema.parse(frontmatter);
+      } catch (e) {
+        console.log(`${frontmatter.title} failed to parse`, e);
+      }
+      console.error(this.filePath);
+      console.error(frontmatter.published_at);
+      console.log(frontmatter);
+      console.log(new Date(frontmatter.published_at ?? Date.now()));
       return {
         ...frontmatter,
         last_modified_at: new Date(frontmatter.last_modified_at),
         created_at: new Date(frontmatter.created_at),
+        published_at: new Date(frontmatter.published_at ?? Date.now()),
       };
     } catch {
       throw Error("No frontmatter found");
     }
+  }
+
+  /*
+   Return the frontmatter as a string
+  */
+  private getRawFrontMatter() {
+    return this.originalFile.split("---")[1] as string;
   }
 }
