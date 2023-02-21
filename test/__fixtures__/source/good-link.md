@@ -6,7 +6,7 @@ tags:
 created_at: 2023-04-04 12:00
 description: ""
 last_modified_at: 2023-04-04 18:00
-status: publish
+status: published
 slug: good-link
 ---
 

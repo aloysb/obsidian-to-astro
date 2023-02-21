@@ -5,17 +5,12 @@ import {
   describe,
   it,
   join,
-} from "./deps.ts";
+} from "../deps.ts";
 import {
+  createBackup,
   findFilesRecursively,
-  prepareBackups,
   prepareDestDirectory,
-  publishNotes,
 } from "../lib/utils.ts";
-
-import { Emitter } from "../lib/eventEmitter.ts";
-import { LinkManager } from "../lib/linkManager.ts";
-import { Note } from "../lib/note.ts";
 
 describe("Retrieveing the notes", () => {
   it("retrieves the notes recursively within a directory", async () => {
@@ -74,7 +69,7 @@ describe("Safety features", () => {
   });
   it("should create a backup of both the source and the destination directories", async () => {
     assertEquals([...Deno.readDirSync(backupDir)].length, 0);
-    const uniqueBackupDir = await prepareBackups(
+    const uniqueBackupDir = await createBackup(
       sourceDir,
       destinationDir,
       backupDir,
@@ -93,19 +88,5 @@ describe("Safety features", () => {
       [...Deno.readDirSync(join(uniqueBackupDir, "destination"))].length,
       1,
     );
-  });
-});
-
-describe("publishNotes", () => {
-  it("should copy the note across to the destination directory", async () => {
-    // Arrange
-    const linkManager = new LinkManager();
-    const destinationDir = Deno.makeTempDirSync();
-    const notes = (await findFilesRecursively("test/__fixtures__/source")).map((
-      path,
-    ) => new Note(path, new Emitter(), linkManager));
-
-    // Act
-    publishNotes(notes, destinationDir);
   });
 });

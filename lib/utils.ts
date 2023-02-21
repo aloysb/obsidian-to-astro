@@ -1,28 +1,13 @@
 // import { Note } from "./types.ts";
-import { copySync, crypto, emptyDirSync, join, logger } from "./deps.ts";
+import { copySync, crypto, emptyDirSync, join, logger } from "../deps.ts";
 
-import { Note } from "./note.ts";
-
-// export async function getAllProcessedNotes(directory: string): Promise<Note[]> {
-//    const notes: Note[] = await findNotesInDirectoryRecursively(directory);
-//    const processedNotes = await replaceWikilinks(notes.filter(({ frontmatter }) => frontmatter.status === 'publish'));
-//    return processedNotes;
-// }
-
-/**
- * @param directory The directory to search. Note that the result will be base on this directory, so if you provide a relative path, the result will be relative.
- * @returns The list of files path
- */
 type Options = {
   match: RegExp;
 };
 
 /**
- * Given a directory, find all the files matching the options provided and return their file paths.
- *
- * @param directory the directory to search
- * @param options options to filter the result. So far, the sole option is to provide a regexp to match.
- * @returns an array of filepath for the files matching the search options in the directory provided
+ * Given a directory, return all the files path in it
+ * Optionally, you can pass a regex to match the files
  */
 export async function findFilesRecursively(
   directory: string,
@@ -47,16 +32,12 @@ export async function findFilesRecursively(
 
 /**
  * Prepare a backup of both the source and the destination folders
- * @param sourceDir source dir filepath
- * @param destinationDir  destination dir filepath
- * @param backupDir the location of the backups
  */
-export function prepareBackups(
+export function createBackup(
   sourceDir: string,
   destinationDir: string,
   backupDir: string,
 ): string {
-  console.log(backupDir);
   // Create a random backup dir
   const uniqueBackupDir = join(
     backupDir,
@@ -83,7 +64,6 @@ export function prepareBackups(
 /**
  * Prepare the destination directory:
  * Empty the directory of all files or create a new directory at the given path
- * @param dirPath the path of the directory to empty
  */
 export function prepareDestDirectory(dirPath: string) {
   try {
@@ -91,19 +71,4 @@ export function prepareDestDirectory(dirPath: string) {
   } catch {
     Deno.mkdirSync(dirPath, { recursive: true });
   }
-}
-
-export function publishNotes(notes: Note[], dirPath: string) {
-  notes.forEach((note) => {
-    const contentToPublish = note.processedFile();
-    if (!contentToPublish) {
-      return;
-    }
-    let slug = note.frontmatter?.slug;
-    if (!slug) {
-      slug = note.frontmatter?.title?.toLowerCase().replace(/ /g, "-");
-      return;
-    }
-    Deno.writeTextFileSync(join(dirPath, `${slug}.md`), contentToPublish);
-  });
 }

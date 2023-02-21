@@ -1,16 +1,15 @@
-import { assertEquals, describe, it, returnsNext, stub } from "./deps.ts";
+import { assertEquals, describe, it, returnsNext, stub } from "../deps.ts";
 
 import { findFilesRecursively } from "../lib/utils.ts";
 import { main } from "../lib/index.ts";
+import { processedBlogSchema } from "../lib/schema.ts";
+import { setupTestDirectories } from "./test-utils.ts";
 
 describe("E2E testing", () => {
   it("should convert my notes to my blog directory when I provide a source and destination directory", async () => {
     // Arrange
-    const sourceDir = "./test/__fixtures__/source";
-    const blogDir = Deno.makeTempDirSync();
-    //  const loggerDir = Deno.makeTempDirSync();
-    const backupDir = Deno.makeTempDirSync();
-
+    const { destroy, directories } = await setupTestDirectories();
+    const { sourceDir, blogDir, backupDir } = directories;
     stub(window, "confirm", returnsNext([true]));
     stub(window, "prompt", returnsNext([sourceDir, blogDir]));
 
@@ -24,13 +23,15 @@ describe("E2E testing", () => {
     ]);
 
     // Assert
-    const notes = await findFilesRecursively(sourceDir);
-    const notesCount = notes.length;
 
     // 1. == BACKUP ==
-    // A backup has been created
+    const notes = await findFilesRecursively(sourceDir);
     const backupDirResult = await findFilesRecursively(backupDir);
-    assertEquals(backupDirResult.length, notesCount, "Backup created");
+    assertEquals(
+      backupDirResult.length,
+      notes.length,
+      `Expected ${backupDirResult.length} to be ${notes.length}`,
+    );
     // The content of the backupDir is the same as the sourceDir
     const originalNotesNames = notes.map((note) => note.split("/").pop());
     const backupNotesNames = backupDirResult.map((note) =>
@@ -47,20 +48,33 @@ describe("E2E testing", () => {
     const blogDirResult = await findFilesRecursively(blogDir);
     assertEquals(
       blogDirResult.length,
-      notesCount - 2,
-      "Notes in blog directory created",
+      notes.length - 2,
+      `Expected ${blogDirResult.length} to be ${notes.length - 2}`,
     );
     // Wikilinks have been replaced by markdown links
-    console.log(blogDirResult);
     blogDirResult.forEach((post) => {
-      console.log("post", post);
       const markdownRegexp = /\[\[|\]\]/g;
-      assertEquals(markdownRegexp.test(Deno.readTextFileSync(post)), false);
+      assertEquals(
+        markdownRegexp.test(Deno.readTextFileSync(post)),
+        false,
+        "wiki links replaced",
+      );
     });
 
     // 3. == SOURCE ==
     // My source notes' frontmatter are updated
-    //TODO check the content of the files
+    const updatedNotes = await findFilesRecursively(sourceDir, {
+      match: /\.md/,
+    });
+    updatedNotes.forEach((note) => {
+      const content = Deno.readTextFileSync(note);
+      try {
+        const [_, frontmatter, _body] = content.split("---")[1];
+        processedBlogSchema.parse(frontmatter);
+      } catch {
+        return;
+      }
+    });
 
     // 4. == LOGGER ==
     // The logger is created
@@ -74,5 +88,6 @@ describe("E2E testing", () => {
     //     for (const directory in [blogDir, loggerDir, backupDir]) {
     //       Deno.removeSync(directory, { recursive: true });
     //     }
+    destroy();
   });
 });
