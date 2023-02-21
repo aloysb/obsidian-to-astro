@@ -7,8 +7,8 @@ import {
   join,
 } from "../deps.ts";
 import {
+  createBackup,
   findFilesRecursively,
-  prepareBackups,
   prepareDestDirectory,
 } from "../lib/utils.ts";
 
@@ -69,7 +69,7 @@ describe("Safety features", () => {
   });
   it("should create a backup of both the source and the destination directories", async () => {
     assertEquals([...Deno.readDirSync(backupDir)].length, 0);
-    const uniqueBackupDir = await prepareBackups(
+    const uniqueBackupDir = await createBackup(
       sourceDir,
       destinationDir,
       backupDir,

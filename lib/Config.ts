@@ -53,7 +53,6 @@ export class Config {
    */
   public static initialize(config: ConfigType) {
     if (this.instance) {
-      console.log("hello");
       return this.instance;
     }
     if (config.type === "cli") {

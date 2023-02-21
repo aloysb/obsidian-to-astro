@@ -15,26 +15,21 @@ export interface Command<T> {
  */
 export class Cli {
   /*
-   * Constructor
-   */
-  private constructor() {
-  }
-
-  /*
    * Static methods
    */
 
   /**
    * handleCommand handles the command line arguments and execute the right command
    */
-  public static async handleCommand(args?: typeof Deno.args) {
+  public static async HandleCommand(args?: typeof Deno.args) {
     const flags = parse(args ?? ["--help"], {
       boolean: ["help", "publish"],
       string: ["source", "blog"],
       alias: { ["help"]: "h" },
     });
+
     const hasNoArgs = Object.values(flags).every((flag) => {
-      return flag === false || (flag as string[]).length === 0;
+      return flag === false || (flag as string[]).length === 0 || flag === "";
     });
 
     if (flags.help || hasNoArgs) {

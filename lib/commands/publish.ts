@@ -1,4 +1,4 @@
-import { prepareBackups, prepareDestDirectory } from "../utils.ts";
+import { createBackup, prepareDestDirectory } from "../utils.ts";
 
 import { Command } from "../Cli.ts";
 import { Config } from "../Config.ts";
@@ -28,7 +28,7 @@ export class PublishCommand implements Command<never> {
 
     // Prepare backup directory
     try {
-      prepareBackups(
+      createBackup(
         sourceDir,
         blogDir,
         backupDir,

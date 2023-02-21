@@ -11,7 +11,7 @@ import {
   Stub,
   stub,
 } from "../deps.ts";
-import { findFilesRecursively, prepareBackups } from "../lib/utils.ts";
+import { createBackup, findFilesRecursively } from "../lib/utils.ts";
 
 import { Config } from "../lib/Config.ts";
 import { InitalizeConfigCommand } from "../lib/commands/initializeConfig.ts";
@@ -46,7 +46,7 @@ describe("CLI commands", () => {
 
     it("should do a backup", () => {
       const confirmStub = stub(window, "confirm", () => true);
-      const backupSpy = spy(prepareBackups);
+      const backupSpy = spy(createBackup);
       try {
         new PublishCommand().execute(config);
         assertSpyCall(backupSpy, 1);

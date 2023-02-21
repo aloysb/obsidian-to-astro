@@ -43,40 +43,40 @@ describe("cli", () => {
   });
 
   it("displays a help/welcome message by default", () => {
-    Cli.handleCommand(undefined);
+    Cli.HandleCommand(undefined);
     assertSpyCallArgs(consoleSpy, 0, [welcomeMessage]);
   });
 
   it("displays the welcome/help message if the help flag is set to true", () => {
-    Cli.handleCommand(["--help"]);
+    Cli.HandleCommand(["--help"]);
     assertSpyCallArgs(consoleSpy, 0, [welcomeMessage]);
   });
   it("displays the welcome/help message if the help flag alias (-h) is set to true", () => {
-    Cli.handleCommand(["-h"]);
+    Cli.HandleCommand(["-h"]);
     assertSpyCallArgs(consoleSpy, 0, [welcomeMessage]);
   });
   it("should run the configuration in manual mode if a source and a destination directories are provided", () => {
     const SOURCE = "/my/path/source";
     const BLOG = "/my/path/blog";
-    Cli.handleCommand(["--publish", "--source", SOURCE, "--blog", BLOG]);
+    Cli.HandleCommand(["--publish", "--source", SOURCE, "--blog", BLOG]);
 
     assertEquals(Config.retrieve().blogDir, BLOG);
     assertEquals(Config.retrieve().sourceDir, SOURCE);
   });
   it("should display an error message if I only provide the source", () => {
     const SOURCE = "/my/path/source";
-    Cli.handleCommand(["--publish", "--source", SOURCE]);
+    Cli.HandleCommand(["--publish", "--source", SOURCE]);
     assertSpyCallArgs(consoleSpy, 0, [missingArgument]); //  assertSpyCallArgs(consoleSpy, 1, [missingArgument]);
   });
 
   it("should display an error message if I only provide the destination (blog", () => {
     const BLOG = "/my/path/blog";
-    Cli.handleCommand(["--publish", "--blog", BLOG]);
+    Cli.HandleCommand(["--publish", "--blog", BLOG]);
     assertSpyCallArgs(consoleSpy, 0, [missingArgument]);
   });
   it("should runs the configuration in integrated mode if neither the source of the blog path are provided", () => {
     const initializeSpy = spy(Config, "initialize");
-    Cli.handleCommand(["--publish"]);
+    Cli.HandleCommand(["--publish"]);
     // @ts-ignore: I can't figure out the Spy generic
     assertSpyCall(initializeSpy, 0, [{ type: "integrated" }]);
     initializeSpy.restore();

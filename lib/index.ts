@@ -6,5 +6,5 @@ await main();
  * Main function
  */
 export async function main(args = Deno.args) {
-  await Cli.handleCommand(args);
+  await Cli.HandleCommand(args);
 }

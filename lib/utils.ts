@@ -33,7 +33,7 @@ export async function findFilesRecursively(
 /**
  * Prepare a backup of both the source and the destination folders
  */
-export function prepareBackups(
+export function createBackup(
   sourceDir: string,
   destinationDir: string,
   backupDir: string,
