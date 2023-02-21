@@ -7,8 +7,11 @@ export interface NoteProps {
 }
 export type Frontmatter = z.infer<typeof blogSchema>;
 
-/**
- * Class representing the parsed version of a note.
+/*
+ * Note class
+ * This class represents a note
+ * It is used to parse the frontmatter and the content of the note
+ * It also provides a way to process the note
  */
 export class Note {
   readonly filePath: string;
@@ -18,21 +21,49 @@ export class Note {
   private _processedFile: string | null = null;
 
   /*
+   * Constructor
+   * Private because we want to use the static method to create a note
+   */
+  private constructor(
+    filePath: string,
+  ) {
+    this.filePath = filePath;
+    this.originalFile = Deno.readTextFileSync(filePath);
+    this.frontmatter = this.parseFrontmatter();
+    this.originalFrontmatter = this.getRawFrontMatter();
+  }
+
+  /*
    * Getters
    */
   public get processedFile(): string | null {
     return this._processedFile;
   }
 
-  /**
-   * Create a note if it is createable!
-   * This prevent from creating faulty notes
-   *
-   * @param filePath
-   * @param onNoteCreatedEmitter
-   * @param linkManager
-   * @returns
+  /*
+   Return the frontmatter as a string
+   If the frontmatter is not valid, return null
+  */
+  public get originalContent(): string | null {
+    try {
+      return this.originalFile.split("---")[2].trim();
+    } catch {
+      return null;
+    }
+  }
+
+  private getRawFrontMatter() {
+    return this.originalFile.split("---")[1] as string;
+  }
+
+  /*
+   * Static methods
    */
+
+  /*
+   Create a note
+   If the note is not valid, return null
+  */
   public static new(
     filePath: string,
   ): Note | null {
@@ -44,32 +75,16 @@ export class Note {
       return null;
     }
   }
-  /**
-   * Create a note
-   * @param filePath the path of file
-   * @param handlers an array of handler to execute when processing the note
-   * @param onCreatedNote a hook to run a function on note creation
-   */
-  private constructor(
-    filePath: string,
-  ) {
-    this.filePath = filePath;
-    this.originalFile = Deno.readTextFileSync(filePath);
-    this.frontmatter = this.parseFrontmatter();
-    this.originalFrontmatter = this.getRawFrontMatter();
-  }
-  /**
-   * Return the raw content of the note, as is.
-   * This does not include frontmatter.
-   */
-  public get originalContent(): string | null {
-    try {
-      return this.originalFile.split("---")[2].trim();
-    } catch {
-      return null;
-    }
-  }
 
+  /*
+   * Methods
+   */
+
+  /*
+   Process the file
+   This method will process the file and return the processed file
+   If the file is not valid, return null
+  */
   public processFile(newContent: string) {
     if (!this.parseFrontmatter()) {
       return null;
@@ -90,9 +105,9 @@ ${content}`;
     }
   }
 
-  /**
-   *  Parse the file frontmatter. Returns null if there is no frontmatter
-   *  @private
+  /*
+     Parse the frontmatter
+     This method will parse the frontmatter and return it
    */
   private parseFrontmatter(): Frontmatter {
     try {
@@ -106,9 +121,5 @@ ${content}`;
     } catch {
       throw Error("No frontmatter found");
     }
-  }
-
-  private getRawFrontMatter() {
-    return this.originalFile.split("---")[1] as string;
   }
 }

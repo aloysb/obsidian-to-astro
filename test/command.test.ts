@@ -13,7 +13,8 @@ import {
 } from "../deps.ts";
 import { findFilesRecursively, prepareBackups } from "../lib/utils.ts";
 
-import { Config } from "../lib/config.ts";
+import { Config } from "../lib/Config.ts";
+import { InitalizeConfigCommand } from "../lib/commands/initializeConfig.ts";
 import { PublishCommand } from "../lib/commands/publish.ts";
 import { setupTestDirectories } from "./test-utils.ts";
 
@@ -65,6 +66,29 @@ describe("CLI commands", () => {
       } finally {
         confirmStub.restore();
       }
+    });
+  });
+
+  describe("initalizeConfig", () => {
+    beforeEach(() => {
+      Config.UNSAFE_destroy();
+    });
+    it("should initialize the config with the right values", () => {
+      const userArgs = {
+        source: "source",
+        blog: "blog",
+        backup: "backup",
+      };
+
+      const config = new InitalizeConfigCommand().execute({
+        source: userArgs.source,
+        blog: userArgs.blog,
+        backup: userArgs.backup,
+      });
+
+      assertEquals(config.sourceDir, "source");
+      assertEquals(config.blogDir, "blog");
+      assertEquals(config.backupDir, "backup");
     });
   });
 });

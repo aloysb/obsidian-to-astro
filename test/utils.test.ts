@@ -5,18 +5,12 @@ import {
   describe,
   it,
   join,
-  logger,
 } from "../deps.ts";
 import {
   findFilesRecursively,
   prepareBackups,
   prepareDestDirectory,
-  publishNotes,
 } from "../lib/utils.ts";
-
-import { Config } from "../lib/config.ts";
-import { NotesManager } from "../lib/NotesManager.ts";
-import { setupTestDirectories } from "./test-utils.ts";
 
 describe("Retrieveing the notes", () => {
   it("retrieves the notes recursively within a directory", async () => {
@@ -95,52 +89,4 @@ describe("Safety features", () => {
       1,
     );
   });
-});
-
-describe("publishNotes", () => {
-  it("should copy the note across to the destination directory", async () => {
-    // Arrange
-    const { directories, destroy } = await setupTestDirectories();
-    const config = Config.initialize({ type: "cli", values: directories });
-    const notesManager = await NotesManager.initialize({ config, logger });
-
-    // Act
-    publishNotes(notesManager.notes, directories.blogDir);
-
-    // Assert
-    assertEquals(
-      (await findFilesRecursively(directories.blogDir)).length,
-      (await findFilesRecursively(directories.sourceDir, { match: /\.md/ }))
-        .length - 1, // There is one file that does not have frontmatter
-    );
-
-    // Cleanup
-    destroy();
-  });
-
-  //TODO: fixme
-  //   it("should update the frontmatter in the source notes", async () => {
-  //     // Arrange
-  //     const linkManager = new LinkManager();
-  //     const { directories, destroy } = await setupTestDirectories();
-  //     const notePaths = await findFilesRecursively(directories.sourceDir);
-
-  //     const notes = notePaths.map((path) =>
-  //       Note.new(path, new Emitter(), linkManager)
-  //     )
-  //       .filter((note) => Boolean(note)) as Note[];
-
-  //     // Act
-  //     publishNotes(notes, directories.blogDir);
-
-  //     // Assert
-  //     // The frontmatter of the notes are updated to include the published date
-  //     notes.forEach((note) => {
-  //       assertEquals(note.frontmatter.status, "publish");
-  //       assertEquals(note.frontmatter.published_at, new Date());
-  //     });
-
-  //     // Cleanup
-  //     destroy();
-  //   });
 });

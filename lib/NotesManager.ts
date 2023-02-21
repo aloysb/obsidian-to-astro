@@ -1,6 +1,7 @@
-import { Config } from "./config.ts";
-import { logger as Logger } from "../deps.ts";
-import { Note } from "./note.ts";
+import { join, logger as Logger } from "../deps.ts";
+
+import { Config } from "./Config.ts";
+import { Note } from "./Note.ts";
 import { findFilesRecursively } from "./utils.ts";
 
 type NotesManagerArgs = {
@@ -11,8 +12,10 @@ type NotesManagerArgs = {
 /**
  * The NotesManager is the central class of the program.
  * It handles the creation, update and publication of the notes.
+ * It is a singleton and can be initialized only once.
  */
 export class NotesManager {
+  private static instance: NotesManager;
   private _notes: Note[] = [];
   private readonly logger: typeof Logger;
   private readonly config: Config;
@@ -24,12 +27,20 @@ export class NotesManager {
     return this._notes;
   }
 
+  /*
+   * Constructor
+   * Private because we want to use the static method to create a NotesManager
+   */
   private constructor(args: NotesManagerArgs) {
     this.logger = args.logger;
     this.config = args.config;
   }
 
   /*
+   * Static methods
+   */
+
+  /**
    *  Create a NotesManager instance.
    *  The reason we need to go through this initialization process is because
    *  we need to await the creation of the notes.
@@ -38,13 +49,48 @@ export class NotesManager {
   public static async initialize(
     args: NotesManagerArgs,
   ): Promise<NotesManager> {
+    if (this.instance) {
+      return this.instance;
+    }
     const notesManager = new NotesManager(args);
     await notesManager.createNotes();
     await notesManager.processNotes();
+    this.instance = notesManager;
     return notesManager;
   }
 
   /*
+   * Public methods
+   */
+
+  /*
+   * Publish the notes to the destination directory
+   */
+  public publishNotes() {
+    let notesPublished = 0;
+    for (const note of this._notes) {
+      let slug = note.frontmatter?.slug;
+      if (!slug) {
+        slug = note.frontmatter?.title?.toLowerCase().replace(/ /g, "-");
+      }
+      if (!note.processedFile) {
+        this.logger.info(`No content for note: ${note.filePath}.md`);
+        continue;
+      }
+      Deno.writeTextFileSync(
+        join(this.config.blogDir, `${slug}.md`),
+        note.processedFile,
+      );
+      notesPublished++;
+      this.logger.info(`Note published: ${slug}.md`);
+    }
+  }
+
+  /*
+   * Private methods
+   */
+
+  /**
    * Look for all the notes in the source directory and create them.
    * Do not create the notes if they are not valid.
    */
@@ -70,7 +116,7 @@ export class NotesManager {
     this.logger.info(`Total files: ${files.length}`);
   }
 
-  /*
+  /**
    * Process the notes.
    * This is where we replace the wikilinks by markdown links.
    */

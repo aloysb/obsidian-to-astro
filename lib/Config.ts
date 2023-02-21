@@ -6,11 +6,34 @@ type ConfigType = {
   type: "cli";
   values: { sourceDir: string; blogDir: string; backupDir?: string };
 } | { type: "integrated"; path?: string };
+
+/*
+ * Class representing the configuration
+ * The configuration is a singleton and can be initialized only once
+ * It is initialized either from the CLI or from the integrated configuration
+ * The integrated configuration is a JSON file located in the user's home directory
+ * The CLI configuration is passed as arguments to the CLI
+ */
 export class Config {
   private static instance: Config;
   private readonly _sourceDir: string;
   private readonly _blogDir: string;
   private readonly _backupDir: string;
+
+  /*
+   * Getters
+   */
+  get sourceDir() {
+    return this._sourceDir;
+  }
+
+  get blogDir() {
+    return this._blogDir;
+  }
+
+  get backupDir() {
+    return this._backupDir;
+  }
 
   private constructor(
     { sourceDir, blogDir, backupDir }: {
@@ -24,14 +47,13 @@ export class Config {
     this._backupDir = backupDir;
   }
 
-  /**
-   * Create or retrieve the current config (singleton)
-   *
-   * @param config Configuration option
-   * @returns the initialized configuration
+  /*
+   * Initialize the configuration
+   * Create a new instance if it does not exist yet or return the existing one
    */
   public static initialize(config: ConfigType) {
     if (this.instance) {
+      console.log("hello");
       return this.instance;
     }
     if (config.type === "cli") {
@@ -91,9 +113,8 @@ export class Config {
     return this.instance;
   }
 
-  /**
-   * Retrieve the current config
-   * @returns the current instance
+  /*
+   * Retrieve the configuration instance
    */
   public static retrieve() {
     if (!this.instance) {
@@ -102,27 +123,6 @@ export class Config {
       );
     }
     return this.instance;
-  }
-
-  /**
-   * Get the source dir path
-   */
-  get sourceDir() {
-    return this._sourceDir;
-  }
-
-  /**
-   * Get the blog dir path
-   */
-  get blogDir() {
-    return this._blogDir;
-  }
-
-  /**
-   * Get the blog dir path
-   */
-  get backupDir() {
-    return this._backupDir;
   }
 
   /**

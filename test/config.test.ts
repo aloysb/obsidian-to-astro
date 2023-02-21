@@ -1,6 +1,6 @@
 import { afterEach, assertEquals, describe, it, stub } from "../deps.ts";
 
-import { Config } from "../lib/config.ts";
+import { Config } from "../lib/Config.ts";
 
 describe("Config", () => {
   const BLOG_DIR = "/my/path/to/blog";

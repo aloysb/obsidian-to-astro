@@ -1,4 +1,4 @@
-import { Command } from "../cli.ts";
+import { Command } from "../Cli.ts";
 
 export const welcomeMessage = `
     Hey there! 
@@ -16,6 +16,10 @@ export const welcomeMessage = `
     Alo.
   `;
 
+/**
+ * Help command
+ * Display the help message
+ */
 export class HelpCommand implements Command<never> {
   public execute() {
     console.log(welcomeMessage);

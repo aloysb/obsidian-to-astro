@@ -1,4 +1,3 @@
-import { Cli, missingArgument } from "../lib/cli.ts";
 import {
   afterEach,
   assertEquals,
@@ -14,7 +13,9 @@ import {
   stub,
 } from "../deps.ts";
 
-import { Config } from "../lib/config.ts";
+import { Cli } from "../lib/Cli.ts";
+import { Config } from "../lib/Config.ts";
+import { missingArgument } from "../lib/commands/initializeConfig.ts";
 import { welcomeMessage } from "../lib/commands/help.ts";
 
 describe("cli", () => {
@@ -55,16 +56,12 @@ describe("cli", () => {
     assertSpyCallArgs(consoleSpy, 0, [welcomeMessage]);
   });
   it("should run the configuration in manual mode if a source and a destination directories are provided", () => {
-    confirmStub.restore();
-    const promptStub = stub(window, "confirm", () => false);
     const SOURCE = "/my/path/source";
     const BLOG = "/my/path/blog";
     Cli.handleCommand(["--publish", "--source", SOURCE, "--blog", BLOG]);
 
     assertEquals(Config.retrieve().blogDir, BLOG);
     assertEquals(Config.retrieve().sourceDir, SOURCE);
-
-    promptStub.restore();
   });
   it("should display an error message if I only provide the source", () => {
     const SOURCE = "/my/path/source";
@@ -78,13 +75,10 @@ describe("cli", () => {
     assertSpyCallArgs(consoleSpy, 0, [missingArgument]);
   });
   it("should runs the configuration in integrated mode if neither the source of the blog path are provided", () => {
-    confirmStub.restore();
     const initializeSpy = spy(Config, "initialize");
-    const promptStub = stub(window, "confirm", () => false);
     Cli.handleCommand(["--publish"]);
     // @ts-ignore: I can't figure out the Spy generic
     assertSpyCall(initializeSpy, 0, [{ type: "integrated" }]);
     initializeSpy.restore();
-    promptStub.restore();
   });
 });

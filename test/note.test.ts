@@ -1,4 +1,4 @@
-import { Frontmatter, Note } from "../lib/note.ts";
+import { Frontmatter, Note } from "../lib/Note.ts";
 import { assertEquals, beforeEach, describe, it } from "../deps.ts";
 
 const NOTE_CONTENT = `Do not delete me

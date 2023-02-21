@@ -1,17 +1,19 @@
-import {
-  prepareBackups,
-  prepareDestDirectory,
-  publishNotes,
-} from "../utils.ts";
+import { prepareBackups, prepareDestDirectory } from "../utils.ts";
 
-import { Command } from "../cli.ts";
-import { Config } from "../config.ts";
+import { Command } from "../Cli.ts";
+import { Config } from "../Config.ts";
 import { NotesManager } from "../NotesManager.ts";
 import { logger } from "../../deps.ts";
 
+/**
+ * Publish command
+ * Publishes the notes to the blog directory
+ */
 export class PublishCommand implements Command<never> {
   public async execute(config: Config) {
     const { backupDir, blogDir, sourceDir } = config;
+
+    // Ask for confirmation before proceeding
     const shouldProceed = confirm(`Using the following directories:
     - Blog: ${blogDir},
     - Vault: ${sourceDir},
@@ -20,10 +22,11 @@ export class PublishCommand implements Command<never> {
 `);
 
     if (!shouldProceed) {
-      console.log("Cancelling. Not post published");
+      console.log("Cancelling");
       return;
     }
 
+    // Prepare backup directory
     try {
       prepareBackups(
         sourceDir,
@@ -35,13 +38,10 @@ export class PublishCommand implements Command<never> {
       Deno.exit(1);
       return;
     }
-
-    const notesManager = await NotesManager.initialize({ config, logger });
-
     // Prepare destination directory
     prepareDestDirectory(blogDir);
 
-    // Copy notes to destination directory
-    publishNotes(notesManager.notes, blogDir);
+    const notesManager = await NotesManager.initialize({ config, logger });
+    notesManager.publishNotes();
   }
 }
