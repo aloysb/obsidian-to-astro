@@ -69,13 +69,7 @@ export class NotesManager {
   public publishNotes() {
     let notesPublished = 0;
     for (const note of this._notes) {
-      let slug = note.processedFrontmatter?.slug;
-      if (!slug) {
-        slug = note.processedFrontmatter?.title?.toLowerCase().replace(
-          / /g,
-          "-",
-        );
-      }
+      const slug = note.processedFrontmatter.slug;
       if (!note.processedFile) {
         this.logger.info(`No content for note: ${note.filePath}.md`);
         continue;

@@ -21,7 +21,10 @@ describe("NotesManager", () => {
 
   it("should allow to create all notes", async () => {
     const notesManager = await NotesManager.initialize({ config, logger });
-    assertEquals(notesManager.notes.length, 5);
+    const expectedFiles = await findFilesRecursively(config.sourceDir, {
+      match: /.*\.md/,
+    });
+    assertEquals(notesManager.notes.length, expectedFiles.length - 1); // There is one file that does not have frontmatter
   });
 
   it("should copy the note across to the destination directory", async () => {

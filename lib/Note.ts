@@ -1,5 +1,5 @@
+import { logger, parseYAML, stringify, z } from "../deps.ts";
 import { originalBlogSchema, processedBlogSchema } from "./schema.ts";
-import { parseYAML, stringify, z } from "../deps.ts";
 
 export interface NoteProps {
   filePath: string;
@@ -80,8 +80,8 @@ ${content}`;
   public static new(
     filePath: string,
   ): Note | null {
-    const note = new Note(filePath);
     try {
+      const note = new Note(filePath);
       note.parseFrontmatter();
       return note;
     } catch {
@@ -101,22 +101,22 @@ ${content}`;
     try {
       const rawFrontmatter = this.getRawFrontMatter();
       const frontmatter = parseYAML(rawFrontmatter) as Frontmatter;
-      try {
-        originalBlogSchema.parse(frontmatter);
-      } catch (e) {
-        console.log(`${frontmatter.title} failed to parse`, e);
-      }
-      console.error(this.filePath);
-      console.error(frontmatter.published_at);
-      console.log(frontmatter);
-      console.log(new Date(frontmatter.published_at ?? Date.now()));
+      originalBlogSchema.parse(frontmatter);
       return {
         ...frontmatter,
         last_modified_at: new Date(frontmatter.last_modified_at),
         created_at: new Date(frontmatter.created_at),
         published_at: new Date(frontmatter.published_at ?? Date.now()),
+        description: frontmatter.description ?? "",
+        slug: frontmatter.slug ??
+          frontmatter.title.toLowerCase().replace(/ /g, "-").replace(
+            /[^a-z0-9-]/g,
+            "",
+          ),
       };
-    } catch {
+    } catch (e) {
+      logger.error(`Invalid frontmatter for ${this.filePath.split("/").pop()}`);
+      logger.error(e);
       throw Error("No frontmatter found");
     }
   }

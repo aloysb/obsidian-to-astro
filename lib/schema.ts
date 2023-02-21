@@ -8,7 +8,7 @@ import { z } from "../deps.ts";
 export const processedBlogSchema = z.object({
   title: z.string(),
   status: z.enum(["published", "draft", "private", "archived", "deleted"]),
-  tags: z.array(z.string()),
+  tags: z.array(z.string().nullable()),
   created_at: z.date(),
   last_modified_at: z.date(),
   published_at: z.date(),
@@ -24,10 +24,10 @@ export const processedBlogSchema = z.object({
 export const originalBlogSchema = z.object({
   title: z.string(),
   status: z.enum(["published", "draft", "private", "archived", "deleted"]),
-  tags: z.array(z.string()),
+  tags: z.array(z.string().nullable()),
   created_at: z.string(),
-  last_modified_at: z.string(),
-  published_at: z.string().optional(),
-  description: z.string(),
-  slug: z.string(),
+  last_modified_at: z.string().or(z.date()),
+  published_at: z.string().optional().or(z.date()),
+  description: z.string().optional().or(z.date()),
+  slug: z.string().optional(),
 });

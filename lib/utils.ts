@@ -38,7 +38,6 @@ export function createBackup(
   destinationDir: string,
   backupDir: string,
 ): string {
-  console.log(backupDir);
   // Create a random backup dir
   const uniqueBackupDir = join(
     backupDir,

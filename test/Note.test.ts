@@ -116,4 +116,8 @@ describe("Note class", () => {
       new Date("2022-01-01T10:00:00.000Z"),
     );
   });
+
+  it("should add an empty description if it is not set", () => {
+    assertEquals(note.processedFrontmatter.description, "");
+  });
 });
