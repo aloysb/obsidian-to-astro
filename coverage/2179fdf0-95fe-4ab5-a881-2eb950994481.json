@@ -1,0 +1,21 @@
+{
+  "scriptId": "231",
+  "url": "https://deno.land/std@0.177.0/fs/ensure_link.ts",
+  "functions": [
+    {
+      "functionName": "",
+      "ranges": [{ "startOffset": 0, "endOffset": 1413, "count": 1 }],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "ensureLink",
+      "ranges": [{ "startOffset": 661, "endOffset": 819, "count": 0 }],
+      "isBlockCoverage": false
+    },
+    {
+      "functionName": "ensureLinkSync",
+      "ranges": [{ "startOffset": 1260, "endOffset": 1412, "count": 0 }],
+      "isBlockCoverage": false
+    }
+  ]
+}

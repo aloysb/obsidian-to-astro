@@ -1,0 +1,63 @@
+{
+  "scriptId": "196",
+  "url": "file:///home/abr/gh/vault2blog/lib/Note.ts",
+  "functions": [
+    {
+      "functionName": "",
+      "ranges": [{ "startOffset": 0, "endOffset": 2994, "count": 1 }],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "<instance_members_initializer>",
+      "ranges": [{ "startOffset": 282, "endOffset": 2993, "count": 8 }],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "Note",
+      "ranges": [{ "startOffset": 506, "endOffset": 751, "count": 8 }],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "get processedFile",
+      "ranges": [{ "startOffset": 786, "endOffset": 849, "count": 0 }],
+      "isBlockCoverage": false
+    },
+    {
+      "functionName": "set processedFile",
+      "ranges": [{ "startOffset": 854, "endOffset": 1310, "count": 0 }],
+      "isBlockCoverage": false
+    },
+    {
+      "functionName": "get originalContent",
+      "ranges": [
+        { "startOffset": 1409, "endOffset": 1567, "count": 1 },
+        { "startOffset": 1518, "endOffset": 1561, "count": 0 }
+      ],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "new",
+      "ranges": [
+        { "startOffset": 1674, "endOffset": 1870, "count": 8 },
+        { "startOffset": 1821, "endOffset": 1864, "count": 1 }
+      ],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "parseFrontmatter",
+      "ranges": [
+        { "startOffset": 1991, "endOffset": 2863, "count": 15 },
+        { "startOffset": 2450, "endOffset": 2463, "count": 12 },
+        { "startOffset": 2519, "endOffset": 2524, "count": 0 },
+        { "startOffset": 2565, "endOffset": 2645, "count": 0 },
+        { "startOffset": 2671, "endOffset": 2857, "count": 1 }
+      ],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "getRawFrontMatter",
+      "ranges": [{ "startOffset": 2914, "endOffset": 2991, "count": 22 }],
+      "isBlockCoverage": true
+    }
+  ]
+}

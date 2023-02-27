@@ -1,0 +1,16 @@
+{
+  "scriptId": "64",
+  "url": "deno:runtime/js/30_fs.js",
+  "functions": [
+    {
+      "functionName": "makeTempFileSync",
+      "ranges": [{ "startOffset": 1639, "endOffset": 1732, "count": 2 }],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "removeSync",
+      "ranges": [{ "startOffset": 3101, "endOffset": 3242, "count": 6 }],
+      "isBlockCoverage": true
+    }
+  ]
+}

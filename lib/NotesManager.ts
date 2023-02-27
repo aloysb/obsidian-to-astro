@@ -1,4 +1,4 @@
-import { join, logger as Logger } from "../deps.ts";
+import { logger as Logger, join } from "../deps.ts";
 
 import { Config } from "./Config.ts";
 import { Note } from "./Note.ts";
@@ -69,6 +69,10 @@ export class NotesManager {
   public publishNotes() {
     let notesPublished = 0;
     for (const note of this._notes) {
+      if (note.processedFrontmatter.status !== "published") {
+        continue;
+      }
+
       const slug = note.processedFrontmatter.slug;
       if (!note.processedFile) {
         this.logger.info(`No content for note: ${note.filePath}.md`);
@@ -81,6 +85,7 @@ export class NotesManager {
       notesPublished++;
       this.logger.info(`Note published: ${slug}.md`);
     }
+    this.logger.info(`Notes published: ${notesPublished}`)
   }
 
   /*

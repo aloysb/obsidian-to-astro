@@ -1,0 +1,16 @@
+{
+  "scriptId": "287",
+  "url": "https://deno.land/std@0.177.0/encoding/_yaml/type/map.ts",
+  "functions": [
+    {
+      "functionName": "",
+      "ranges": [{ "startOffset": 0, "endOffset": 453, "count": 1 }],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "construct",
+      "ranges": [{ "startOffset": 361, "endOffset": 427, "count": 0 }],
+      "isBlockCoverage": false
+    }
+  ]
+}

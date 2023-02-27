@@ -1,0 +1,31 @@
+{
+  "scriptId": "275",
+  "url": "https://deno.land/std@0.177.0/encoding/_yaml/type/binary.ts",
+  "functions": [
+    {
+      "functionName": "",
+      "ranges": [{ "startOffset": 0, "endOffset": 3587, "count": 1 }],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "resolveYamlBinary",
+      "ranges": [{ "startOffset": 483, "endOffset": 1001, "count": 0 }],
+      "isBlockCoverage": false
+    },
+    {
+      "functionName": "constructYamlBinary",
+      "ranges": [{ "startOffset": 1002, "endOffset": 1976, "count": 0 }],
+      "isBlockCoverage": false
+    },
+    {
+      "functionName": "representYamlBinary",
+      "ranges": [{ "startOffset": 1977, "endOffset": 3078, "count": 0 }],
+      "isBlockCoverage": false
+    },
+    {
+      "functionName": "isBinary",
+      "ranges": [{ "startOffset": 3079, "endOffset": 3373, "count": 0 }],
+      "isBlockCoverage": false
+    }
+  ]
+}

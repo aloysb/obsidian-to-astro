@@ -1,0 +1,105 @@
+{
+  "scriptId": "214",
+  "url": "file:///home/abr/gh/vault2blog/lib/NotesManager.ts",
+  "functions": [
+    {
+      "functionName": "",
+      "ranges": [{ "startOffset": 0, "endOffset": 4761, "count": 1 }],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "<instance_members_initializer>",
+      "ranges": [{ "startOffset": 312, "endOffset": 4760, "count": 1 }],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "<static_initializer>",
+      "ranges": [{ "startOffset": 337, "endOffset": 352, "count": 1 }],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "get notes",
+      "ranges": [{ "startOffset": 421, "endOffset": 468, "count": 0 }],
+      "isBlockCoverage": false
+    },
+    {
+      "functionName": "NotesManager",
+      "ranges": [{ "startOffset": 578, "endOffset": 672, "count": 1 }],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "initialize",
+      "ranges": [
+        { "startOffset": 955, "endOffset": 1263, "count": 2 },
+        { "startOffset": 1007, "endOffset": 1262, "count": 1 }
+      ],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "publishNotes",
+      "ranges": [
+        { "startOffset": 1358, "endOffset": 1970, "count": 2 },
+        { "startOffset": 1446, "endOffset": 1964, "count": 8 },
+        { "startOffset": 1514, "endOffset": 1553, "count": 0 },
+        { "startOffset": 1648, "endOffset": 1767, "count": 0 }
+      ],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "createNotes",
+      "ranges": [
+        { "startOffset": 2136, "endOffset": 2914, "count": 1 },
+        { "startOffset": 2329, "endOffset": 2631, "count": 5 },
+        { "startOffset": 2404, "endOffset": 2518, "count": 4 },
+        { "startOffset": 2518, "endOffset": 2621, "count": 1 }
+      ],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "processNotes",
+      "ranges": [
+        { "startOffset": 3016, "endOffset": 3466, "count": 1 },
+        { "startOffset": 3072, "endOffset": 3460, "count": 4 },
+        { "startOffset": 3224, "endOffset": 3309, "count": 0 }
+      ],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "replaceWikiLinks",
+      "ranges": [
+        { "startOffset": 3544, "endOffset": 4160, "count": 4 },
+        { "startOffset": 3637, "endOffset": 3734, "count": 0 }
+      ],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "",
+      "ranges": [
+        { "startOffset": 3811, "endOffset": 4118, "count": 21 },
+        { "startOffset": 3948, "endOffset": 3992, "count": 19 },
+        { "startOffset": 3992, "endOffset": 4117, "count": 2 }
+      ],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "",
+      "ranges": [{ "startOffset": 4042, "endOffset": 4078, "count": 2 }],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "processLink",
+      "ranges": [
+        { "startOffset": 4219, "endOffset": 4758, "count": 2 },
+        { "startOffset": 4426, "endOffset": 4672, "count": 1 },
+        { "startOffset": 4672, "endOffset": 4679, "count": 0 },
+        { "startOffset": 4717, "endOffset": 4723, "count": 1 }
+      ],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "",
+      "ranges": [{ "startOffset": 4349, "endOffset": 4398, "count": 7 }],
+      "isBlockCoverage": true
+    }
+  ]
+}

@@ -1,0 +1,64 @@
+{
+  "scriptId": "199",
+  "url": "file:///home/abr/gh/vault2blog/lib/Config.ts",
+  "functions": [
+    {
+      "functionName": "",
+      "ranges": [{ "startOffset": 0, "endOffset": 4475, "count": 1 }],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "<instance_members_initializer>",
+      "ranges": [{ "startOffset": 508, "endOffset": 4474, "count": 2 }],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "<static_initializer>",
+      "ranges": [{ "startOffset": 527, "endOffset": 542, "count": 1 }],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "get sourceDir",
+      "ranges": [{ "startOffset": 616, "endOffset": 671, "count": 4 }],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "get blogDir",
+      "ranges": [{ "startOffset": 676, "endOffset": 727, "count": 12 }],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "get backupDir",
+      "ranges": [{ "startOffset": 732, "endOffset": 787, "count": 3 }],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "Config",
+      "ranges": [{ "startOffset": 792, "endOffset": 955, "count": 2 }],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "initialize",
+      "ranges": [
+        { "startOffset": 1089, "endOffset": 3836, "count": 3 },
+        { "startOffset": 1137, "endOffset": 1182, "count": 1 },
+        { "startOffset": 1182, "endOffset": 1459, "count": 2 },
+        { "startOffset": 1412, "endOffset": 1433, "count": 0 },
+        { "startOffset": 1459, "endOffset": 1502, "count": 2 },
+        { "startOffset": 1502, "endOffset": 3800, "count": 0 },
+        { "startOffset": 3800, "endOffset": 3835, "count": 2 }
+      ],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "retrieve",
+      "ranges": [{ "startOffset": 3898, "endOffset": 4131, "count": 0 }],
+      "isBlockCoverage": false
+    },
+    {
+      "functionName": "UNSAFE_destroy",
+      "ranges": [{ "startOffset": 4204, "endOffset": 4472, "count": 1 }],
+      "isBlockCoverage": true
+    }
+  ]
+}

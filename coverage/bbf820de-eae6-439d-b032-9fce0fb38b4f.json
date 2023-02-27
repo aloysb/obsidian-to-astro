@@ -1,0 +1,31 @@
+{
+  "scriptId": "238",
+  "url": "https://deno.land/std@0.177.0/fs/walk.ts",
+  "functions": [
+    {
+      "functionName": "",
+      "ranges": [{ "startOffset": 0, "endOffset": 5043, "count": 1 }],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "include",
+      "ranges": [{ "startOffset": 427, "endOffset": 759, "count": 0 }],
+      "isBlockCoverage": false
+    },
+    {
+      "functionName": "wrapErrorWithRootPath",
+      "ranges": [{ "startOffset": 760, "endOffset": 1162, "count": 0 }],
+      "isBlockCoverage": false
+    },
+    {
+      "functionName": "walk",
+      "ranges": [{ "startOffset": 1599, "endOffset": 3332, "count": 0 }],
+      "isBlockCoverage": false
+    },
+    {
+      "functionName": "walkSync",
+      "ranges": [{ "startOffset": 3387, "endOffset": 5042, "count": 0 }],
+      "isBlockCoverage": false
+    }
+  ]
+}

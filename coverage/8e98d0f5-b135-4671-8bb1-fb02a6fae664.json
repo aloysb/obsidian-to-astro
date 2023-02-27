@@ -1,0 +1,16 @@
+{
+  "scriptId": "198",
+  "url": "file:///home/abr/gh/vault2blog/lib/index.ts",
+  "functions": [
+    {
+      "functionName": "",
+      "ranges": [{ "startOffset": 0, "endOffset": 154, "count": 1 }],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "main",
+      "ranges": [{ "startOffset": 77, "endOffset": 153, "count": 2 }],
+      "isBlockCoverage": true
+    }
+  ]
+}

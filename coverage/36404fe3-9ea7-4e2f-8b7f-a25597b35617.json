@@ -1,0 +1,25 @@
+{
+  "scriptId": "234",
+  "url": "https://deno.land/std@0.177.0/fs/empty_dir.ts",
+  "functions": [
+    {
+      "functionName": "",
+      "ranges": [{ "startOffset": 0, "endOffset": 2379, "count": 1 }],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "emptyDir",
+      "ranges": [{ "startOffset": 572, "endOffset": 1267, "count": 0 }],
+      "isBlockCoverage": false
+    },
+    {
+      "functionName": "emptyDirSync",
+      "ranges": [
+        { "startOffset": 1678, "endOffset": 2378, "count": 4 },
+        { "startOffset": 2160, "endOffset": 2376, "count": 2 },
+        { "startOffset": 2226, "endOffset": 2260, "count": 0 }
+      ],
+      "isBlockCoverage": true
+    }
+  ]
+}

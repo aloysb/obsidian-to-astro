@@ -1,15 +1,15 @@
 import { HelpCommand, welcomeMessage } from "../lib/commands/help.ts";
 import {
-  afterEach,
-  assertEquals,
-  assertSpyCall,
-  assertSpyCallArgs,
-  beforeEach,
-  describe,
-  it,
-  spy,
-  Stub,
-  stub,
+   Stub,
+   afterEach,
+   assertEquals,
+   assertSpyCall,
+   assertSpyCallArgs,
+   beforeEach,
+   describe,
+   it,
+   spy,
+   stub,
 } from "../deps.ts";
 import { createBackup, findFilesRecursively } from "../lib/utils.ts";
 
@@ -66,6 +66,15 @@ describe("CLI commands", () => {
       } finally {
         confirmStub.restore();
       }
+    });
+
+    it("should commit the changes to the blog directory", async () => {
+       const confirmStub = stub(window, "confirm", () => true);
+       try {
+          await new PublishCommand().execute(config);
+       } finally {
+          confirmStub.restore();
+       }
     });
   });
 

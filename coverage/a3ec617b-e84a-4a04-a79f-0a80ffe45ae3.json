@@ -1,0 +1,77 @@
+{
+  "scriptId": "279",
+  "url": "https://deno.land/std@0.177.0/encoding/_yaml/type/int.ts",
+  "functions": [
+    {
+      "functionName": "",
+      "ranges": [{ "startOffset": 0, "endOffset": 4709, "count": 1 }],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "isHexCode",
+      "ranges": [{ "startOffset": 348, "endOffset": 484, "count": 0 }],
+      "isBlockCoverage": false
+    },
+    {
+      "functionName": "isOctCode",
+      "ranges": [{ "startOffset": 485, "endOffset": 562, "count": 0 }],
+      "isBlockCoverage": false
+    },
+    {
+      "functionName": "isDecCode",
+      "ranges": [
+        { "startOffset": 563, "endOffset": 640, "count": 321 },
+        { "startOffset": 616, "endOffset": 628, "count": 291 }
+      ],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "resolveYamlInteger",
+      "ranges": [
+        { "startOffset": 641, "endOffset": 2635, "count": 201 },
+        { "startOffset": 766, "endOffset": 779, "count": 0 },
+        { "startOffset": 852, "endOffset": 887, "count": 0 },
+        { "startOffset": 908, "endOffset": 2011, "count": 0 },
+        { "startOffset": 2109, "endOffset": 2122, "count": 0 },
+        { "startOffset": 2154, "endOffset": 2364, "count": 321 },
+        { "startOffset": 2206, "endOffset": 2215, "count": 0 },
+        { "startOffset": 2240, "endOffset": 2246, "count": 0 },
+        { "startOffset": 2295, "endOffset": 2332, "count": 201 },
+        { "startOffset": 2332, "endOffset": 2364, "count": 120 },
+        { "startOffset": 2364, "endOffset": 2451, "count": 0 },
+        { "startOffset": 2453, "endOffset": 2634, "count": 0 }
+      ],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "constructYamlInteger",
+      "ranges": [{ "startOffset": 2636, "endOffset": 3577, "count": 0 }],
+      "isBlockCoverage": false
+    },
+    {
+      "functionName": "isInteger",
+      "ranges": [{ "startOffset": 3578, "endOffset": 3728, "count": 0 }],
+      "isBlockCoverage": false
+    },
+    {
+      "functionName": "binary",
+      "ranges": [{ "startOffset": 3921, "endOffset": 4034, "count": 0 }],
+      "isBlockCoverage": false
+    },
+    {
+      "functionName": "octal",
+      "ranges": [{ "startOffset": 4044, "endOffset": 4154, "count": 0 }],
+      "isBlockCoverage": false
+    },
+    {
+      "functionName": "decimal",
+      "ranges": [{ "startOffset": 4164, "endOffset": 4226, "count": 0 }],
+      "isBlockCoverage": false
+    },
+    {
+      "functionName": "hexadecimal",
+      "ranges": [{ "startOffset": 4236, "endOffset": 4384, "count": 0 }],
+      "isBlockCoverage": false
+    }
+  ]
+}

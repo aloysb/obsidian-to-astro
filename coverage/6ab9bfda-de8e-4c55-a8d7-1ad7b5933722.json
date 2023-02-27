@@ -1,0 +1,38 @@
+{
+  "scriptId": "286",
+  "url": "https://deno.land/std@0.177.0/encoding/_yaml/type/float.ts",
+  "functions": [
+    {
+      "functionName": "",
+      "ranges": [{ "startOffset": 0, "endOffset": 3299, "count": 1 }],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "resolveYamlFloat",
+      "ranges": [
+        { "startOffset": 695, "endOffset": 954, "count": 169 },
+        { "startOffset": 768, "endOffset": 904, "count": 0 },
+        { "startOffset": 935, "endOffset": 953, "count": 0 }
+      ],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "constructYamlFloat",
+      "ranges": [{ "startOffset": 955, "endOffset": 1711, "count": 0 }],
+      "isBlockCoverage": false
+    },
+    {
+      "functionName": "representYamlFloat",
+      "ranges": [{ "startOffset": 1760, "endOffset": 2910, "count": 0 }],
+      "isBlockCoverage": false
+    },
+    {
+      "functionName": "isFloat",
+      "ranges": [
+        { "startOffset": 2911, "endOffset": 3060, "count": 76 },
+        { "startOffset": 3010, "endOffset": 3057, "count": 0 }
+      ],
+      "isBlockCoverage": true
+    }
+  ]
+}

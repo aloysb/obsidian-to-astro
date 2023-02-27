@@ -1,0 +1,26 @@
+{
+  "scriptId": "277",
+  "url": "https://deno.land/x/zod@v3.16.1/helpers/errorUtil.ts",
+  "functions": [
+    {
+      "functionName": "",
+      "ranges": [{ "startOffset": 0, "endOffset": 319, "count": 1 }],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "",
+      "ranges": [{ "startOffset": 23, "endOffset": 285, "count": 1 }],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "errorUtil.errToObj",
+      "ranges": [{ "startOffset": 85, "endOffset": 173, "count": 0 }],
+      "isBlockCoverage": false
+    },
+    {
+      "functionName": "errorUtil.toString",
+      "ranges": [{ "startOffset": 215, "endOffset": 282, "count": 0 }],
+      "isBlockCoverage": false
+    }
+  ]
+}

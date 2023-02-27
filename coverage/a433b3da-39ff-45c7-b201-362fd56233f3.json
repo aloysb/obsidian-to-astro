@@ -1,0 +1,39 @@
+{
+  "scriptId": "293",
+  "url": "https://deno.land/std@0.177.0/encoding/_yaml/type/timestamp.ts",
+  "functions": [
+    {
+      "functionName": "",
+      "ranges": [{ "startOffset": 0, "endOffset": 2671, "count": 1 }],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "resolveYamlTimestamp",
+      "ranges": [
+        { "startOffset": 829, "endOffset": 1046, "count": 169 },
+        { "startOffset": 890, "endOffset": 903, "count": 0 },
+        { "startOffset": 950, "endOffset": 962, "count": 0 },
+        { "startOffset": 1014, "endOffset": 1026, "count": 4 },
+        { "startOffset": 1026, "endOffset": 1045, "count": 165 }
+      ],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "constructYamlTimestamp",
+      "ranges": [
+        { "startOffset": 1047, "endOffset": 2372, "count": 4 },
+        { "startOffset": 1222, "endOffset": 1260, "count": 0 },
+        { "startOffset": 1435, "endOffset": 1514, "count": 0 },
+        { "startOffset": 1701, "endOffset": 1903, "count": 0 },
+        { "startOffset": 2005, "endOffset": 2213, "count": 0 },
+        { "startOffset": 2316, "endOffset": 2353, "count": 0 }
+      ],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "representYamlTimestamp",
+      "ranges": [{ "startOffset": 2373, "endOffset": 2445, "count": 12 }],
+      "isBlockCoverage": true
+    }
+  ]
+}

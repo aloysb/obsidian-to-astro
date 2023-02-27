@@ -1,0 +1,47 @@
+{
+  "scriptId": "257",
+  "url": "https://deno.land/std@0.177.0/fs/_util.ts",
+  "functions": [
+    {
+      "functionName": "",
+      "ranges": [{ "startOffset": 0, "endOffset": 1820, "count": 1 }],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "isSubdir",
+      "ranges": [
+        { "startOffset": 342, "endOffset": 645, "count": 2 },
+        { "startOffset": 411, "endOffset": 440, "count": 0 }
+      ],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "",
+      "ranges": [{ "startOffset": 603, "endOffset": 641, "count": 6 }],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "getFileInfoType",
+      "ranges": [{ "startOffset": 807, "endOffset": 958, "count": 0 }],
+      "isBlockCoverage": false
+    },
+    {
+      "functionName": "createWalkEntrySync",
+      "ranges": [{ "startOffset": 1019, "endOffset": 1337, "count": 0 }],
+      "isBlockCoverage": false
+    },
+    {
+      "functionName": "createWalkEntry",
+      "ranges": [{ "startOffset": 1399, "endOffset": 1721, "count": 0 }],
+      "isBlockCoverage": false
+    },
+    {
+      "functionName": "toPathString",
+      "ranges": [
+        { "startOffset": 1729, "endOffset": 1819, "count": 15 },
+        { "startOffset": 1790, "endOffset": 1809, "count": 0 }
+      ],
+      "isBlockCoverage": true
+    }
+  ]
+}

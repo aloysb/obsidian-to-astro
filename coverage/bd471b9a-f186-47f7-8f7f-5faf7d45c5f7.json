@@ -1,0 +1,54 @@
+{
+  "scriptId": "64",
+  "url": "deno:runtime/js/30_fs.js",
+  "functions": [
+    {
+      "functionName": "copyFileSync",
+      "ranges": [{ "startOffset": 983, "endOffset": 1131, "count": 28 }],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "makeTempDirSync",
+      "ranges": [{ "startOffset": 1440, "endOffset": 1531, "count": 6 }],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "mkdirArgs",
+      "ranges": [
+        { "startOffset": 1842, "endOffset": 2166, "count": 6 },
+        { "startOffset": 2096, "endOffset": 2139, "count": 0 }
+      ],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "mkdirSync",
+      "ranges": [{ "startOffset": 2170, "endOffset": 2258, "count": 6 }],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "readDirSync",
+      "ranges": [{ "startOffset": 2388, "endOffset": 2502, "count": 8 }],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "readDir",
+      "ranges": [{ "startOffset": 2506, "endOffset": 2721, "count": 8 }],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "",
+      "ranges": [{ "startOffset": 2641, "endOffset": 2709, "count": 8 }],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "removeSync",
+      "ranges": [{ "startOffset": 3101, "endOffset": 3242, "count": 5 }],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "lstatSync",
+      "ranges": [{ "startOffset": 7133, "endOffset": 7276, "count": 28 }],
+      "isBlockCoverage": true
+    }
+  ]
+}

@@ -1,0 +1,71 @@
+{
+  "scriptId": "218",
+  "url": "https://deno.land/std@0.177.0/log/handlers.ts",
+  "functions": [
+    {
+      "functionName": "",
+      "ranges": [{ "startOffset": 0, "endOffset": 9137, "count": 1 }],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "<instance_members_initializer>",
+      "ranges": [{ "startOffset": 353, "endOffset": 1233, "count": 1 }],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "BaseHandler",
+      "ranges": [{ "startOffset": 418, "endOffset": 610, "count": 1 }],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "handle",
+      "ranges": [{ "startOffset": 615, "endOffset": 764, "count": 0 }],
+      "isBlockCoverage": false
+    },
+    {
+      "functionName": "format",
+      "ranges": [{ "startOffset": 769, "endOffset": 1182, "count": 0 }],
+      "isBlockCoverage": false
+    },
+    {
+      "functionName": "log",
+      "ranges": [{ "startOffset": 1187, "endOffset": 1199, "count": 0 }],
+      "isBlockCoverage": false
+    },
+    {
+      "functionName": "setup",
+      "ranges": [{ "startOffset": 1204, "endOffset": 1214, "count": 1 }],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "destroy",
+      "ranges": [{ "startOffset": 1219, "endOffset": 1231, "count": 0 }],
+      "isBlockCoverage": false
+    },
+    {
+      "functionName": "format",
+      "ranges": [{ "startOffset": 1406, "endOffset": 1951, "count": 0 }],
+      "isBlockCoverage": false
+    },
+    {
+      "functionName": "log",
+      "ranges": [{ "startOffset": 1956, "endOffset": 1998, "count": 0 }],
+      "isBlockCoverage": false
+    },
+    {
+      "functionName": "<instance_members_initializer>",
+      "ranges": [{ "startOffset": 2008, "endOffset": 2098, "count": 0 }],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "<instance_members_initializer>",
+      "ranges": [{ "startOffset": 2922, "endOffset": 4503, "count": 0 }],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "<instance_members_initializer>",
+      "ranges": [{ "startOffset": 6646, "endOffset": 9136, "count": 0 }],
+      "isBlockCoverage": true
+    }
+  ]
+}

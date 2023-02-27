@@ -1,0 +1,67 @@
+{
+  "scriptId": "280",
+  "url": "file:///home/abr/gh/vault2blog/lib/Note.ts",
+  "functions": [
+    {
+      "functionName": "",
+      "ranges": [{ "startOffset": 0, "endOffset": 2994, "count": 1 }],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "<instance_members_initializer>",
+      "ranges": [{ "startOffset": 282, "endOffset": 2993, "count": 5 }],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "Note",
+      "ranges": [{ "startOffset": 506, "endOffset": 751, "count": 5 }],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "get processedFile",
+      "ranges": [{ "startOffset": 786, "endOffset": 849, "count": 8 }],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "set processedFile",
+      "ranges": [
+        { "startOffset": 854, "endOffset": 1310, "count": 4 },
+        { "startOffset": 941, "endOffset": 972, "count": 0 },
+        { "startOffset": 1179, "endOffset": 1304, "count": 0 }
+      ],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "get originalContent",
+      "ranges": [
+        { "startOffset": 1409, "endOffset": 1567, "count": 4 },
+        { "startOffset": 1518, "endOffset": 1561, "count": 0 }
+      ],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "new",
+      "ranges": [
+        { "startOffset": 1674, "endOffset": 1870, "count": 5 },
+        { "startOffset": 1821, "endOffset": 1864, "count": 1 }
+      ],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "parseFrontmatter",
+      "ranges": [
+        { "startOffset": 1991, "endOffset": 2863, "count": 9 },
+        { "startOffset": 2450, "endOffset": 2463, "count": 6 },
+        { "startOffset": 2519, "endOffset": 2524, "count": 0 },
+        { "startOffset": 2565, "endOffset": 2645, "count": 0 },
+        { "startOffset": 2671, "endOffset": 2857, "count": 1 }
+      ],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "getRawFrontMatter",
+      "ranges": [{ "startOffset": 2914, "endOffset": 2991, "count": 13 }],
+      "isBlockCoverage": true
+    }
+  ]
+}

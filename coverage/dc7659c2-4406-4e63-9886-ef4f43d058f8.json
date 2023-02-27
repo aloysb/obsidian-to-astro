@@ -1,0 +1,11 @@
+{
+  "scriptId": "292",
+  "url": "file:///home/abr/gh/vault2blog/test/__snapshots__/schema.test.ts.snap",
+  "functions": [
+    {
+      "functionName": "",
+      "ranges": [{ "startOffset": 0, "endOffset": 4550, "count": 1 }],
+      "isBlockCoverage": true
+    }
+  ]
+}

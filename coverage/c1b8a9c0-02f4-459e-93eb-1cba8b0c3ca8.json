@@ -1,0 +1,41 @@
+{
+  "scriptId": "197",
+  "url": "file:///home/abr/gh/vault2blog/lib/utils.ts",
+  "functions": [
+    {
+      "functionName": "",
+      "ranges": [{ "startOffset": 0, "endOffset": 1894, "count": 1 }],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "findFilesRecursively",
+      "ranges": [
+        { "startOffset": 237, "endOffset": 788, "count": 12 },
+        { "startOffset": 407, "endOffset": 768, "count": 40 },
+        { "startOffset": 493, "endOffset": 669, "count": 34 },
+        { "startOffset": 518, "endOffset": 525, "count": 12 },
+        { "startOffset": 526, "endOffset": 561, "count": 12 },
+        { "startOffset": 563, "endOffset": 604, "count": 2 },
+        { "startOffset": 604, "endOffset": 669, "count": 32 },
+        { "startOffset": 669, "endOffset": 762, "count": 6 }
+      ],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "createBackup",
+      "ranges": [
+        { "startOffset": 871, "endOffset": 1581, "count": 1 },
+        { "startOffset": 1451, "endOffset": 1579, "count": 0 }
+      ],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "prepareDestDirectory",
+      "ranges": [
+        { "startOffset": 1715, "endOffset": 1893, "count": 2 },
+        { "startOffset": 1803, "endOffset": 1891, "count": 0 }
+      ],
+      "isBlockCoverage": true
+    }
+  ]
+}

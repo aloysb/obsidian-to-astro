@@ -1,0 +1,31 @@
+{
+  "scriptId": "195",
+  "url": "file:///home/abr/gh/vault2blog/test/test-utils.test.ts",
+  "functions": [
+    {
+      "functionName": "",
+      "ranges": [{ "startOffset": 0, "endOffset": 969, "count": 1 }],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "",
+      "ranges": [{ "startOffset": 233, "endOffset": 966, "count": 1 }],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "",
+      "ranges": [{ "startOffset": 292, "endOffset": 435, "count": 1 }],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "",
+      "ranges": [{ "startOffset": 452, "endOffset": 482, "count": 1 }],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "",
+      "ranges": [{ "startOffset": 530, "endOffset": 962, "count": 1 }],
+      "isBlockCoverage": true
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "scriptId": "200",
+  "url": "file:///home/abr/gh/vault2blog/lib/commands/help.ts",
+  "functions": [
+    {
+      "functionName": "",
+      "ranges": [{ "startOffset": 0, "endOffset": 652, "count": 1 }],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "execute",
+      "ranges": [{ "startOffset": 595, "endOffset": 649, "count": 3 }],
+      "isBlockCoverage": true
+    }
+  ]
+}

@@ -1,0 +1,136 @@
+{
+  "scriptId": "249",
+  "url": "https://deno.land/std@0.177.0/encoding/_yaml/dumper/dumper.ts",
+  "functions": [
+    {
+      "functionName": "",
+      "ranges": [{ "startOffset": 0, "endOffset": 25900, "count": 1 }],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "encodeHex",
+      "ranges": [{ "startOffset": 2059, "endOffset": 2609, "count": 0 }],
+      "isBlockCoverage": false
+    },
+    {
+      "functionName": "indentString",
+      "ranges": [{ "startOffset": 2685, "endOffset": 3243, "count": 0 }],
+      "isBlockCoverage": false
+    },
+    {
+      "functionName": "generateNextLine",
+      "ranges": [{ "startOffset": 3244, "endOffset": 3347, "count": 0 }],
+      "isBlockCoverage": false
+    },
+    {
+      "functionName": "testImplicitResolving",
+      "ranges": [{ "startOffset": 3348, "endOffset": 3632, "count": 0 }],
+      "isBlockCoverage": false
+    },
+    {
+      "functionName": "isWhitespace",
+      "ranges": [{ "startOffset": 3669, "endOffset": 3744, "count": 0 }],
+      "isBlockCoverage": false
+    },
+    {
+      "functionName": "isPrintable",
+      "ranges": [{ "startOffset": 4001, "endOffset": 4217, "count": 0 }],
+      "isBlockCoverage": false
+    },
+    {
+      "functionName": "isPlainSafe",
+      "ranges": [{ "startOffset": 4298, "endOffset": 4739, "count": 0 }],
+      "isBlockCoverage": false
+    },
+    {
+      "functionName": "isPlainSafeFirst",
+      "ranges": [{ "startOffset": 4817, "endOffset": 5675, "count": 0 }],
+      "isBlockCoverage": false
+    },
+    {
+      "functionName": "needIndentIndicator",
+      "ranges": [{ "startOffset": 5739, "endOffset": 5855, "count": 0 }],
+      "isBlockCoverage": false
+    },
+    {
+      "functionName": "chooseScalarStyle",
+      "ranges": [{ "startOffset": 6335, "endOffset": 8773, "count": 0 }],
+      "isBlockCoverage": false
+    },
+    {
+      "functionName": "foldLine",
+      "ranges": [{ "startOffset": 8989, "endOffset": 10581, "count": 0 }],
+      "isBlockCoverage": false
+    },
+    {
+      "functionName": "dropEndingNewline",
+      "ranges": [{ "startOffset": 10617, "endOffset": 10733, "count": 0 }],
+      "isBlockCoverage": false
+    },
+    {
+      "functionName": "foldString",
+      "ranges": [{ "startOffset": 10892, "endOffset": 12099, "count": 0 }],
+      "isBlockCoverage": false
+    },
+    {
+      "functionName": "escapeString",
+      "ranges": [{ "startOffset": 12135, "endOffset": 13075, "count": 0 }],
+      "isBlockCoverage": false
+    },
+    {
+      "functionName": "blockHeader",
+      "ranges": [{ "startOffset": 13157, "endOffset": 13599, "count": 0 }],
+      "isBlockCoverage": false
+    },
+    {
+      "functionName": "writeScalar",
+      "ranges": [{ "startOffset": 14019, "endOffset": 16133, "count": 0 }],
+      "isBlockCoverage": false
+    },
+    {
+      "functionName": "writeFlowSequence",
+      "ranges": [{ "startOffset": 16134, "endOffset": 16602, "count": 0 }],
+      "isBlockCoverage": false
+    },
+    {
+      "functionName": "writeBlockSequence",
+      "ranges": [{ "startOffset": 16603, "endOffset": 17345, "count": 0 }],
+      "isBlockCoverage": false
+    },
+    {
+      "functionName": "writeFlowMapping",
+      "ranges": [{ "startOffset": 17346, "endOffset": 18402, "count": 0 }],
+      "isBlockCoverage": false
+    },
+    {
+      "functionName": "writeBlockMapping",
+      "ranges": [{ "startOffset": 18403, "endOffset": 20476, "count": 0 }],
+      "isBlockCoverage": false
+    },
+    {
+      "functionName": "detectType",
+      "ranges": [{ "startOffset": 20477, "endOffset": 21629, "count": 0 }],
+      "isBlockCoverage": false
+    },
+    {
+      "functionName": "writeNode",
+      "ranges": [{ "startOffset": 21746, "endOffset": 24360, "count": 0 }],
+      "isBlockCoverage": false
+    },
+    {
+      "functionName": "inspectNode",
+      "ranges": [{ "startOffset": 24361, "endOffset": 25251, "count": 0 }],
+      "isBlockCoverage": false
+    },
+    {
+      "functionName": "getDuplicateReferences",
+      "ranges": [{ "startOffset": 25252, "endOffset": 25635, "count": 0 }],
+      "isBlockCoverage": false
+    },
+    {
+      "functionName": "dump",
+      "ranges": [{ "startOffset": 25643, "endOffset": 25899, "count": 0 }],
+      "isBlockCoverage": false
+    }
+  ]
+}

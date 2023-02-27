@@ -1,0 +1,11 @@
+{
+  "scriptId": "269",
+  "url": "https://deno.land/x/zod@v3.16.1/helpers/typeAliases.ts",
+  "functions": [
+    {
+      "functionName": "",
+      "ranges": [{ "startOffset": 0, "endOffset": 118, "count": 1 }],
+      "isBlockCoverage": true
+    }
+  ]
+}

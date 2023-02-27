@@ -1,0 +1,31 @@
+{
+  "scriptId": "212",
+  "url": "file:///home/abr/gh/vault2blog/lib/Cli.ts",
+  "functions": [
+    {
+      "functionName": "",
+      "ranges": [{ "startOffset": 0, "endOffset": 1477, "count": 1 }],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "HandleCommand",
+      "ranges": [
+        { "startOffset": 584, "endOffset": 1474, "count": 2 },
+        { "startOffset": 645, "endOffset": 680, "count": 0 },
+        { "startOffset": 1118, "endOffset": 1195, "count": 1 },
+        { "startOffset": 1223, "endOffset": 1468, "count": 1 },
+        { "startOffset": 1399, "endOffset": 1458, "count": 0 }
+      ],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "",
+      "ranges": [
+        { "startOffset": 988, "endOffset": 1078, "count": 6 },
+        { "startOffset": 1032, "endOffset": 1052, "count": 3 },
+        { "startOffset": 1053, "endOffset": 1067, "count": 1 }
+      ],
+      "isBlockCoverage": true
+    }
+  ]
+}

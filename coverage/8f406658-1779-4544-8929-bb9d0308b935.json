@@ -1,0 +1,108 @@
+{
+  "scriptId": "4",
+  "url": "deno:core/01_core.js",
+  "functions": [
+    {
+      "functionName": "setPromise",
+      "ranges": [
+        { "startOffset": 1636, "endOffset": 2014, "count": 16 },
+        { "startOffset": 1825, "endOffset": 1943, "count": 0 }
+      ],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "getPromise",
+      "ranges": [
+        { "startOffset": 2018, "endOffset": 2495, "count": 16 },
+        { "startOffset": 2187, "endOffset": 2327, "count": 0 }
+      ],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "newPromise",
+      "ranges": [{ "startOffset": 2499, "endOffset": 2746, "count": 16 }],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "",
+      "ranges": [{ "startOffset": 2580, "endOffset": 2660, "count": 16 }],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "opresolve",
+      "ranges": [{ "startOffset": 3103, "endOffset": 3334, "count": 16 }],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "unwrapOpResult",
+      "ranges": [
+        { "startOffset": 4196, "endOffset": 4968, "count": 16 },
+        { "startOffset": 4331, "endOffset": 4948, "count": 0 }
+      ],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "rollPromiseId",
+      "ranges": [{ "startOffset": 4972, "endOffset": 5030, "count": 16 }],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "handleOpCallTracing",
+      "ranges": [
+        { "startOffset": 6448, "endOffset": 6819, "count": 16 },
+        { "startOffset": 6531, "endOffset": 6786, "count": 0 }
+      ],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "",
+      "ranges": [{ "startOffset": 6721, "endOffset": 6770, "count": 0 }],
+      "isBlockCoverage": false
+    },
+    {
+      "functionName": "opAsync",
+      "ranges": [{ "startOffset": 6823, "endOffset": 6895, "count": 16 }],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "resources",
+      "ranges": [{ "startOffset": 7141, "endOffset": 7217, "count": 6 }],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "metrics",
+      "ranges": [{ "startOffset": 7221, "endOffset": 7455, "count": 6 }],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "",
+      "ranges": [{ "startOffset": 7380, "endOffset": 7420, "count": 2604 }],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "tryClose",
+      "ranges": [{ "startOffset": 10576, "endOffset": 10606, "count": 6 }],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "print",
+      "ranges": [{ "startOffset": 10878, "endOffset": 10918, "count": 15 }],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "setMacrotaskCallback",
+      "ranges": [{ "startOffset": 10946, "endOffset": 10987, "count": 1 }],
+      "isBlockCoverage": false
+    },
+    {
+      "functionName": "encode",
+      "ranges": [{ "startOffset": 11404, "endOffset": 11433, "count": 4 }],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "destructureError",
+      "ranges": [{ "startOffset": 12113, "endOffset": 12155, "count": 3 }],
+      "isBlockCoverage": true
+    }
+  ]
+}

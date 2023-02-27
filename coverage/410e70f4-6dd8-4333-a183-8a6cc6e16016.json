@@ -1,0 +1,20 @@
+{
+  "scriptId": "201",
+  "url": "file:///home/abr/gh/vault2blog/lib/commands/publish.ts",
+  "functions": [
+    {
+      "functionName": "",
+      "ranges": [{ "startOffset": 0, "endOffset": 1130, "count": 1 }],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "execute",
+      "ranges": [
+        { "startOffset": 263, "endOffset": 1127, "count": 2 },
+        { "startOffset": 608, "endOffset": 678, "count": 0 },
+        { "startOffset": 796, "endOffset": 892, "count": 0 }
+      ],
+      "isBlockCoverage": true
+    }
+  ]
+}

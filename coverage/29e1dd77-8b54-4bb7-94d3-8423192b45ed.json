@@ -1,0 +1,29 @@
+{
+  "scriptId": "64",
+  "url": "deno:runtime/js/30_fs.js",
+  "functions": [
+    {
+      "functionName": "mkdirArgs",
+      "ranges": [
+        { "startOffset": 1842, "endOffset": 2166, "count": 2 },
+        { "startOffset": 2096, "endOffset": 2139, "count": 0 }
+      ],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "mkdirSync",
+      "ranges": [{ "startOffset": 2170, "endOffset": 2258, "count": 2 }],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "readDirSync",
+      "ranges": [{ "startOffset": 2388, "endOffset": 2502, "count": 2 }],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "lstatSync",
+      "ranges": [{ "startOffset": 7133, "endOffset": 7276, "count": 2 }],
+      "isBlockCoverage": true
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "scriptId": "287",
+  "url": "https://deno.land/std@0.177.0/encoding/_yaml/type/set.ts",
+  "functions": [
+    {
+      "functionName": "",
+      "ranges": [{ "startOffset": 0, "endOffset": 759, "count": 1 }],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "resolveYamlSet",
+      "ranges": [{ "startOffset": 330, "endOffset": 543, "count": 0 }],
+      "isBlockCoverage": false
+    },
+    {
+      "functionName": "constructYamlSet",
+      "ranges": [{ "startOffset": 544, "endOffset": 617, "count": 0 }],
+      "isBlockCoverage": false
+    }
+  ]
+}

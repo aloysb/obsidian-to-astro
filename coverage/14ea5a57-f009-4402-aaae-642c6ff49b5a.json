@@ -1,0 +1,26 @@
+{
+  "scriptId": "251",
+  "url": "https://deno.land/std@0.177.0/io/buf_writer.ts",
+  "functions": [
+    {
+      "functionName": "",
+      "ranges": [{ "startOffset": 0, "endOffset": 7024, "count": 1 }],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "<instance_members_initializer>",
+      "ranges": [{ "startOffset": 147, "endOffset": 692, "count": 0 }],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "<instance_members_initializer>",
+      "ranges": [{ "startOffset": 1061, "endOffset": 3847, "count": 0 }],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "<instance_members_initializer>",
+      "ranges": [{ "startOffset": 4231, "endOffset": 7023, "count": 0 }],
+      "isBlockCoverage": true
+    }
+  ]
+}

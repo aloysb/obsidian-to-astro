@@ -1,0 +1,112 @@
+{
+  "scriptId": "263",
+  "url": "https://deno.land/x/zod@v3.16.1/ZodError.ts",
+  "functions": [
+    {
+      "functionName": "",
+      "ranges": [{ "startOffset": 0, "endOffset": 7568, "count": 1 }],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "quotelessJson",
+      "ranges": [{ "startOffset": 524, "endOffset": 628, "count": 0 }],
+      "isBlockCoverage": false
+    },
+    {
+      "functionName": "<instance_members_initializer>",
+      "ranges": [{ "startOffset": 637, "endOffset": 4223, "count": 1 }],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "get errors",
+      "ranges": [{ "startOffset": 689, "endOffset": 737, "count": 0 }],
+      "isBlockCoverage": false
+    },
+    {
+      "functionName": "ZodError",
+      "ranges": [
+        { "startOffset": 742, "endOffset": 1105, "count": 1 },
+        { "startOffset": 978, "endOffset": 1037, "count": 0 }
+      ],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "format",
+      "ranges": [{ "startOffset": 1110, "endOffset": 3130, "count": 0 }],
+      "isBlockCoverage": false
+    },
+    {
+      "functionName": "<static_initializer>",
+      "ranges": [{ "startOffset": 3135, "endOffset": 3234, "count": 1 }],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "create",
+      "ranges": [{ "startOffset": 3151, "endOffset": 3234, "count": 0 }],
+      "isBlockCoverage": false
+    },
+    {
+      "functionName": "toString",
+      "ranges": [{ "startOffset": 3240, "endOffset": 3287, "count": 0 }],
+      "isBlockCoverage": false
+    },
+    {
+      "functionName": "get message",
+      "ranges": [{ "startOffset": 3292, "endOffset": 3366, "count": 2 }],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "get isEmpty",
+      "ranges": [{ "startOffset": 3371, "endOffset": 3433, "count": 0 }],
+      "isBlockCoverage": false
+    },
+    {
+      "functionName": "addIssue",
+      "ranges": [{ "startOffset": 3449, "endOffset": 3542, "count": 0 }],
+      "isBlockCoverage": false
+    },
+    {
+      "functionName": "addIssues",
+      "ranges": [{ "startOffset": 3560, "endOffset": 3663, "count": 0 }],
+      "isBlockCoverage": false
+    },
+    {
+      "functionName": "flatten",
+      "ranges": [{ "startOffset": 3669, "endOffset": 4161, "count": 0 }],
+      "isBlockCoverage": false
+    },
+    {
+      "functionName": "get formErrors",
+      "ranges": [{ "startOffset": 4166, "endOffset": 4221, "count": 0 }],
+      "isBlockCoverage": false
+    },
+    {
+      "functionName": "defaultErrorMap",
+      "ranges": [
+        { "startOffset": 4255, "endOffset": 7452, "count": 10 },
+        { "startOffset": 4413, "endOffset": 4466, "count": 0 },
+        { "startOffset": 4599, "endOffset": 4743, "count": 0 },
+        { "startOffset": 4752, "endOffset": 4900, "count": 0 },
+        { "startOffset": 4909, "endOffset": 4999, "count": 0 },
+        { "startOffset": 5008, "endOffset": 5170, "count": 0 },
+        { "startOffset": 5179, "endOffset": 5353, "count": 0 },
+        { "startOffset": 5362, "endOffset": 5469, "count": 0 },
+        { "startOffset": 5478, "endOffset": 5589, "count": 0 },
+        { "startOffset": 5598, "endOffset": 5686, "count": 0 },
+        { "startOffset": 5695, "endOffset": 5872, "count": 0 },
+        { "startOffset": 5881, "endOffset": 6412, "count": 0 },
+        { "startOffset": 6421, "endOffset": 6946, "count": 0 },
+        { "startOffset": 6955, "endOffset": 7038, "count": 0 },
+        { "startOffset": 7047, "endOffset": 7177, "count": 0 },
+        { "startOffset": 7186, "endOffset": 7313, "count": 0 },
+        { "startOffset": 7322, "endOffset": 7408, "count": 0 }
+      ],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "setErrorMap",
+      "ranges": [{ "startOffset": 7528, "endOffset": 7566, "count": 0 }],
+      "isBlockCoverage": false
+    }
+  ]
+}

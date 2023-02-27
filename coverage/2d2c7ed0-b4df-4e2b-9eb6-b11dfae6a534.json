@@ -1,0 +1,14 @@
+{
+  "scriptId": "147",
+  "url": "",
+  "functions": [
+    {
+      "functionName": "op_read_dir_async",
+      "ranges": [
+        { "startOffset": 151, "endOffset": 665, "count": 12 },
+        { "startOffset": 356, "endOffset": 513, "count": 0 }
+      ],
+      "isBlockCoverage": true
+    }
+  ]
+}

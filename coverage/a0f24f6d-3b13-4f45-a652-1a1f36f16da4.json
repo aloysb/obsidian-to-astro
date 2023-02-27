@@ -1,0 +1,21 @@
+{
+  "scriptId": "227",
+  "url": "https://deno.land/std@0.177.0/encoding/_yaml/parse.ts",
+  "functions": [
+    {
+      "functionName": "",
+      "ranges": [{ "startOffset": 0, "endOffset": 732, "count": 1 }],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "parse",
+      "ranges": [{ "startOffset": 555, "endOffset": 626, "count": 9 }],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "parseAll",
+      "ranges": [{ "startOffset": 634, "endOffset": 731, "count": 0 }],
+      "isBlockCoverage": false
+    }
+  ]
+}

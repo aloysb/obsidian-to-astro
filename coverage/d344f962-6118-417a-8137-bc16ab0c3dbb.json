@@ -1,0 +1,61 @@
+{
+  "scriptId": "259",
+  "url": "https://deno.land/x/zod@v3.16.1/helpers/parseUtil.ts",
+  "functions": [
+    {
+      "functionName": "",
+      "ranges": [{ "startOffset": 0, "endOffset": 4819, "count": 1 }],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "getParsedType",
+      "ranges": [{ "startOffset": 453, "endOffset": 1804, "count": 0 }],
+      "isBlockCoverage": false
+    },
+    {
+      "functionName": "makeIssue",
+      "ranges": [{ "startOffset": 1831, "endOffset": 2419, "count": 0 }],
+      "isBlockCoverage": false
+    },
+    {
+      "functionName": "addIssueToContext",
+      "ranges": [{ "startOffset": 2458, "endOffset": 2836, "count": 0 }],
+      "isBlockCoverage": false
+    },
+    {
+      "functionName": "<instance_members_initializer>",
+      "ranges": [{ "startOffset": 2844, "endOffset": 4360, "count": 0 }],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "DIRTY",
+      "ranges": [{ "startOffset": 4447, "endOffset": 4504, "count": 0 }],
+      "isBlockCoverage": false
+    },
+    {
+      "functionName": "OK",
+      "ranges": [{ "startOffset": 4524, "endOffset": 4581, "count": 0 }],
+      "isBlockCoverage": false
+    },
+    {
+      "functionName": "isAborted",
+      "ranges": [{ "startOffset": 4608, "endOffset": 4635, "count": 0 }],
+      "isBlockCoverage": false
+    },
+    {
+      "functionName": "isDirty",
+      "ranges": [{ "startOffset": 4660, "endOffset": 4685, "count": 0 }],
+      "isBlockCoverage": false
+    },
+    {
+      "functionName": "isValid",
+      "ranges": [{ "startOffset": 4710, "endOffset": 4735, "count": 0 }],
+      "isBlockCoverage": false
+    },
+    {
+      "functionName": "isAsync",
+      "ranges": [{ "startOffset": 4760, "endOffset": 4817, "count": 0 }],
+      "isBlockCoverage": false
+    }
+  ]
+}
