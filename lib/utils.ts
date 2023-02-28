@@ -89,9 +89,6 @@ async function handleCommandResult(
       gitAddCmd.stderrOutput(),
    ]);
 
-   logger.error(gitAddCmd.stderrOutput());
-   logger.error(gitAddCmd.output());
-   logger.error(status);
    if (status.code === 0) {
       const result = new TextDecoder().decode(stdout);
       return result;
@@ -112,7 +109,7 @@ async function getGitRoot(dirPath: string): Promise<string> {
       stderr: "piped",
    });
 
-   return await handleCommandResult(gitRootCmd);
+   return (await handleCommandResult(gitRootCmd)).replace("\n", "");
 }
 
 /**
