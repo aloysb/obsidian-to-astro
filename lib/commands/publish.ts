@@ -41,7 +41,7 @@ export class PublishCommand implements Command<never> {
       notesManager.publishNotes();
 
       try {
-         await publishToGit(blogDir);
+         // await publishToGit(blogDir);
       } catch (e) {
          logger.error("Error publishing to git", e);
          Deno.exit(1);

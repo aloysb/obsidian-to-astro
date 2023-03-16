@@ -41,7 +41,7 @@ created_at: 2023-01-01T02:00:00.000Z
 description: ''
 published_at: 2023-01-01T02:00:00.000Z
 last_modified_at: 2023-01-01T08:00:00.000Z
-status: publish
+draft: false
 slug: hello-world
 
 --- 
@@ -58,66 +58,64 @@ It contains wiki link does no exist fake link an wiki links that exists like
 this one [under an alias!](./good-link)`;
 
 describe("Note class", () => {
-  let note: Note;
-  const filePath = "test/__fixtures__/source/fake-note.md";
-  const filePathWithoutFrontmatter =
-    "test/__fixtures__/source/note-without-frontmatter.md";
-  const fileContent = Deno.readTextFileSync(filePath);
+   let note: Note;
+   const filePath = "test/__fixtures__/source/fake-note.md";
+   const filePathWithoutFrontmatter =
+      "test/__fixtures__/source/note-without-frontmatter.md";
+   const fileContent = Deno.readTextFileSync(filePath);
 
-  beforeAll(() => {
-    stub(Date, "now", () => new Date("2023-01-01T02:00:00.000Z").getTime());
-  });
-  beforeEach(() => {
-    note = Note.new(filePath) as Note;
-  });
-  it("should instantiate a Note object from a file path", () => {
-    assertEquals(note.filePath, filePath);
-    assertEquals(note.originalFile, fileContent);
-  });
+   beforeAll(() => {
+      stub(Date, "now", () => new Date("2023-01-01T02:00:00.000Z").getTime());
+   });
+   beforeEach(() => {
+      note = Note.new(filePath) as Note;
+   });
+   it("should instantiate a Note object from a file path", () => {
+      assertEquals(note.filePath, filePath);
+      assertEquals(note.originalFile, fileContent);
+   });
 
-  it("should let me obtain the frontmatter", () => {
-    const expected: Frontmatter = {
-      title: "hello world",
-      description: "",
-      created_at: new Date("2023-01-01 12:00"),
-      last_modified_at: new Date("2023-01-01 18:00"),
-      published_at: new Date("2023-01-01T02:00:00.000Z"),
-      slug: "hello-world",
-      status: "published",
-      tags: ["hello", "world"],
-    };
-    assertEquals(expected, note.processedFrontmatter);
-  });
+   it("should let me obtain the frontmatter", () => {
+      const expected: Frontmatter = {
+         title: "hello world",
+         description: "",
+         draft: false,
+         created_at: new Date("2023-01-01 12:00"),
+         last_modified_at: new Date("2023-01-01 18:00"),
+         published_at: new Date("2023-01-01T02:00:00.000Z"),
+         slug: "hello-world",
+         tags: ["hello", "world"],
+      };
+      assertEquals(expected, note.processedFrontmatter);
+   });
 
-  it("should return null if there is no frontmatter", () => {
-    const noteWithoutFrontMatter = Note.new(
-      filePathWithoutFrontmatter,
-    );
-    const expected = null;
-    noteWithoutFrontMatter === expected;
-  });
+   it("should return null if there is no frontmatter", () => {
+      const noteWithoutFrontMatter = Note.new(filePathWithoutFrontmatter);
+      const expected = null;
+      noteWithoutFrontMatter === expected;
+   });
 
-  it("should let me obtain the note original content", () => {
-    const expected = NOTE_CONTENT;
-    assertEquals(note.originalContent, expected);
-  });
+   it("should let me obtain the note original content", () => {
+      const expected = NOTE_CONTENT;
+      assertEquals(note.originalContent, expected);
+   });
 
-  it("should update the published_at date if it is not set", () => {
-    assertEquals(
-      note.processedFrontmatter.published_at,
-      new Date("2023-01-01T02:00:00.000Z"),
-    );
+   it("should update the published_at date if it is not set", () => {
+      assertEquals(
+         note.processedFrontmatter.published_at,
+         new Date("2023-01-01T02:00:00.000Z")
+      );
 
-    const noteWithPublishedAt = Note.new(
-      "./test/__fixtures__/source/folder/subfolder/note3.md",
-    ) as Note;
-    assertEquals(
-      noteWithPublishedAt.processedFrontmatter.published_at,
-      new Date("2022-01-01T10:00:00.000Z"),
-    );
-  });
+      const noteWithPublishedAt = Note.new(
+         "./test/__fixtures__/source/folder/subfolder/note3.md"
+      ) as Note;
+      assertEquals(
+         noteWithPublishedAt.processedFrontmatter.published_at,
+         new Date("2022-01-01T10:00:00.000Z")
+      );
+   });
 
-  it("should add an empty description if it is not set", () => {
-    assertEquals(note.processedFrontmatter.description, "");
-  });
+   it("should add an empty description if it is not set", () => {
+      assertEquals(note.processedFrontmatter.description, "");
+   });
 });

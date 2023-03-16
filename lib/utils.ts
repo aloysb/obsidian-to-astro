@@ -91,6 +91,7 @@ async function handleCommandResult(
 
    if (status.code === 0) {
       const result = new TextDecoder().decode(stdout);
+      gitAddCmd.close();
       return result;
    } else {
       logger.error(new TextDecoder().decode(stderr));
@@ -101,7 +102,7 @@ async function handleCommandResult(
 /**
  * Given a directory, return the git root of the directory if there is one
  */
-async function getGitRoot(dirPath: string): Promise<string> {
+export async function getGitRootDirectory(dirPath: string): Promise<string> {
    const gitRootCmd = Deno.run({
       cwd: dirPath,
       cmd: ["git", "rev-parse", "--show-toplevel"],
@@ -116,7 +117,7 @@ async function getGitRoot(dirPath: string): Promise<string> {
  * Add a directory to git
  */
 async function addDirectoryChangesToGit(dirPath: string): Promise<string> {
-   const gitRoot = await getGitRoot(dirPath);
+   const gitRoot = await getGitRootDirectory(dirPath);
 
    const gitAddCmd = Deno.run({
       cwd: gitRoot,
@@ -135,24 +136,22 @@ async function checkoutNewGitBranch(
    dirPath: string,
    branchName: string
 ): Promise<string> {
-   const gitRoot = await getGitRoot(dirPath);
+   const gitRoot = await getGitRootDirectory(dirPath);
    const gitBranchCmd = await Deno.run({
       cwd: gitRoot,
-      cmd: ["pwd"],
-      // cmd: ["git", "checkout", "-b", branchName],
+      cmd: ["git", "checkout", "-b", branchName],
       stdout: "piped",
       stderr: "piped",
    });
 
-   const r = await handleCommandResult(gitBranchCmd);
-   return r;
+   return await handleCommandResult(gitBranchCmd);
 }
 
 /**
  * Commit the changes in a directory
  */
 async function commitChanges(dirPath: string, message: string): Promise<void> {
-   const gitRoot = await getGitRoot(dirPath);
+   const gitRoot = await getGitRootDirectory(dirPath);
 
    const gitCommitCmd = Deno.run({
       cwd: gitRoot,
@@ -168,7 +167,7 @@ async function commitChanges(dirPath: string, message: string): Promise<void> {
  * Push the changes to the remote
  */
 async function pushChanges(dirPath: string): Promise<void> {
-   const gitRoot = await getGitRoot(dirPath);
+   const gitRoot = await getGitRootDirectory(dirPath);
 
    const gitPushCmd = Deno.run({
       cwd: gitRoot,

@@ -116,7 +116,6 @@ ${content}`;
       };
     } catch (e) {
       logger.error(`Invalid frontmatter for ${this.filePath.split("/").pop()}`);
-      logger.error(e);
       throw Error("No frontmatter found");
     }
   }

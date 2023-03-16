@@ -69,19 +69,33 @@ export class NotesManager {
   public publishNotes() {
     let notesPublished = 0;
     for (const note of this._notes) {
-      if (note.processedFrontmatter.status !== "published") {
-        continue;
+      if (note.processedFrontmatter.draft) {
+         this.logger.info(
+            note.processedFrontmatter.title +
+               " is a draft. It has been ignored."
+         );
+         continue;
       }
 
       const slug = note.processedFrontmatter.slug;
-      if (!note.processedFile) {
-        this.logger.info(`No content for note: ${note.filePath}.md`);
-        continue;
+      if (!slug) {
+         this.logger.warning(
+            note.processedFrontmatter.title +
+               " has no slug. It has been ignored."
+         );
+         continue;
       }
+
+      if (!note.processedFile) {
+         this.logger.info(`No content for note: ${note.filePath}.md`);
+         continue;
+      }
+
       Deno.writeTextFileSync(
-        join(this.config.blogDir, `${slug}.md`),
-        note.processedFile,
+         join(this.config.blogDir, `${slug}.md`),
+         note.processedFile
       );
+
       notesPublished++;
       this.logger.info(`Note published: ${slug}.md`);
     }
