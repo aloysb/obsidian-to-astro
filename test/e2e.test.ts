@@ -28,28 +28,28 @@ describe("E2E testing", () => {
     const notes = await findFilesRecursively(sourceDir);
     const backupDirResult = await findFilesRecursively(backupDir);
     assertEquals(
-       backupDirResult.length,
-       notes.length,
-       `Backup error: Expected ${backupDirResult.length} to be ${notes.length}`
+      backupDirResult.length,
+      notes.length,
+      `Backup error: Expected ${backupDirResult.length} to be ${notes.length}`,
     );
     // The content of the backupDir is the same as the sourceDir
     const originalNotesNames = notes.map((note) => note.split("/").pop());
     const backupNotesNames = backupDirResult.map((note) =>
-       note.split("/").pop()
+      note.split("/").pop()
     );
     assertEquals(
-       originalNotesNames.sort(),
-       backupNotesNames.sort(),
-       "Backup content"
+      originalNotesNames.sort(),
+      backupNotesNames.sort(),
+      "Backup content",
     );
 
     // 2. == BLOG ==
     // My notes are in the destination directory and processed
     const blogDirResult = await findFilesRecursively(blogDir);
     assertEquals(
-       blogDirResult.length,
-       notes.length - 2, // -2 because two notes are fake notes
-       `Blog error: Expected ${blogDirResult.length} to be ${notes.length - 2}`
+      blogDirResult.length,
+      notes.length - 2, // -2 because two notes are fake notes
+      `Blog error: Expected ${blogDirResult.length} to be ${notes.length - 2}`,
     );
     // Wikilinks have been replaced by markdown links
     blogDirResult.forEach((post) => {
