@@ -1,7 +1,7 @@
 import { originalBlogSchema, processedBlogSchema } from "./schema.ts";
 import { parseYAML, stringify, z } from "../deps.ts";
 
-import Logger from "./Logger.ts";
+import { Logger } from "./Logger.ts";
 
 export interface NoteProps {
   filePath: string;

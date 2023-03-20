@@ -1,5 +1,6 @@
 import { HelpCommand } from "./commands/help.ts";
 import { InitalizeConfigCommand } from "./commands/initializeConfig.ts";
+import { Logger } from "./Logger.ts";
 import { PublishCommand } from "./commands/publish.ts";
 import { parse } from "../deps.ts";
 
@@ -40,6 +41,7 @@ export class Cli {
     if (flags.publish) {
       try {
         const config = await new InitalizeConfigCommand().execute(flags);
+        Logger.initialize(config);
         await new PublishCommand().execute(config);
       } catch (e) {
         console.error(e);

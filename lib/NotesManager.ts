@@ -1,5 +1,5 @@
 import { Config } from "./Config.ts";
-import Logger from "./Logger.ts";
+import { Logger } from "./Logger.ts";
 import { Note } from "./Note.ts";
 import { findFilesRecursively } from "./utils.ts";
 import { join } from "../deps.ts";

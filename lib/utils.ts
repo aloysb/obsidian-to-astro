@@ -1,6 +1,6 @@
 import { copySync, crypto, emptyDirSync, join } from "../deps.ts";
 
-import Logger from "./Logger.ts";
+import { Logger } from "./Logger.ts";
 
 type Options = {
   match: RegExp;

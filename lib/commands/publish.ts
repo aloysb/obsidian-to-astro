@@ -2,7 +2,7 @@ import { createBackup, prepareDestDirectory } from "../utils.ts";
 
 import { Command } from "../Cli.ts";
 import { Config } from "../Config.ts";
-import Logger from "../Logger.ts";
+import { Logger } from "../Logger.ts";
 import { NotesManager } from "../NotesManager.ts";
 
 /**

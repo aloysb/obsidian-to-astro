@@ -21,6 +21,7 @@ export class Config {
   private readonly _sourceDir: string;
   private readonly _blogDir: string;
   private readonly _backupDir: string;
+  private readonly _logDir: string;
 
   /*
    * Getters
@@ -37,6 +38,10 @@ export class Config {
     return this._backupDir;
   }
 
+  get logDir() {
+    return this._logDir;
+  }
+
   private constructor({
     sourceDir,
     blogDir,
@@ -49,6 +54,7 @@ export class Config {
     this._blogDir = blogDir;
     this._sourceDir = sourceDir;
     this._backupDir = backupDir;
+    this._logDir = `${homedir}/.vault2blog/logs`;
   }
 
   /*

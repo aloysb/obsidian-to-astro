@@ -1,2 +1,0 @@
-ERROR Invalid frontmatter for note-without-frontmatter.md
-DEBUG [{"code":"invalid_type","expected":"object","received":"string","path":[],"message":"Expected object, received string"}]
