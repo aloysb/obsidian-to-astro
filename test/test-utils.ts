@@ -34,13 +34,13 @@ export async function setupTestDirectories(): Promise<TestFixtures> {
 
   // A function to remove the directories after the test
   const destroy = () => {
-    for (const dir of Object.values(directories)) {
-      Deno.removeSync(dir, { recursive: true });
-    }
+     for (const dir of Object.values(directories)) {
+        Deno.removeSync(dir, { recursive: true });
+     }
   };
 
   return {
-    directories,
-    destroy,
+     directories,
+     destroy,
   };
 }

@@ -31,12 +31,13 @@ export {
   it,
 } from "https://deno.land/std@0.177.0/testing/bdd.ts";
 export {
-  assertSpyCall,
-  assertSpyCallArgs,
-  returnsArg,
-  returnsNext,
-  spy,
-  stub,
+   assertSpyCall,
+   assertSpyCallArgs,
+   returnsArg,
+   resolvesNext,
+   returnsNext,
+   spy,
+   stub,
 } from "https://deno.land/std@0.177.0/testing/mock.ts";
 export type { Spy, Stub } from "https://deno.land/std@0.177.0/testing/mock.ts";
 export { assertSnapshot } from "https://deno.land/std@0.177.0/testing/snapshot.ts";

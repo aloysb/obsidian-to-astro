@@ -1,11 +1,12 @@
 import { Frontmatter, Note } from "../lib/Note.ts";
 import {
-  assertEquals,
-  beforeAll,
-  beforeEach,
-  describe,
-  it,
-  stub,
+   afterEach,
+   assertEquals,
+   beforeAll,
+   beforeEach,
+   describe,
+   it,
+   stub,
 } from "../deps.ts";
 
 const NOTE_CONTENT = `Do not delete me
@@ -66,6 +67,7 @@ describe("Note class", () => {
 
    beforeAll(() => {
       stub(Date, "now", () => new Date("2023-01-01T02:00:00.000Z").getTime());
+      Deno.env.set("ENV_MODE", "TEST");
    });
    beforeEach(() => {
       note = Note.new(filePath) as Note;

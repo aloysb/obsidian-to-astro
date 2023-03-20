@@ -1,4 +1,6 @@
-import { copySync, crypto, emptyDirSync, join, logger } from "../deps.ts";
+import { copySync, crypto, emptyDirSync, join } from "../deps.ts";
+
+import Logger from "./Logger.ts";
 
 type Options = {
    match: RegExp;
@@ -50,12 +52,12 @@ export function createBackup(
       copySync(destinationDir, join(uniqueBackupDir, "destination"), {
          overwrite: true,
       });
-      logger.info(
+      Logger.get().info(
          `"Backup successful. \n Backup directory: ${uniqueBackupDir}`
       );
       return uniqueBackupDir;
    } catch (e) {
-      logger.error(`Failed to prepare backup: \n ${e}`);
+      Logger.get().error(`Failed to prepare backup: \n ${e}`);
       throw new Error("Fail to prepare backups");
    }
 }
@@ -94,7 +96,7 @@ async function handleCommandResult(
       gitAddCmd.close();
       return result;
    } else {
-      logger.error(new TextDecoder().decode(stderr));
+      Logger.get().error(new TextDecoder().decode(stderr));
       Deno.exit(1);
    }
 }

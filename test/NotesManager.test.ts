@@ -9,42 +9,42 @@ describe("NotesManager", () => {
   let config: Config;
   beforeEach(async () => {
     const { directories } = await setupTestDirectories();
-    config = Config.initialize({
-      type: "cli",
-      values: {
-        sourceDir: directories.sourceDir,
-        blogDir: directories.blogDir,
-        backupDir: directories.backupDir,
-      },
+    config = await Config.initialize({
+       type: "cli",
+       values: {
+          sourceDir: directories.sourceDir,
+          blogDir: directories.blogDir,
+          backupDir: directories.backupDir,
+       },
     });
   });
 
   it("should allow to create all notes", async () => {
-    const notesManager = await NotesManager.initialize({ config, logger });
-    const expectedFiles = await findFilesRecursively(config.sourceDir, {
-      match: /.*\.md/,
-    });
-    assertEquals(notesManager.notes.length, expectedFiles.length - 1); // There is one file that does not have frontmatter
+     const notesManager = await NotesManager.initialize({ config });
+     const expectedFiles = await findFilesRecursively(config.sourceDir, {
+        match: /.*\.md/,
+     });
+     assertEquals(notesManager.notes.length, expectedFiles.length - 1); // There is one file that does not have frontmatter
   });
 
   it("should copy the note across to the destination directory", async () => {
-    // Arrange
-    const notesManager = await NotesManager.initialize({ config, logger });
+     // Arrange
+     const notesManager = await NotesManager.initialize({ config });
 
-    // Act
-    notesManager.publishNotes();
+     // Act
+     notesManager.publishNotes();
 
-    // Assert
-    const files = await findFilesRecursively(config.sourceDir, {
-      match: /.*\.md/,
-    });
-    const expectedFiles = await findFilesRecursively(config.blogDir, {
-      match: /.*\.md/,
-    });
-    assertEquals(
-      files.length - 1, // There is one file that does not have frontmatter,
-      expectedFiles.length,
-      `The number of files in the source directory ${files.length} is not the same as the number of files in the destination directory ${expectedFiles.length}`,
-    );
+     // Assert
+     const files = await findFilesRecursively(config.sourceDir, {
+        match: /.*\.md/,
+     });
+     const expectedFiles = await findFilesRecursively(config.blogDir, {
+        match: /.*\.md/,
+     });
+     assertEquals(
+        files.length - 1, // There is one file that does not have frontmatter,
+        expectedFiles.length,
+        `The number of files in the source directory ${files.length} is not the same as the number of files in the destination directory ${expectedFiles.length}`
+     );
   });
 });

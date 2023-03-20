@@ -1,9 +1,9 @@
-import { createBackup, prepareDestDirectory, publishToGit } from "../utils.ts";
+import { createBackup, prepareDestDirectory } from "../utils.ts";
 
 import { Command } from "../Cli.ts";
 import { Config } from "../Config.ts";
+import Logger from "../Logger.ts";
 import { NotesManager } from "../NotesManager.ts";
-import { logger } from "../../deps.ts";
 
 /**
  * Publish command
@@ -14,12 +14,12 @@ export class PublishCommand implements Command<never> {
       const { backupDir, blogDir, sourceDir } = config;
 
       // Ask for confirmation before proceeding
-      const shouldProceed = confirm(`Using the following directories:
-    - Blog: ${blogDir},
-    - Vault: ${sourceDir},
-    - Backup: ${backupDir}
-    Do you want to proceed?
-`);
+      const shouldProceed = prompt(`Using the following directories:
+          - Blog: ${blogDir},
+          - Vault: ${sourceDir},
+          - Backup: ${backupDir}
+          Do you want to proceed?
+      `);
 
       if (!shouldProceed) {
          console.log("Cancelling");
@@ -30,20 +30,22 @@ export class PublishCommand implements Command<never> {
       try {
          createBackup(sourceDir, blogDir, backupDir);
       } catch (e) {
-         logger.error(e);
+         Logger.get().error(e);
          Deno.exit(1);
          return;
       }
       // Prepare destination directory
       prepareDestDirectory(blogDir);
 
-      const notesManager = await NotesManager.initialize({ config, logger });
-      notesManager.publishNotes();
+      const notesManager = await NotesManager.initialize({
+         config,
+      });
+      await notesManager.publishNotes();
 
       try {
          // await publishToGit(blogDir);
       } catch (e) {
-         logger.error("Error publishing to git", e);
+         Logger.get().error("Error publishing to git", e);
          Deno.exit(1);
       }
    }

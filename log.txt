@@ -1,6 +1,2 @@
-Using the following directories:
-    - Blog: /home/abr/gh/website/src/content/blog,
-    - Vault: /home/abr/obsidian/20_areas/blog,
-    - Backup: /home/abr/.vault2blog/backups
-    Do you want to proceed?
- [y/N] 
+ERROR Invalid frontmatter for note-without-frontmatter.md
+DEBUG [{"code":"invalid_type","expected":"object","received":"string","path":[],"message":"Expected object, received string"}]

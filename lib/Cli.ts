@@ -33,17 +33,17 @@ export class Cli {
     });
 
     if (flags.help || hasNoArgs) {
-      new HelpCommand().execute();
-      // Deno.exit(0);
+       new HelpCommand().execute();
+       Deno.exit(0);
     }
 
     if (flags.publish) {
-      try {
-        const config = await new InitalizeConfigCommand().execute(flags);
-        await new PublishCommand().execute(config);
-      } catch (e) {
-        console.error(e);
-      }
+       try {
+          const config = await new InitalizeConfigCommand().execute(flags);
+          await new PublishCommand().execute(config);
+       } catch (e) {
+          console.error(e);
+       }
     }
   }
 }
